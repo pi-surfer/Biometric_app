@@ -1,16 +1,7 @@
 # app_project
 
-A new Flutter project.
+This repository aims to provide a working environment for the development of a Flutter App, which aims at fulfilling target 2.3 of the UN Sustainable Development Goals.
 
-## Getting Started
+This project is part of the "Biomedical Wearable Technologies for Healthcare and Wellbeing" class, Bioengineering Master, University of Padua.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Authors: Maccagnan Jenny, Martin Beatrice, Sterzi Lorenzo.
