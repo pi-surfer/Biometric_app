@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:molten_navigationbar_flutter/molten_navigationbar_flutter.dart';
 
 import 'package:app_project/screens/login_page.dart';
 
@@ -12,6 +13,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  int _selectedIndex = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -230,6 +234,34 @@ class _HomePageState extends State<HomePage> {
       ),
       ),
     ]),
+
+    bottomNavigationBar: MoltenBottomNavigationBar(
+          barColor: Colors.black,
+          selectedIndex: _selectedIndex,
+          domeHeight: 25,
+          // specify what will happen when a tab is clicked
+          onTabChange: (clickedIndex) {
+            setState(() {
+              _selectedIndex = clickedIndex;
+            });
+          },
+          // ansert as many tabs as you like
+          tabs: [
+            MoltenTab(
+              icon: Icon(Icons.search),
+
+              // selectedColor: Colors.yellow,
+            ),
+            MoltenTab(
+              icon: Icon(Icons.home),
+              title: Text('home'),
+              // selectedColor: Colors.yellow,
+            ),
+            MoltenTab(
+              icon: Icon(Icons.person),
+              // selectedColor: Colors.yellow,
+            ),
+      ],),
     );
   }
 
