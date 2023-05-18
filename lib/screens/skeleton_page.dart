@@ -58,6 +58,12 @@ void _onTabTapped(int index) {
         return HomePage();
       case 1:
         return LoginPage();
+      case 2:
+        return HomePage();
+      case 3:
+        return LoginPage();
+      case 4:
+        return HomePage();
       default:
         return HomePage();
     }
