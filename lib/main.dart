@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_project/screens/login_page.dart';
+import 'package:app_project/screens/skeleton_page.dart';
 
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: LoginPage()
+      home: SkeletonPage(),
     );
   } // build
 } // MyApp

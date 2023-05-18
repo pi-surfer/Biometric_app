@@ -11,30 +11,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('${HomePage.routename} built');
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(HomePage.routename),
-      ),
+    return Scaffold(      
       body: Center(
-        child: Text('login_flow'),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blueAccent,
-              ),
-              child: Text('login_flow'),
-            ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('logout'),
-              onTap: () => _toLoginPage(context),
-            )
-          ],
-        ),
+        child: Text('Ciao'),
       ),
     );
   }

@@ -1,34 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:molten_navigationbar_flutter/molten_navigationbar_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'package:app_project/screens/login_page.dart';
+import 'package:app_project/screens/home_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class SkeletonPage extends StatefulWidget {
+  const SkeletonPage({Key? key}) : super(key: key);
 
   @override
-  State createState() => _HomePageState();
+  State createState() => _SkeletonPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _SkeletonPageState extends State<SkeletonPage> {
 
 int _selIdx = 0;
 
 List<MoltenTab> navBarTabs = [
     MoltenTab(
-      icon: Icon(Icons.search),
-      selectedColor: Colors.yellow,
+      icon: Icon(MdiIcons.shoeSneaker,size: 30),
+      selectedColor: Color.fromARGB(255, 0, 0, 0),
+      unselectedColor: Color.fromARGB(255, 255, 255, 255),
     ),
     MoltenTab(
-      icon: Icon(Icons.home),
-      selectedColor: Colors.yellow,
+      icon: Icon(Icons.location_pin,size:30),
+      selectedColor: Color.fromARGB(255, 0, 0, 0),
+      unselectedColor: Color.fromARGB(255, 255, 255, 255),
     ),
     MoltenTab(
-      icon: Icon(Icons.person),
-      selectedColor: Colors.yellow,
+      icon: Icon(Icons.home_rounded,size: 30),
+      selectedColor: Color.fromARGB(255, 0, 0, 0),
+      unselectedColor: Color.fromARGB(255, 255, 255, 255),
+    ),
+    MoltenTab(
+      icon: Icon(Icons.handshake_rounded,size:30),
+      selectedColor: Color.fromARGB(255, 0, 0, 0),
+      unselectedColor: Color.fromARGB(255, 255, 255, 255),
+    ),
+    MoltenTab(
+      icon: Icon(Icons.qr_code,size: 30),
+      selectedColor: Color.fromARGB(255, 0, 0, 0),
+      unselectedColor: Color.fromARGB(255, 255, 255, 255),
     ),
   ];
 
@@ -45,7 +57,7 @@ void _onTabTapped(int index) {
       case 0:
         return HomePage();
       case 1:
-        return HomePage();
+        return LoginPage();
       default:
         return HomePage();
     }
@@ -67,18 +79,32 @@ void _onTabTapped(int index) {
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('logout'),
+              onTap: () => _toLoginPage(context),),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Profile'),
               onTap: () => _toLoginPage(context),
             ),
           ],
         ),
       ),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(223, 6, 150, 30),
+        title: Text('SKELETON'),
+        ),
       body: _selectPage(index: _selIdx),
       bottomNavigationBar: MoltenBottomNavigationBar(
-        barColor: Colors.black,
+        barColor: Color.fromARGB(223, 6, 150, 30),
+        domeCircleColor: Colors.white,
+        borderRaduis: BorderRadius.circular(15),
+        borderColor: Colors.black,
+        margin: EdgeInsets.only(bottom: 30, left:12, right: 12),
+        curve: Curves.bounceIn,
         selectedIndex: _selIdx,
-        domeHeight: 25,
+        domeHeight: 15,
         onTabChange: _onTabTapped,
         tabs: navBarTabs,
+        duration: Duration(milliseconds: 200),
       ),
     );
   }
