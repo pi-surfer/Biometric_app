@@ -50,7 +50,7 @@ class _ProjectPageState extends State<ProjectPage> {
         automaticallyImplyLeading: false, // per tornare indietro con la navigazione
         foregroundColor: Colors.black,
         backgroundColor: Color.fromARGB(255, 130, 204, 34),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25))
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft:Radius.circular(20), bottomRight:Radius.circular(20)))
       ),
       body: SingleChildScrollView(
         child: Column(
