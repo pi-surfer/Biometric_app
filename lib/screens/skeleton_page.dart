@@ -79,7 +79,7 @@ void _onTabTapped(int index) {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 13, 129, 52),
+                color: Color.fromARGB(255, 130, 204, 34),
               ),
               child: Text('My Profile'),
             ),
@@ -96,12 +96,12 @@ void _onTabTapped(int index) {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(223, 6, 150, 30),
+        backgroundColor: Color.fromARGB(255, 130, 204, 34),
         title: Text('SKELETON'),
         ),
       body: _selectPage(index: _selIdx),
       bottomNavigationBar: MoltenBottomNavigationBar(
-        barColor: Color.fromARGB(223, 6, 150, 30),
+        barColor: Color.fromARGB(255, 130, 204, 34),
         domeCircleColor: Colors.white,
         borderRaduis: BorderRadius.circular(15),
         borderColor: Colors.black,

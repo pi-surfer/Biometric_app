@@ -39,19 +39,6 @@ class _ProjectPageState extends State<ProjectPage> {
   Widget build(BuildContext context) {
     print('${ProjectPage.routename} built');
     return Scaffold(
-        appBar: AppBar(
-        leadingWidth: 50,
-        title: Text('Project', textAlign: TextAlign.left, style: TextStyle(fontWeight: FontWeight.bold)),
-        centerTitle: true,
-        leading: Icon(Icons.account_circle),
-        actions: [
-            const Icon(Icons.access_time)
-      ],
-        automaticallyImplyLeading: false, // per tornare indietro con la navigazione
-        foregroundColor: Colors.black,
-        backgroundColor: Color.fromARGB(255, 130, 204, 34),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25))
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -64,7 +51,7 @@ class _ProjectPageState extends State<ProjectPage> {
                         Card(
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                           child: ExpansionTile(
-                            leading: CircleAvatar(backgroundImage: AssetImage('images/miele_Dario.jpg')),
+                            leading: CircleAvatar(backgroundImage: AssetImage('assets/images/miele_Dario.jpg')),
                                 title: Text('Miele di Dario', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
                                 //leading: Icon(Icons.info),
                                 children: [
