@@ -5,9 +5,10 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:app_project/screens/login_page.dart';
 import 'package:app_project/screens/home_page.dart';
 import 'package:app_project/screens/projects_page.dart';
+import 'package:app_project/screens/training_page.dart';
 
 class SkeletonPage extends StatefulWidget {
-  const SkeletonPage({Key? key}) : super(key: key);
+  SkeletonPage({Key? key}) : super(key: key);
 
   @override
   State createState() => _SkeletonPageState();
@@ -56,7 +57,7 @@ void _onTabTapped(int index) {
   }) {
     switch (index) {
       case 0:
-        return HomePage();
+        return Activity();
       case 1:
         return ProjectPage();
       case 2:
