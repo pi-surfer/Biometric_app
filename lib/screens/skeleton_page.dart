@@ -6,6 +6,7 @@ import 'package:app_project/screens/login_page.dart';
 import 'package:app_project/screens/home_page.dart';
 import 'package:app_project/screens/projects_page.dart';
 import 'package:app_project/screens/training_page.dart';
+import 'package:app_project/screens/partner_page.dart';
 
 class SkeletonPage extends StatefulWidget {
   SkeletonPage({Key? key}) : super(key: key);
@@ -63,7 +64,7 @@ void _onTabTapped(int index) {
       case 2:
         return HomePage();
       case 3:
-        return LoginPage();
+        return Partner();
       case 4:
         return HomePage();
       default:
