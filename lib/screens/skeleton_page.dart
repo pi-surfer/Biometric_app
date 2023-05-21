@@ -8,6 +8,7 @@ import 'package:app_project/screens/home_page.dart';
 import 'package:app_project/screens/projects_page.dart';
 import 'package:app_project/screens/training_page.dart';
 import 'package:app_project/screens/partner_page.dart';
+import 'package:app_project/screens/profile_page.dart';
 
 class SkeletonPage extends StatefulWidget {
   SkeletonPage({Key? key}) : super(key: key);
@@ -87,7 +88,7 @@ void _onItemTapped(int index) {
                 ListTile(
                   leading: const Icon(Icons.person),
                   title: const Text('Profile'),
-                  onTap: () => _toLoginPage(context),
+                  onTap: () => _toProfilePage(context),
                 ),
               ],
             ),
@@ -134,4 +135,11 @@ void _onItemTapped(int index) {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const LoginPage()));
   } // _toLoginPage
+
+  void _toProfilePage(BuildContext context) {
+    Navigator.pop(context);
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const ProfilePage()));
+  } // _toProfilePage
+
 }
