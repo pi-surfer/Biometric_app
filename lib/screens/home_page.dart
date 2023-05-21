@@ -12,15 +12,52 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(      
-      body: CustomScrollView(slivers: [
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(children: [
-              Container(
+    return Scaffold(   
+      backgroundColor:  const Color.fromARGB(255, 173, 254, 178),   
+      body: Padding(
+        padding: EdgeInsets.only(bottom:85),
+        child: CustomScrollView(slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(children: [
+                Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Color.fromARGB(248, 247, 235, 133),
+                      border: Border.all(
+                          width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),
+                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: const [
+                            Text('Progetto finanziato: AGRILUSKA'),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text('DESCRIZIONE'),
+                          ],
+                        ),
+                        Container(
+                            padding: const EdgeInsets.all(10),
+                            color: Color.fromARGB(255, 151, 157, 162),
+                            height: 100,
+                            width: 100),
+                      ],
+                    )),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 270,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
@@ -34,143 +71,111 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          Text('Progetto finanziato'),
-                          SizedBox(
-                            height: 20,
+                        children: [
+                          const Text('SITUAZIONE ATTUALE:'),
+                          LinearPercentIndicator(
+                            animation: true,
+                            width: 300.0,
+                            lineHeight: 25,
+                            percent: 0.7,
+                            trailing: Icon(Icons.mood, size: 30),
+                            barRadius: Radius.circular(10),
+                            backgroundColor: Color.fromARGB(255, 209, 160, 160),
+                            progressColor: Color.fromARGB(255, 221, 31, 31),
                           ),
-                          Text('DESCRIZIONE'),
                         ],
                       ),
-                      Container(
-                          padding: const EdgeInsets.all(10),
-                          color: Color.fromARGB(255, 151, 157, 162),
-                          height: 100,
-                          width: 100),
                     ],
-                  )),
+                  ),
+                ),
+              ]),
+            ),
+          ),
+      
+          SliverToBoxAdapter(
+            child: Padding( 
+              padding: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+              child: Column(
+                children: [Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: null,
+                border:
+                    Border.all(width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+              ),
+              child: Container(
+                height: 300,
+                padding: const EdgeInsets.all(30),
+                // implement the bar chart
+                child: BarChart(
+                  BarChartData(
+                      borderData: FlBorderData(
+                          border: const Border(
+                        top: BorderSide.none,
+                        right: BorderSide.none,
+                        left: BorderSide(width: 1),
+                        bottom: BorderSide(width: 1),
+                      )),
+                      groupsSpace: 10,
+      
+                      // add bars
+                      barGroups: [
+                        BarChartGroupData(x: 1, barRods: [
+                          BarChartRodData(toY: 3, width: 15, color: Colors.amber),
+                        ]),
+                        BarChartGroupData(x: 2, barRods: [
+                          BarChartRodData(toY: 1, width: 15, color: Colors.amber),
+                        ]),
+                        BarChartGroupData(x: 3, barRods: [
+                          BarChartRodData(toY: 2, width: 15, color: Colors.amber),
+                        ]),
+                      ]),
+                ),
+              ),
+            ),Column(children: [
               SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 270,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  color: null,
-                  border: Border.all(
-                      width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const Text('SITUAZIONE ATTUALE:'),
-                        LinearPercentIndicator(
-                          animation: true,
-                          width: 300.0,
-                          lineHeight: 25,
-                          percent: 0.7,
-                          trailing: Icon(Icons.mood, size: 30),
-                          barRadius: Radius.circular(10),
-                          backgroundColor: Color.fromARGB(255, 209, 160, 160),
-                          progressColor: Color.fromARGB(255, 221, 31, 31),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: Container(
+                        height: 150,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: null,
+                          border: Border.all(
+                              width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                        child: Center(child: Text('Azienda della settimana'))),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Container(
+                        height: 150,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: null,
+                          border: Border.all(
+                              width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                        ),
+                        child: Center(child: Text('Progetto della settimana'))),
+                  ),
+                ],
               ),
             ]),
-          ),
+         ]),
         ),
-
-        SliverToBoxAdapter(
-          child: Padding( 
-            padding: EdgeInsets.only(left: 10, right: 10, bottom: 40),
-            child: Column(
-              children: [Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              color: null,
-              border:
-                  Border.all(width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),
-              borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-            child: Container(
-              height: 300,
-              padding: const EdgeInsets.all(30),
-              // implement the bar chart
-              child: BarChart(
-                BarChartData(
-                    borderData: FlBorderData(
-                        border: const Border(
-                      top: BorderSide.none,
-                      right: BorderSide.none,
-                      left: BorderSide(width: 1),
-                      bottom: BorderSide(width: 1),
-                    )),
-                    groupsSpace: 10,
-
-                    // add bars
-                    barGroups: [
-                      BarChartGroupData(x: 1, barRods: [
-                        BarChartRodData(toY: 3, width: 15, color: Colors.amber),
-                      ]),
-                      BarChartGroupData(x: 2, barRods: [
-                        BarChartRodData(toY: 1, width: 15, color: Colors.amber),
-                      ]),
-                      BarChartGroupData(x: 3, barRods: [
-                        BarChartRodData(toY: 2, width: 15, color: Colors.amber),
-                      ]),
-                    ]),
-              ),
-            ),
-          ),Column(children: [
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: Container(
-                      height: 150,
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        color: null,
-                        border: Border.all(
-                            width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                      ),
-                      child: Center(child: Text('Azienda della settimana'))),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Container(
-                      height: 150,
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        color: null,
-                        border: Border.all(
-                            width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                      ),
-                      child: Center(child: Text('Progetto della settimana'))),
-                ),
-              ],
-            ),
+        ),
           ]),
-       ]),
       ),
-      ),
-    ]),
     );
   }
 
