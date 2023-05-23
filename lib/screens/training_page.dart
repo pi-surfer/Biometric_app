@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-//import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 //import 'package:progetto/widgets/custom_plot.dart';
 //import 'package:intl/intl.dart';
@@ -63,7 +63,7 @@ class Activity extends StatefulWidget {
 
 class _ActivityState extends State<Activity> {
    late List<GDPData> _chartData;
-   ///late TooltipBehavior _tooltipBehavior;
+   late TooltipBehavior _tooltipBehavior;
    late List<finalOBIETTIVI> _chartData1;
 
 
@@ -71,7 +71,7 @@ class _ActivityState extends State<Activity> {
   void initState(){
     _chartData = getChartData();
     _chartData1 = getChartData1();
-    ///_tooltipBehavior = TooltipBehavior(enable: true);
+    _tooltipBehavior = TooltipBehavior(enable: true);
     
     super.initState();
   }
@@ -114,7 +114,7 @@ class _ActivityState extends State<Activity> {
             )
           ],
         ),*/
-        /*body: SafeArea(
+        body: SafeArea(
           child: SingleChildScrollView(
               child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -264,7 +264,7 @@ class _ActivityState extends State<Activity> {
               items: navBarItems,
               //currentIndex: _selIdx,
               //onTap: _onItemTapped,
-                  ),*/*/);}
+                  ),*/);}
           
 
                   List<GDPData> getChartData(){
