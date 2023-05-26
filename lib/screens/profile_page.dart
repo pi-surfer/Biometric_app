@@ -96,7 +96,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 height: 15,
                               ),
                               TextField(
-                                controller: names,
+                                controller: username,
                                 decoration: InputDecoration(
                                     labelText: 'Username',
                                     prefixIcon: Icon(Icons.people),
@@ -108,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 height: 15,
                               ),
                               TextField(
-                                controller: names,
+                                controller: email,
                                 decoration: InputDecoration(
                                     labelText: 'Email',
                                     prefixIcon: Icon(Icons.email),
@@ -120,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 height: 15,
                               ),
                               TextField(
-                                controller: names,
+                                controller: password,
                                 decoration: InputDecoration(
                                     labelText: 'Password',
                                     prefixIcon: Icon(Icons.password),
