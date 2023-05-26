@@ -16,22 +16,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(   
-      backgroundColor:  const Color.fromARGB(255, 173, 254, 178),   
+      backgroundColor:  const Color.fromARGB(255, 254, 251, 228),   
       body: Padding(
-        padding: EdgeInsets.only(bottom:85),
+        padding: const EdgeInsets.only(bottom:85),
         child: CustomScrollView(slivers: [
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(children: [
                 Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
-                      color: Color.fromARGB(248, 247, 235, 133),
+                      color: const Color.fromARGB(248, 247, 235, 133),
                       border: Border.all(
-                          width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),
-                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                          width: 2.0, color: const Color.fromARGB(255, 0, 0, 0)),
+                      borderRadius: const BorderRadius.all(Radius.circular(30)),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -48,23 +48,23 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Container(
                             padding: const EdgeInsets.all(10),
-                            color: Color.fromARGB(255, 151, 157, 162),
+                            color: const Color.fromARGB(255, 151, 157, 162),
                             height: 100,
                             width: 100),
                       ],
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
                   height: 270,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     color: null,
                     border: Border.all(
-                        width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                        width: 2.0, color: const Color.fromARGB(255, 0, 0, 0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(30)),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -78,10 +78,10 @@ class _HomePageState extends State<HomePage> {
                             width: 300.0,
                             lineHeight: 25,
                             percent: 0.7,
-                            trailing: Icon(Icons.mood, size: 30),
-                            barRadius: Radius.circular(10),
-                            backgroundColor: Color.fromARGB(255, 209, 160, 160),
-                            progressColor: Color.fromARGB(255, 221, 31, 31),
+                            trailing: const Icon(Icons.mood, size: 30),
+                            barRadius: const Radius.circular(10),
+                            backgroundColor: const Color.fromARGB(255, 209, 160, 160),
+                            progressColor: const Color.fromARGB(255, 221, 31, 31),
                           ),
                         ],
                       ),
@@ -94,16 +94,16 @@ class _HomePageState extends State<HomePage> {
       
           SliverToBoxAdapter(
             child: Padding( 
-              padding: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 40),
               child: Column(
                 children: [Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: null,
                 border:
-                    Border.all(width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),
-                borderRadius: BorderRadius.all(Radius.circular(30)),
+                    Border.all(width: 2.0, color: const Color.fromARGB(255, 0, 0, 0)),
+                borderRadius: const BorderRadius.all(Radius.circular(30)),
               ),
               child: Container(
                 height: 300,
@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),Column(children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -149,12 +149,12 @@ class _HomePageState extends State<HomePage> {
                           shape: BoxShape.rectangle,
                           color: null,
                           border: Border.all(
-                              width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                              width: 2.0, color: const Color.fromARGB(255, 0, 0, 0)),
+                          borderRadius: const BorderRadius.all(Radius.circular(30)),
                         ),
-                        child: Center(child: Text('Azienda della settimana'))),
+                        child: const Center(child: Text('Azienda della settimana'))),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Container(
                         height: 150,
@@ -163,10 +163,10 @@ class _HomePageState extends State<HomePage> {
                           shape: BoxShape.rectangle,
                           color: null,
                           border: Border.all(
-                              width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                              width: 2.0, color: const Color.fromARGB(255, 0, 0, 0)),
+                          borderRadius: const BorderRadius.all(Radius.circular(30)),
                         ),
-                        child: Center(child: Text('Progetto della settimana'))),
+                        child: const Center(child: Text('Progetto della settimana'))),
                   ),
                 ],
               ),

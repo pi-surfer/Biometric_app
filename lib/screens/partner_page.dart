@@ -46,14 +46,14 @@ class PartnerState extends State<Partner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 177, 252, 180),
-        appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 254, 251, 228),
+        /*appBar: AppBar(
           centerTitle: true,
           toolbarHeight: 80,
           elevation: 0,
           backgroundColor: const Color.fromARGB(255, 4, 84, 6),
-          iconTheme: const IconThemeData(color: Color.fromARGB(255, 255, 255, 255)),
-          title: const Text('OUR PARTNERS', style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+          iconTheme: const IconThemeData(color: Color.fromARGB(255, 254, 251, 228)),
+          //title: const Text('OUR PARTNERS', style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
           actions: [
             Padding(
               padding: const EdgeInsets.all(12.0),
@@ -74,7 +74,7 @@ class PartnerState extends State<Partner> {
 
             )
           ],
-        ),
+        ),*/
         body: SafeArea(
           child: SingleChildScrollView(
               child: Padding(
@@ -88,8 +88,8 @@ class PartnerState extends State<Partner> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Color.fromARGB(255, 3, 66, 5),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                        //fontWeight: FontWeight.bold,
+                        fontSize: 18),
                   ),
                   
                   const SizedBox(
@@ -99,7 +99,7 @@ class PartnerState extends State<Partner> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
                     children: [
-                    SizedBox(
+                    Container(
                       width: 150.0,
                       height: 150.0,
                       child: 
@@ -109,7 +109,7 @@ class PartnerState extends State<Partner> {
                       width: 150.0,
                       height: 150.0,
                       child: 
-                        Image.asset("assets/images/generali.jpg", fit:BoxFit.contain, ),),   
+                        Image.asset("assets/images/generali.jpg", fit:BoxFit.contain,),),   
                   ],
                   ),
 

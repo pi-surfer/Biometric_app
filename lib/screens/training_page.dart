@@ -81,7 +81,7 @@ class _ActivityState extends State<Activity> {
   @override
   Widget build(BuildContext context) {
       return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 173, 254, 178),
+        backgroundColor: const Color.fromARGB(255,254,251,228),
         /*appBar: AppBar(
           centerTitle: true,
           toolbarHeight: 65,
@@ -120,21 +120,21 @@ class _ActivityState extends State<Activity> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.navigate_before, color: Color.fromARGB(255, 6, 95, 9),size:20,),
+                        icon: const Icon(Icons.navigate_before, color: Color.fromARGB(255, 1, 97, 4),size:20,),
                         onPressed: () {
                           setState(() {
                             day = day.subtract(const Duration(days: 1));
                             });
                           }),
                         Text(DateFormat('dd MM yyyy').format(day), style: const TextStyle(
-                          color: Color.fromARGB(255, 6, 95, 9),
+                          color: Color.fromARGB(255, 1, 97, 4),
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                           fontStyle: FontStyle.normal,
                           )
                         ),
                       IconButton(
-                        icon: const Icon(Icons.navigate_next, color: Color.fromARGB(255, 6, 95, 9),size: 20, ),
+                        icon: const Icon(Icons.navigate_next, color: Color.fromARGB(255, 1, 97, 4),size: 20, ),
                         onPressed: () {
                           setState(() {
                             day = day.add(const Duration(days: 1));
@@ -147,8 +147,8 @@ class _ActivityState extends State<Activity> {
 
                     TextButton.icon(
                       onPressed: () {  },
-                      icon: const Icon(MdiIcons.reload, size: 18, color: Color.fromARGB(255,255,255,255)),
-                      label: const Text("UPDATE YOUR DATA", style: TextStyle(color: Color.fromARGB(255,255,255,255), fontSize: 16)), 
+                      icon: const Icon(MdiIcons.reload, size: 18, color: Color.fromARGB(255,254,251,228)),
+                      label: const Text("Update your data", style: TextStyle(color: Color.fromARGB(255,254,251,228), fontSize: 16)), 
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.all(12),
                         shape: const RoundedRectangleBorder(
@@ -156,7 +156,7 @@ class _ActivityState extends State<Activity> {
                             Radius.circular(28.0),
                             ),
                           ),
-                        backgroundColor:const Color.fromARGB(255, 11, 87, 14),
+                        backgroundColor:const Color.fromARGB(255, 1, 97, 4),
                         )
 
                     ),
@@ -166,8 +166,11 @@ class _ActivityState extends State<Activity> {
                       ),
                     
                     SfCircularChart(
+                      backgroundColor: const Color.fromARGB(255, 254, 251, 228),
                       legend: Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap, position:LegendPosition.bottom, 
                       textStyle: const TextStyle(fontSize: 13)),
+                      palette: [Color.fromARGB(255, 253, 176, 120), Color.fromARGB(255, 255, 114, 106), Color.fromARGB(255, 255, 221, 74),],
+                      borderWidth: 2.0,
                       tooltipBehavior: _tooltipBehavior,
                       series: <CircularSeries>[
                         RadialBarSeries<GDPData,String>(
@@ -181,41 +184,48 @@ class _ActivityState extends State<Activity> {
                       )
                     ]),
                 
-                
                     const SizedBox(
                       height: 20,
                       ),
 
-                    const Text('Oggi hai guadagnato N crediti', style: TextStyle(
-                          color: Color.fromARGB(255, 6, 95, 9),
+                    /*const Text('Oggi hai guadagnato N crediti', style: TextStyle(
+                          color: Color.fromARGB(255, 1, 97, 4),
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                           fontStyle: FontStyle.normal,
-                          ),) ,
+                          ),) ,*/
 
                     const SizedBox(
                       height: 20,
                       ),
-
-                              
 
                     Container(
                       alignment: Alignment.center,
                       height: 200,
                       width: 200,
                       child: SfCircularChart(
+                        palette: [Color.fromARGB(255, 253, 176, 120), Color.fromARGB(255, 255, 114, 106), Color.fromARGB(255, 255, 221, 74),],
                       
                       //textStyle: const TextStyle(fontSize: 13)),
                       //tooltipBehavior: _tooltipBehavior,
-                      series: <CircularSeries>[
+                        series: <CircularSeries>[
                         RadialBarSeries<finalOBIETTIVI,String>(
-                        pointColorMapper: (finalOBIETTIVI,_) => const Color.fromARGB(255, 10, 159, 12),
-                        dataSource: _chartData1,
-                        xValueMapper: (finalOBIETTIVI value,_) => value.crediti,
-                        yValueMapper: (finalOBIETTIVI value,_) => value.value,
-                        dataLabelSettings: const DataLabelSettings(isVisible: true),
-                        enableTooltip: true,
-                        maximumValue: 300,
+                          //trackColor: Color.fromARGB(122, 255, 114, 106),
+                          
+                          pointColorMapper: (finalOBIETTIVI,_) => const Color.fromARGB(255, 255, 114, 106),
+                          dataSource: _chartData1,
+                          xValueMapper: (finalOBIETTIVI value,_) => value.crediti,
+                          yValueMapper: (finalOBIETTIVI value, _) => value.value,
+                          dataLabelSettings: const DataLabelSettings(
+                            isVisible: true,
+                            
+                            textStyle: TextStyle(
+                              fontSize: 20,
+                              color: Color.fromARGB(255, 1, 97, 4),
+                            ),
+                          ),
+                          enableTooltip: true,
+                          maximumValue: 300,
                         
                       )
                     ] 

@@ -35,7 +35,7 @@ class LoginPage extends StatelessWidget {
       onSignup: _signUpUser,
       onRecoverPassword: _recoverPassword, // devo mettere queste funzioni perché sono onSignup e onRecoverPassword sono richiesti da FlutterLogin
       onSubmitAnimationCompleted: () async{
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
       },
     );
   } // build
