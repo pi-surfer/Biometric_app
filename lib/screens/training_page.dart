@@ -76,16 +76,11 @@ class _ActivityState extends State<Activity> {
     super.initState();
   }
 
-  
-  
   DateTime day = DateTime.now();
   
   @override
   Widget build(BuildContext context) {
-    
-    
-    
-    return Scaffold(
+      return Scaffold(
         backgroundColor: const Color.fromARGB(255, 173, 254, 178),
         /*appBar: AppBar(
           centerTitle: true,
