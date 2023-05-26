@@ -54,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
             actions: [const Icon(Icons.access_time)],
             //automaticallyImplyLeading: false, // per tornare indietro con la navigazione
             foregroundColor: Colors.black,
-            backgroundColor: Color.fromARGB(255, 130, 204, 34),
+            backgroundColor: Color.fromARGB(255, 254, 251, 228),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25))),
         body: SingleChildScrollView(
