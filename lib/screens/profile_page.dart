@@ -59,15 +59,19 @@ class _ProfilePageState extends State<ProfilePage> {
                 borderRadius: BorderRadius.circular(25))),
         body: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
+                alignment: Alignment.topCenter,
                 padding: EdgeInsets.only(top: 20),
-                child: Stack(children: [
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
                   Container(
                     margin: EdgeInsets.only(top: 80),
-                    width: 400,
+                    //width: 400,
                     height: 475,
-                    //width: MediaQuery.of(context).size.width,
+                    width: MediaQuery.of(context).size.width*0.9,
                     //height: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         color: Color.fromARGB(114, 255, 236, 66),
@@ -86,7 +90,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               TextField(
                                 controller: names,
                                 decoration: InputDecoration(
-                                    labelText: 'Names',
+                                    //labelText: 'Names',
                                     prefixIcon: Icon(Icons.person),
                                     border: myInputBorder(),
                                     enabledBorder: myInputBorder(),
@@ -171,7 +175,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ]),
               ),
-
+          
               // pensavo di rimandare alla pagina progetti o di mettere un expansion tile ma non riesco a farlo
               SizedBox(height: 15),
               ElevatedButton(

@@ -95,7 +95,7 @@ void _onItemTapped(int currentIndex){
       child: ClipRect(
         child: Scaffold(
           extendBody: true,
-          /*drawer: Drawer(
+          drawer: Drawer(
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
@@ -116,7 +116,7 @@ void _onItemTapped(int currentIndex){
                 ),
               ],
             ),
-          ),*/
+          ),
           appBar: AppBar(
             //shadowColor: Colors.transparent,
             backgroundColor: const Color.fromARGB(255, 254, 251, 228) ,
