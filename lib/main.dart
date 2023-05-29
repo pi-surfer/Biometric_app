@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:app_project/screens/skeleton_page.dart';
 
-import 'package:app_project/screens/login_page.dart';
+import 'package:app_project/screens/training_page.dart';
+import 'package:flutter/material.dart';
 
 
 void main() {
@@ -13,8 +14,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LoginPage()
-    );
+    return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Poppins',
+      ),
+      home: const Activity(),
+      );
   } // build
-} // MyApp
+} // MyApp 

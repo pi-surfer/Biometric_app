@@ -1,17 +1,18 @@
+//import 'package:app_project/widgets/date_widget.dart';
+import 'package:app_project/widgets/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+//import 'package:app_project/gestures/tap.dart';
 
 //import 'package:progetto/widgets/custom_plot.dart';
 //import 'package:intl/intl.dart';
 
-
-
 class GDPData{
   GDPData(this.continent,this.gdp);
   final String continent;
-  final int gdp;
+  final dynamic gdp;
 }
 
 class finalOBIETTIVI{
@@ -22,7 +23,6 @@ class finalOBIETTIVI{
 
 class day {
   // this class models the single heart rate data point
-
   late final DateTime date;
   late final int value;
 }
@@ -37,36 +37,17 @@ class Activity extends StatefulWidget {
   State<Activity> createState() => ActivityState();
 }
 
-List<BottomNavigationBarItem> navBarItems = [
-    const BottomNavigationBarItem(
-      icon: Icon(MdiIcons.mapMarkerOutline),
-      label: 'Activity',
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(MdiIcons.tractor),
-      label: 'Firm',
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(MdiIcons.homeOutline),
-      label: 'Home',
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(MdiIcons.humanQueue),
-      label: 'Partner',
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(MdiIcons.shoppingOutline),
-      label: 'Promo',
-    ),
-  ];
-
 class ActivityState extends State<Activity> {
-   late List<GDPData> _chartData;
-   late TooltipBehavior _tooltipBehavior;
-   late List<finalOBIETTIVI> _chartData1;
+  DatePickerController _controller = DatePickerController();
 
+  DateTime _selectedValue = DateTime.now();
 
-   @override
+  late List<GDPData> _chartData;
+  late TooltipBehavior _tooltipBehavior;
+  late List<finalOBIETTIVI> _chartData1;
+   
+
+    @override
   void initState(){
     _chartData = getChartData();
     _chartData1 = getChartData1();
@@ -75,70 +56,76 @@ class ActivityState extends State<Activity> {
     super.initState();
   }
 
-  
-  
   DateTime day = DateTime.now();
   
   @override
   Widget build(BuildContext context) {
     
-    
-    
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 173, 254, 178),
+        backgroundColor: const Color.fromARGB(255, 254, 251, 228),
         appBar: AppBar(
           centerTitle: true,
           toolbarHeight: 65,
           elevation: 0,
-          backgroundColor: const Color.fromARGB(255, 6, 95, 9),
-          iconTheme: const IconThemeData(color: Color.fromARGB(255, 255, 255, 255)),
-          title: const Text('Your Activity', style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: IconButton(
-                  onPressed: () {
-                    /*Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            fullscreenDialog: true,
-                            builder: (context) => Profile()));
-                  */},
-                  
-                  icon: const Icon(
-                    MdiIcons.circleBox,
-                    size: 40,
-                    color: Color.fromARGB(255, 255, 255, 255),
-                  )),
-            )
-          ],
-        ),
+          backgroundColor: const Color.fromARGB(255, 254, 251, 228),
+          ),
         body: SafeArea(
           child: SingleChildScrollView(
-              child: Padding(
+            child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                children: [ 
+                  Container(
+                  child: DatePicker(
+                  DateTime.now(),
+                  width: 60,
+                  height: 80,
+                  controller: _controller,
+                  //startDate: DateTime.now(),
+                  selectionColor: Color.fromARGB(100, 1, 97, 4),
+                  selectedTextColor: Color.fromARGB(255, 254, 251, 228),
+                  /*inactiveDates: [
+                    DateTime.now().add(Duration(days: 1)),
+                    DateTime.now().add(Duration(days: 2)),
+                    DateTime.now().add(Duration(days: 3)),
+                    DateTime.now().add(Duration(days: 4)),
+                    DateTime.now().add(Duration(days: 5)),
+                    DateTime.now().add(Duration(days: 6)),
+                    DateTime.now().add(Duration(days: 7))
+                  ],*/
+                  onDateChange: (date) {
+                    // New date selected
+                    setState(() {
+                      _selectedValue = date;
+                    });
+                  },
+                ),
+              ),
+            
+              SizedBox(
+                height: 20,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.navigate_before, color: Color.fromARGB(255, 6, 95, 9),size:20,),
-                        onPressed: () {
-                          setState(() {
-                            day = day.subtract(const Duration(days: 1));
-                            });
-                          }),
-                        Text(DateFormat('dd MM yyyy').format(day), style: const TextStyle(
-                          color: Color.fromARGB(255, 6, 95, 9),
+                  IconButton(
+                    icon: const Icon(Icons.navigate_before, color: Color.fromARGB(255, 1, 97, 4),size:20,),
+                    onPressed: () {
+                      setState(() {
+                        day = day.subtract(const Duration(days: 1));
+                        });
+                      }),
+                      Text(DateFormat('dd MM yyyy').format(day), style: const TextStyle(
+                          color: Color.fromARGB(255, 1, 97, 4),
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                           fontStyle: FontStyle.normal,
                           )
                         ),
                       IconButton(
-                        icon: const Icon(Icons.navigate_next, color: Color.fromARGB(255, 6, 95, 9),size: 20, ),
+                        icon: const Icon(Icons.navigate_next, color: Color.fromARGB(255, 1, 97, 4),size: 20, ),
                         onPressed: () {
                           setState(() {
                             day = day.add(const Duration(days: 1));
@@ -151,8 +138,12 @@ class ActivityState extends State<Activity> {
 
                     TextButton.icon(
                       onPressed: () {  },
-                      icon: const Icon(MdiIcons.reload, size: 18, color: Color.fromARGB(255,255,255,255)),
-                      label: const Text("UPDATE YOUR DATA", style: TextStyle(color: Color.fromARGB(255,255,255,255), fontSize: 16)), 
+                      icon: const Icon(MdiIcons.reload, size: 18, color: Color.fromARGB(255,254,251,228)),
+                      label: const Text("Update your data", 
+                      style: TextStyle(
+                        color: Color.fromARGB(255,254,251,228), 
+                        fontSize: 16),
+                        ), 
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.all(12),
                         shape: const RoundedRectangleBorder(
@@ -160,7 +151,7 @@ class ActivityState extends State<Activity> {
                             Radius.circular(28.0),
                             ),
                           ),
-                        backgroundColor:const Color.fromARGB(255, 11, 87, 14),
+                        backgroundColor:const Color.fromARGB(255, 1, 97, 4),
                         )
 
                     ),
@@ -168,22 +159,72 @@ class ActivityState extends State<Activity> {
                     const SizedBox(
                       height: 20,
                       ),
-                    
-                    SfCircularChart(
-                      legend: Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap, position:LegendPosition.bottom, 
-                      textStyle: const TextStyle(fontSize: 13)),
+
+                      Container(
+                      alignment: Alignment.center,
+                      height: 500,
+                      width: 500,
+                      child: SfCircularChart(
+                        annotations: <CircularChartAnnotation>[
+                          CircularChartAnnotation(
+                            widget: Container(
+                              child: const Text('Text', style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Poppins', 
+                                color: Color.fromARGB(255, 1, 97, 4)),)
+                              ),                        
+                        )
+                      ],
+                      palette: const <Color> [
+                        Color.fromARGB(255, 255, 114, 106),
+                        Color.fromARGB(255, 255, 221, 74), 
+                        Color.fromARGB(255, 253, 176, 120)],
+                      
+                      legend: Legend(
+                        isVisible: true,
+                        //textStyle: TextStyle(
+                          //fontSize: 15, fontWeight: FontWeight.bold, fontFamily: 'Poppins'),
+
+                        position:LegendPosition.bottom,
+                        alignment: ChartAlignment.center,
+                        overflowMode: LegendItemOverflowMode.wrap, 
+                        legendItemBuilder: (String name, dynamic series, dynamic point, int index) {
+                          return Container(
+                            height: 75,
+                            width: 98,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(name, style:TextStyle(fontSize: 14, fontWeight: FontWeight.bold, fontFamily: 'Poppins')),
+                                Text(point.y.toString(), style:TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'Poppins')),
+                                Text('/1000', style:TextStyle(fontSize: 14, fontFamily: 'Poppins')),],),
+                                
+                                //Icon(point.MdiIcons.fire),
+                                //Icon(point.MdiIcons.walk),
+                                //Icon(point.MdiIcons.clock),
+                                
+                          );
+                         }, 
+                      ),
                       tooltipBehavior: _tooltipBehavior,
                       series: <CircularSeries>[
                         RadialBarSeries<GDPData,String>(
-                        dataSource: _chartData,
-                        
-                        xValueMapper: (GDPData data,_) => data.continent,
-                        yValueMapper: (GDPData data,_) => data.gdp,
-                        dataLabelSettings: const DataLabelSettings(isVisible: true),
-                        enableTooltip: true,
-                        maximumValue: 10000
-                      )
-                    ]),
+                          useSeriesColor: true,
+                          
+                          trackOpacity: 0.2,
+                          dataSource: _chartData,
+                          xValueMapper: (GDPData data,_) => data.continent,
+                          yValueMapper: (GDPData data,_) => data.gdp,
+                          cornerStyle: CornerStyle.endCurve,
+                          radius:'90%',
+                          gap:'6%',
+                          dataLabelSettings: const DataLabelSettings(isVisible: false),
+                          enableTooltip: true,
+                          maximumValue: 1000
+                          )
+                        ]),),
                 
                 
                     const SizedBox(
@@ -191,7 +232,7 @@ class ActivityState extends State<Activity> {
                       ),
 
                     const Text('Oggi hai guadagnato N crediti', style: TextStyle(
-                          color: Color.fromARGB(255, 6, 95, 9),
+                          color: Color.fromARGB(255, 1, 97, 4),
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                           fontStyle: FontStyle.normal,
@@ -205,8 +246,8 @@ class ActivityState extends State<Activity> {
 
                     Container(
                       alignment: Alignment.center,
-                      height: 200,
-                      width: 200,
+                      height: 350,
+                      width: 350,
                       child: SfCircularChart(
                       
                       //textStyle: const TextStyle(fontSize: 13)),
@@ -215,9 +256,15 @@ class ActivityState extends State<Activity> {
                         RadialBarSeries<finalOBIETTIVI,String>(
                         pointColorMapper: (finalOBIETTIVI,_) => const Color.fromARGB(255, 10, 159, 12),
                         dataSource: _chartData1,
+                        useSeriesColor: true,
+                        trackOpacity: 0.2,
+                        
                         xValueMapper: (finalOBIETTIVI value,_) => value.crediti,
                         yValueMapper: (finalOBIETTIVI value,_) => value.value,
-                        dataLabelSettings: const DataLabelSettings(isVisible: true),
+                        cornerStyle: CornerStyle.endCurve,
+                        radius:'100%',
+                        gap:'4%',
+                        dataLabelSettings: const DataLabelSettings(isVisible: false),
                         enableTooltip: true,
                         maximumValue: 300,
                         
@@ -252,25 +299,22 @@ class ActivityState extends State<Activity> {
                       height: 20,
                       ),
                     
-                ],),),),),
-                
-    
-      
-
-                  bottomNavigationBar: BottomNavigationBar(
+                ],),),),),);
+              
+              /*    bottomNavigationBar: BottomNavigationBar(
               backgroundColor: const Color.fromARGB(255,255,255,255),
               fixedColor:  const Color.fromARGB(255, 6, 95, 9),
               items: navBarItems,
               //currentIndex: _selIdx,
               //onTap: _onItemTapped,
-                  ),);}
+                  ),*/;}
           
 
                   List<GDPData> getChartData(){
               final List<GDPData> chartData=[
-                GDPData('Run', 1600),
-                GDPData('Walk', 2490),
-                GDPData('Bike', 2900)
+                GDPData('Kalories', 100),
+                GDPData('Time', 60),
+                GDPData('Steps', 8645)
               ];
               return chartData;}
             
@@ -280,9 +324,7 @@ class ActivityState extends State<Activity> {
                 ];
                 return chartData1;
               }
-                  
-                   
-            
+           
   } //build
  //Page
 
