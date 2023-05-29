@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-//import 'package:fl_chart/fl_chart.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-import 'package:app_project/models/chart1.dart';
+import 'package:app_project/models/linechart_week.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,7 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  int _selectedIndex = 1;
+  //int _selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                     //height: 300,
                     padding: const EdgeInsets.only(left: 10,right: 20),
                     // implement the bar chart
-                    child: LineChartSample2(),    // Grafico linea da chart1.dart
+                    child: LineChartWeek(),    // Grafico linea da chart1.dart
                   ),
                   Padding(
                           padding: EdgeInsets.all(20),
