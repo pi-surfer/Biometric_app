@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_project/screens/home_page1.dart';
+import 'package:app_project/screens/home_page.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 
 } // main
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage()
+    return MaterialApp(
+      home: HomePage(),
     );
   } // build
 } // MyApp
