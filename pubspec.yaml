@@ -68,6 +68,9 @@ flutter:
     - assets/images/logo1.png
     - assets/images/arnie.png
     - assets/images/nike.png
+    - assets/images/garden.png
+    - assets/images/marathon.png
+    - assets/images/well_done.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

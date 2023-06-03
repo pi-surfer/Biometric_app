@@ -117,7 +117,7 @@ class _LineChartWeek extends State<LineChartWeek> {
 
   LineChartData mainData() {
     return LineChartData(
-      gridData: FlGridData(show: false),
+      gridData: FlGridData(drawHorizontalLine: true, drawVerticalLine: false),
       titlesData: FlTitlesData(
         show: true,
         rightTitles: AxisTitles(
@@ -187,7 +187,7 @@ class _LineChartWeek extends State<LineChartWeek> {
   LineChartData avgData() {
     return LineChartData(
       lineTouchData: LineTouchData(enabled: false),
-      gridData: FlGridData(show: false,),
+      gridData: FlGridData(drawHorizontalLine: true, drawVerticalLine: false),
       titlesData: FlTitlesData(
         show: true,
         bottomTitles: AxisTitles(
