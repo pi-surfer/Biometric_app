@@ -1,12 +1,24 @@
+import 'package:app_project/models/projects.dart';
+import 'package:app_project/provider/projects_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter/services.dart';
+
+import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
+// import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+// import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher_string.dart';
 
 class ProjectPage extends StatefulWidget {
-  const ProjectPage({Key? key}) : super(key: key);
+  //const ProjectPage({Key? key}) : super(key: key);
 
   static const routename = 'Projectpage';
+  final List<Projects> projects;
+
+  const ProjectPage({
+    Key? key,
+    this.projects = const[],
+  }):super(key: key);
 
   @override
   State createState() => _ProjectPageState();
@@ -14,6 +26,9 @@ class ProjectPage extends StatefulWidget {
 
 class _ProjectPageState extends State<ProjectPage> {
   final List<int> lista = [1,2,3,4,5,6,7,8,9];
+  bool toggled_1 = false;
+  bool toggled_2 = false;
+  bool toggled_3 = false;
 
 
 
@@ -37,6 +52,7 @@ class _ProjectPageState extends State<ProjectPage> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ProjectProvider>(context);
     print('${ProjectPage.routename} built');
     return Scaffold(
         appBar: AppBar(
@@ -52,33 +68,58 @@ class _ProjectPageState extends State<ProjectPage> {
         backgroundColor: Color.fromARGB(255, 130, 204, 34),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft:Radius.circular(20), bottomRight:Radius.circular(20)))
       ),
+
+      // TODO: figure out errors
       body: SingleChildScrollView(
         child: Column(
-          children: [
+          children: Projects.map((projects) {
+              return ExpansionTile(title: Projects.name),
+            })
+          /*children: [
+            projects.map((projects) {
+              return 
+            })
             SizedBox(
-              height: 300,
+              height: 700,
               
               child: ListView(
                 children: [
+                  // ignore: unused_local_variable
                   for(var i in lista)
                         Card(
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                           child: ExpansionTile(
+                            //title: Container(
+                             //decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/miele_dario.jpg"), fit: BoxFit.cover)),
+                             //child: Text('Miele di Dario', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),),
                             leading: CircleAvatar(backgroundImage: AssetImage('images/miele_Dario.jpg')),
-                                title: Text('Miele di Dario', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
+                            //title: Image.asset("assets/images/miele_dario.jpg", 
+                            //height: 80.0, 
+                            //width: double.infinity, 
+                            //alignment: Alignment.center,
+                            //fit: BoxFit.cover,),
+                            title: Text('Miele di Dario', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
                                 //leading: Icon(Icons.info),
+                                //subtitle: Text('Miele di Dario', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
                                 children: [
                                   Text('Api di Dario è un bellissimo luogo in cui moltissime api risiedono in splendide arnie'),
-                                       
-                                   
-                              
-                                ],
+                                  SwitchListTile(value: toggled_1, onChanged: (value) {
+                                    setState(()
+                                      => toggled_1 = value
+                                    );
+                                  },
+                                  activeThumbImage: toggled_1
+                                  ? const AssetImage('images/ape_carina2.jpg')
+                                  : null,),
+                                  //ButtonBar(
+                                    //children: Radio())
+                                  ],
                                 childrenPadding: EdgeInsets.all(30),
-                                tilePadding: EdgeInsets.all(20),
+                                tilePadding: EdgeInsets.all(0),
                                 expandedAlignment: Alignment.center,
-                                collapsedBackgroundColor: Color.fromARGB(114, 255, 236, 66),
+                                collapsedBackgroundColor: Colors.transparent,
                                 collapsedIconColor: Colors.black,
-                                backgroundColor: Colors.white,
+                                backgroundColor: Color.fromARGB(255, 254, 251, 228),
                                 ),
                         )
                       ],
@@ -88,7 +129,7 @@ class _ProjectPageState extends State<ProjectPage> {
               SizedBox(
                 height: 20
               ),
-              Container(
+              /*Container(
                 height: 400,
                 width: 400,
                 color: Colors.grey,
@@ -102,8 +143,8 @@ class _ProjectPageState extends State<ProjectPage> {
                   child: Text('Open Maps',style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30),)
                   )
                 )
-              )
-          ]
+              )*/
+          ]*/
           ),
       )
         );
