@@ -185,7 +185,7 @@ class PartnerState extends State<Partner> {
                   Container(
                     decoration: BoxDecoration(
                       image: const DecorationImage(
-                        image: AssetImage("assets/images/2.jpg"), 
+                        image: AssetImage("assets/gif/patagonia.gif"), 
                         fit: BoxFit.cover, opacity: 5), 
                         borderRadius: BorderRadius.circular(10)),
                     padding: const EdgeInsets.all(10),
