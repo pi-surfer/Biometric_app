@@ -94,10 +94,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       children:[ 
                         Container(
                           alignment: Alignment.topCenter,
-                          margin: EdgeInsets.only(top:80),
+                          margin: EdgeInsets.only(top:80, left: 20, right: 20),
                           //width: 400,
                           height: 475,
-                          width: MediaQuery.of(context).size.width*0.8,
+                          width: MediaQuery.of(context).size.width,
                           //height: MediaQuery.of(context).size.width*0.6,
                           decoration: BoxDecoration(
                             color: Color.fromARGB(255, 254, 251, 228),
@@ -207,7 +207,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
 
                 // pensavo di rimandare alla pagina progetti o di mettere un expansion tile ma non riesco a farlo
-                SizedBox(height: 30),
+                /*SizedBox(height: 30),
                 ElevatedButton(onPressed: () {},
                   child: Text('Stai sostenendo: ... '),
                   style: ElevatedButton.styleFrom(
@@ -217,7 +217,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     textStyle: TextStyle(
                       fontSize: 25, fontWeight: FontWeight.bold)
                   )
-                ),
+                ),*/
                 SizedBox(height: 30),
                 Center(
                   child: Container(
@@ -454,7 +454,110 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 SizedBox(
                   height: 30
-                )
+                ),
+                Container(
+                  height: 300,
+                  width: MediaQuery.of(context).size.width*0.8,
+                  padding: EdgeInsets.only(left: 30, right: 30),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 254, 251, 228),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                      bottomLeft:Radius.circular(20),
+                      bottomRight:Radius.circular(20) 
+                    ),
+                    border: Border.all(
+                    color: Colors.grey.shade400,
+                   )  
+                  ),
+                  child: Text('YOUR PROJECT',
+                    textAlign: TextAlign.center, 
+                    style: TextStyle(fontWeight: FontWeight.bold),),
+                ),
+                SizedBox(
+                  height: 30
+                ),
+                Container(
+                  height: 300,
+                  width: MediaQuery.of(context).size.width*0.8,
+                  padding: EdgeInsets.only(left: 30, right: 30),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 254, 251, 228),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                      bottomLeft:Radius.circular(20),
+                      bottomRight:Radius.circular(20) 
+                    ),
+                    border: Border.all(
+                    color: Colors.grey.shade400,
+                   )  
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        child: Text('REWARD'),
+                        height: 300,
+                        width: 320,
+                        padding: EdgeInsets.all(20),
+                        margin: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 254, 251, 228),
+                          borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                          bottomLeft:Radius.circular(20),
+                          bottomRight:Radius.circular(20) 
+                        ),
+                    border: Border.all(
+                    color: Colors.grey.shade400,
+                   )  
+                  )
+                      ),
+                      Container(
+                        child: Text('BADGE'),
+                        height: 300,
+                        width: 320,
+                        padding: EdgeInsets.all(20),
+                        margin: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 254, 251, 228),
+                          borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                          bottomLeft:Radius.circular(20),
+                          bottomRight:Radius.circular(20) 
+                        ),
+                    border: Border.all(
+                    color: Colors.grey.shade400,
+                   )  
+                  )
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 30
+                ),
+                Container(
+                  height: 300,
+                  width: MediaQuery.of(context).size.width*0.8,
+                  padding: EdgeInsets.only(left: 30, right: 30),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 254, 251, 228),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    border: Border.all(
+                    color: Colors.grey.shade400,
+                   )  
+                  ),
+                  child: Text('YOUR WEEKLY ACTIVITY',
+                    textAlign: TextAlign.center, 
+                    style: TextStyle(fontWeight: FontWeight.bold),),
+                ),
+                SizedBox(
+                  height: 30
+                ),
           ],
         ),
             
