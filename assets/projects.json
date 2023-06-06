@@ -1,0 +1,82 @@
+[
+    {
+      "id": 1,
+      "name": "Api di Dario",
+      "address": {
+        "street": "via sconosciuta, 1",
+        "city": "Feltre",
+        "geo": {
+          "lat": "-37.3159",
+          "lng": "81.1496"
+        }
+      },
+      "phone": "1-770-736-8031 x56442",
+      "website": "hildegard.org",
+      "description": "descrizione del posto da inserire",
+      "value": "false"  
+    },
+    {
+      "id": 2,
+      "name": "Il radicchio di Andrea",
+      "address": {
+        "street": "Via sconosciuta, 2",
+        "city": "Padova",
+        "geo": {
+          "lat": "-43.9509",
+          "lng": "-34.4618"
+        }
+      },
+      "phone": "010-692-6593 x09125",
+      "website": "anastasia.net",
+      "description": "descrizione del posto da inserire",
+      "value": "false"  
+    },
+    {
+      "id": 3,
+      "name": "I carciofi di Matteo",
+      "address": {
+        "street": "Via sconosciuta, 3",
+        "city": "Padova",
+        "geo": {
+          "lat": "-68.6102",
+          "lng": "-47.0653"
+        }
+      },
+      "phone": "1-463-123-4447",
+      "website": "ramiro.info",
+      "description": "descrizione del posto da inserire",
+      "value": "false"   
+    },
+    {
+      "id": 4,
+      "name": "I pomodori di Anna",
+      "address": {
+        "street": "Via sconosciuta,3",
+        "city": "South Elvis",
+        "geo": {
+          "lat": "29.4572",
+          "lng": "-164.2990"
+        }
+      },
+      "phone": "493-170-9623 x156",
+      "website": "kale.biz",
+      "description": "descrizione del posto da inserire",
+      "value": "false"  
+    },
+    {
+      "id": 5,
+      "name": "L'insalata di Jenny",
+      "address": {
+        "street": "via sconosciuta, 4",
+        "city": "Padova",
+        "geo": {
+          "lat": "-31.8129",
+          "lng": "62.5342"
+        }
+      },
+      "phone": "(254)954-1289",
+      "website": "demarco.info",
+      "description": "descrizione del posto da inserire",
+      "value": "false"    
+    }
+  ]

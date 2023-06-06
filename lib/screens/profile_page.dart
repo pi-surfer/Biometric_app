@@ -22,60 +22,35 @@ class _ProfilePageState extends State<ProfilePage> {
     TextEditingController email = TextEditingController();
     TextEditingController password = TextEditingController();
     return Scaffold(
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 39, 145, 43),
-                ),
-                child: Text('My Profile'),
-              ),
-              ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text('logout'),
-                onTap: () => _toLoginPage(context),
-              ),
-              ListTile(
-                leading: const Icon(Icons.home),
-                title: const Text('Home'),
-                onTap: () => _toHomePage(context),
-              ),
-            ],
-          ),
-        ),
-        appBar: AppBar(
-            leadingWidth: 50,
-            title: Text('Hello Bob!',
-                textAlign: TextAlign.left,
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            centerTitle: true,
-            actions: [const Icon(Icons.access_time)],
-            //automaticallyImplyLeading: false, // per tornare indietro con la navigazione
-            foregroundColor: Colors.black,
-            backgroundColor: Color.fromARGB(255, 254, 251, 228),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25))),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                alignment: Alignment.topCenter,
-                padding: EdgeInsets.only(top: 20),
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 80),
-                    //width: 400,
-                    height: 475,
-                    width: MediaQuery.of(context).size.width*0.9,
-                    //height: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(114, 255, 236, 66),
-                        borderRadius: BorderRadius.only(
+      appBar: AppBar(
+        leadingWidth: 50,
+        title: Text('Hello Bob!', textAlign: TextAlign.left, style: TextStyle(fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        leading: Icon(Icons.account_circle),
+        actions: [
+            const Icon(Icons.access_time)
+      ],
+        automaticallyImplyLeading: false, // per tornare indietro con la navigazione
+        foregroundColor: Colors.black,
+        backgroundColor: Color.fromARGB(255, 130, 204, 34),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft:Radius.circular(20), bottomRight:Radius.circular(20)))
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+                  padding: EdgeInsets.only(top:20),
+                  child: Stack(
+                    children:[ 
+                      Container(
+                        margin: EdgeInsets.only(top:80),
+                        width: 400,
+                        height: 475,
+                        //width: MediaQuery.of(context).size.width,
+                        //height: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(114, 255, 236, 66),
+                          borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(40),
                             topRight: Radius.circular(40),
                             bottomLeft: Radius.circular(40),
