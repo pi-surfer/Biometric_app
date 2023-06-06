@@ -3,27 +3,69 @@
         "name": "Generali",
         "url": "https://www.generali.it/risparmio-investimenti/investimento/generasviluppo-sostenibile",
         "phrase": "SOCIETY & HEALTH",
-        "code": 1   
+        "image": "assets/images/generali.jpg"   
     },
     {
         "id": 2,
         "name": "Patagonia",
         "url": "https://eu.patagonia.com/gb/en/actionworks/campaigns/?utm_source=patagonia.com&utm_medium=referral&utm_campaign=subnav",
         "phrase": "STARTS WITH LITTLE THINGS",
-        "code": 2   
+        "image": "assets/images/patagonia.jpg"   
     },
     {
         "id": 3,
         "name": "Nike",
         "url": "https://www.nike.com/it/sostenibilita",
         "phrase": "FOLLOW YOUR GOALS",
-        "code": 3 
+        "image": "assets/images/nike.jpg" 
     },
     {
         "id": 4,
         "name": "Google",
         "url": "",
         "phrase": "STRONGER TOGETHER",  
-        "code": 4
+        "image": "assets/images/google.jpg"
+    },
+    {
+        "id": 5,
+        "name": "gruppo Hera",
+        "url": "https://www.gruppohera.it/gruppo/sostenibilita/bilancio-di-sostenibilita/bs",
+        "phrase": "SHARED VALUES",
+        "image": "assets/gif/hera.gif"   
+    },
+    {
+        "id": 6,
+        "name": "Treedom",
+        "url": "https://www.treedom.net/it",
+        "phrase": "LET'S GREEN THE PLANET",
+        "image": "assets/gif/treedom.gif"   
+    },
+    {
+        "id": 7,
+        "name": "Enel",
+        "url": "https://www.enelcuore.it/",
+        "phrase": "HEART THEMES",
+        "image": "assets/images/enel.jpg" 
+    },
+    {
+        "id": 8,
+        "name": "Salomon",
+        "url": "https://www.salomon.com/it-it/sustainability",
+        "phrase": "RESPONSIBLE INNOVATION",  
+        "image": "assets/images/salomon.jpg"
+    },
+    {
+        "id": 9,
+        "name": "Fjällräven",
+        "url": "https://www.fjallraven.com/eu/en-gb/about-fjallraven/sustainability",
+        "phrase": "CARE & REPAIR",
+        "image": "assets/images/fjällräven.jpg" 
+    },
+    {
+        "id": 10,
+        "name": "The North Face",
+        "url": "https://www.thenorthface.it/innovation/sustainability/operations/climate-change.html",
+        "phrase": "WALLS ARE MEANT FOR CLIMBING",  
+        "image": "assets/images/thenorthface.jpg"
     }
     ]
