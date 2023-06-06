@@ -15,68 +15,49 @@ class RewardPage extends StatefulWidget {
 }
 
 class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
+
+ final _pageController = PageController(viewportFraction: 0.8);
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.7,
-            child: PageView.builder(
-              controller: _pageController,
-              itemBuilder: ((context, index) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 32,
-                    horizontal: 16,
-                  ),
-                  color: Colors.red,
-                  //decoration: BoxDecoration(),
-                  child: Center(child: Text('Page $index'),),
-                );
-              }),
-            ),
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.4,
+                width: MediaQuery.of(context).size.width * 0.8,
+                      color: Colors.green),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.4,
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemBuilder: ((context, index) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 32,
+                        horizontal: 16,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          offset: const Offset(0, 6),
+                          blurRadius: 8,)],
+                      ),
+                      child: Center(child: Text('Page $index'),),
+                    );
+                  }),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
-}
-
-
-
-class _VideoScreenState extends State<VideosScreen> {
-  late PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(viewportFraction: 0.8);
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-}
-
-
-
-class VideoCard extends StatelessWidget {
-
-  final String assetPath;
-
-  const VideoCard({
-    super.key,
-    required this.assetPath,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Card();
-  }
-
 }
