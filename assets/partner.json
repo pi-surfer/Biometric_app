@@ -1,0 +1,29 @@
+    [{
+        "id": 1,
+        "name": "Generali",
+        "url": "https://www.generali.it/risparmio-investimenti/investimento/generasviluppo-sostenibile",
+        "phrase": "SOCIETY & HEALTH",
+        "code": 1   
+    },
+    {
+        "id": 2,
+        "name": "Patagonia",
+        "url": "https://eu.patagonia.com/gb/en/actionworks/campaigns/?utm_source=patagonia.com&utm_medium=referral&utm_campaign=subnav",
+        "phrase": "STARTS WITH LITTLE THINGS",
+        "code": 2   
+    },
+    {
+        "id": 3,
+        "name": "Nike",
+        "url": "https://www.nike.com/it/sostenibilita",
+        "phrase": "FOLLOW YOUR GOALS",
+        "code": 3 
+    },
+    {
+        "id": 4,
+        "name": "Google",
+        "url": "",
+        "phrase": "STRONGER TOGETHER",  
+        "code": 4
+    }
+    ]
