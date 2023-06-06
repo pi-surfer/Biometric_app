@@ -4,12 +4,12 @@ import 'package:app_project/screens/skeleton_page.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 
 } // main
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

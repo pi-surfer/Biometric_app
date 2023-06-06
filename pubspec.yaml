@@ -45,6 +45,7 @@ dependencies:
   curved_navigation_bar: ^1.0.3
   url_launcher: ^6.1.11
   http: ^1.0.0
+  animations: ^2.0.7
 
 dev_dependencies:
   flutter_test:
@@ -76,15 +77,20 @@ flutter:
     - assets/images/2.jpg
     - assets/images/1.jpg
     - assets/images/4.jpg
-     - assets/images/avatar_Carciofo.jpg
-     - assets/images/miele_Dario.jpg
-     - assets/images/nome.png
+    - assets/images/avatar_Carciofo.jpg
+    - assets/images/miele_Dario.jpg
+    - assets/images/nome.png
     - assets/gif/patagonia.gif
     - assets/gif/Fit2Seed.gif
     - assets/videos/Fit2Seed.mp4
     - assets/partner.json
-
-     - assets/images/ape_carina2.jpg
+    - assets/images/ape_carina2.jpg
+    - assets/images/logo1.png
+    - assets/images/arnie.png
+    - assets/images/nike.png
+    - assets/images/garden.png
+    - assets/images/marathon.png
+    - assets/images/well_done.png
      
 
   # An image asset can refer to one or more resolution-specific "variants", see
