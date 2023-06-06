@@ -52,7 +52,7 @@ class _ProjectPageState extends State<ProjectPage> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProjectProvider>(context);
+    //final provider = Provider.of<ProjectProvider>(context);
     print('${ProjectPage.routename} built');
     return Scaffold(
         appBar: AppBar(
@@ -72,13 +72,13 @@ class _ProjectPageState extends State<ProjectPage> {
       // TODO: figure out errors
       body: SingleChildScrollView(
         child: Column(
-          children: Projects.map((projects) {
-              return ExpansionTile(title: Projects.name),
-            })
-          /*children: [
-            projects.map((projects) {
-              return 
-            })
+          //children: Projects.map((projects) {
+              //return ExpansionTile(title: Projects.name),
+            //})
+          children: [
+            //projects.map((projects) {
+              //return 
+            //})
             SizedBox(
               height: 700,
               
@@ -144,7 +144,7 @@ class _ProjectPageState extends State<ProjectPage> {
                   )
                 )
               )*/
-          ]*/
+          ]
           ),
       )
         );
