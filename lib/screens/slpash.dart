@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app_project/screens/home_page.dart';
-import 'package:app_project/widgets/video_widget.dart';
+//import 'package:app_project/screens/home_page.dart';
 
 
 class Splash extends StatelessWidget {
