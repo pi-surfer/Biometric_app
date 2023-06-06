@@ -72,6 +72,7 @@ flutter:
     - assets/images/1.jpg
     - assets/images/4.jpg
     - assets/gif/patagonia.gif
+    - assets/gif/Fit2Seed.gif
     - assets/videos/Fit2Seed.mp4
     - assets/partner.json
 

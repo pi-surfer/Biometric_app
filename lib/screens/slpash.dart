@@ -40,11 +40,13 @@ class Splash extends StatelessWidget {
     //Future.delayed(const Duration(seconds: 1), () => _checkAuth(context));
     return Material(
       child: Container(
-        color: Color.fromARGB(255, 251, 251, 228),
+        //color: Color.fromARGB(255, 251, 251, 228),
         alignment: Alignment.center,
-        child: Stack(children: <Widget>[
-          VideoWidget(),
-          ]),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/gif/Fit2Seed.gif"), 
+              fit: BoxFit.cover),
+          ),
           )
 
       ,)                 
