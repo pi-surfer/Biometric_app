@@ -1,10 +1,10 @@
 import 'package:app_project/models/projects.dart';
-import 'package:app_project/provider/projects_provider.dart';
+//import 'package:app_project/provider/projects_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 // import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 // import 'package:url_launcher/url_launcher.dart';
 // import 'package:url_launcher/url_launcher_string.dart';
@@ -55,19 +55,8 @@ class _ProjectPageState extends State<ProjectPage> {
     //final provider = Provider.of<ProjectProvider>(context);
     print('${ProjectPage.routename} built');
     return Scaffold(
-        appBar: AppBar(
-        leadingWidth: 50,
-        title: Text('Project', textAlign: TextAlign.left, style: TextStyle(fontWeight: FontWeight.bold)),
-        centerTitle: true,
-        leading: Icon(Icons.account_circle),
-        actions: [
-            const Icon(Icons.access_time)
-      ],
-        automaticallyImplyLeading: false, // per tornare indietro con la navigazione
-        foregroundColor: Colors.black,
-        backgroundColor: Color.fromARGB(255, 130, 204, 34),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft:Radius.circular(20), bottomRight:Radius.circular(20)))
-      ),
+
+      backgroundColor: const Color.fromARGB(255, 254, 251, 228),  
 
       // TODO: figure out errors
       body: SingleChildScrollView(
@@ -92,7 +81,7 @@ class _ProjectPageState extends State<ProjectPage> {
                             //title: Container(
                              //decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/miele_dario.jpg"), fit: BoxFit.cover)),
                              //child: Text('Miele di Dario', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),),
-                            leading: CircleAvatar(backgroundImage: AssetImage('images/miele_Dario.jpg')),
+                            leading: CircleAvatar(backgroundImage: AssetImage('assets/images/miele_Dario.jpg')),
                             //title: Image.asset("assets/images/miele_dario.jpg", 
                             //height: 80.0, 
                             //width: double.infinity, 
@@ -109,7 +98,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                     );
                                   },
                                   activeThumbImage: toggled_1
-                                  ? const AssetImage('images/ape_carina2.jpg')
+                                  ? const AssetImage('assets/images/ape_carina2.jpg')
                                   : null,),
                                   //ButtonBar(
                                     //children: Radio())

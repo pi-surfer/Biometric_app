@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Poppins'),
-      home: SkeletonPage(),
+      home: const SkeletonPage(),
     );
   } // build
-} // MyApp 
+} // MyApp

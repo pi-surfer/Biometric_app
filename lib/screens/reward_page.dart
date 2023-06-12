@@ -3,10 +3,6 @@ import 'package:flutter/rendering.dart';
 
 //import 'package:app_project/screens/login_page.dart';
 
-final assets = [
-    // lista path assets
-];
-
 class RewardPage extends StatefulWidget {
   const RewardPage({Key? key}) : super(key: key);
 
@@ -20,16 +16,22 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
   
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 254, 251, 228),
+      body: SingleChildScrollView(
+        child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.4,
-                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.3,
+                width: MediaQuery.of(context).size.width * 0.85,
+                      color: Colors.green),
+              SizedBox(height: 10,),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.1,
+                width: MediaQuery.of(context).size.width * 0.85,
                       color: Colors.green),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.4,
@@ -38,7 +40,7 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
                   itemBuilder: ((context, index) {
                     return Container(
                       margin: const EdgeInsets.symmetric(
-                        vertical: 32,
+                        vertical: 16,
                         horizontal: 16,
                       ),
                       decoration: BoxDecoration(
