@@ -15,7 +15,8 @@ class Projects {
     String phone;
     String website;
     String description;
-    String value;
+    bool value;
+    bool selected;
 
     Projects({
         required this.id,
@@ -25,6 +26,7 @@ class Projects {
         required this.website,
         required this.description,
         required this.value,
+        required this.selected,
     });
 
     factory Projects.fromJson(Map<String, dynamic> json) => Projects(
@@ -35,6 +37,7 @@ class Projects {
         website: json["website"],
         description: json["description"],
         value: json["value"],
+        selected: json["selected"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -45,49 +48,26 @@ class Projects {
         "website": website,
         "description": description,
         "value": value,
+        "selected": selected,
     };
 }
 
 class Address {
     String street;
     String city;
-    Geo geo;
 
     Address({
         required this.street,
         required this.city,
-        required this.geo,
     });
 
     factory Address.fromJson(Map<String, dynamic> json) => Address(
         street: json["street"],
         city: json["city"],
-        geo: Geo.fromJson(json["geo"]),
     );
 
     Map<String, dynamic> toJson() => {
         "street": street,
         "city": city,
-        "geo": geo.toJson(),
-    };
-}
-
-class Geo {
-    String lat;
-    String lng;
-
-    Geo({
-        required this.lat,
-        required this.lng,
-    });
-
-    factory Geo.fromJson(Map<String, dynamic> json) => Geo(
-        lat: json["lat"],
-        lng: json["lng"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "lat": lat,
-        "lng": lng,
     };
 }

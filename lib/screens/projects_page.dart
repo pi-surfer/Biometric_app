@@ -76,7 +76,13 @@ class _ProjectPageState extends State<ProjectPage> {
 
     // TODO: figure out errors
     body: SingleChildScrollView(
-      child: Column(
+      child: ListView.builder(
+        itemCount: Projects.id.length,
+        itemBuilder: (context, index) {
+          return 
+        },
+      )
+      /*Column(
         mainAxisAlignment: MainAxisAlignment.center,
         //children: Projects.map((projects) {
             //return ExpansionTile(title: Projects.name),
@@ -315,7 +321,7 @@ class _ProjectPageState extends State<ProjectPage> {
             )*/
             */
         ]
-        ),
+        ),*/
     )
       );
   }
