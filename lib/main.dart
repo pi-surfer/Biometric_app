@@ -1,5 +1,4 @@
 import 'package:app_project/models/missions.dart';
-import 'package:app_project/providers/medals_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_project/screens/reward_page.dart';

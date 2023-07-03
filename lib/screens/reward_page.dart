@@ -1,8 +1,7 @@
-import 'dart:math';
-
-import 'package:app_project/models/missions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:app_project/models/missions.dart';
 
 //import 'package:app_project/providers/medals_provider.dart';
 //import 'package:app_project/screens/login_page.dart';
@@ -16,7 +15,7 @@ class RewardPage extends StatefulWidget {
 
 class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
   final _pageController = PageController(viewportFraction: 0.8);
-  Missions missions = Missions();
+  TextStyle statStyle = const TextStyle(fontSize: 16,);
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +23,21 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
     // changing inside medals_provider
 
     return Scaffold(
+      floatingActionButton:
+          Consumer<Missions>(builder: ((context, missions, child) {
+        return FloatingActionButton(
+          onPressed: () {
+            missions.addProjectToCount();
+            missions.checkMissions();
+          },
+          child: Text('+'),
+        );
+      })),
       backgroundColor: const Color.fromARGB(255, 254, 251, 228),
       body: SingleChildScrollView(
         child: Padding(
           padding:
-              const EdgeInsets.only(left: 10, right: 10, top: 130, bottom: 400),
+              const EdgeInsets.only(left: 10, right: 10, top: 110, bottom: 400),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -47,21 +56,9 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
               const SizedBox(
                 height: 20,
               ),
-              Consumer<Missions>(builder: ((context, missions, child) {
-                return Container(
-                    child: Center(
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      missions.addProjectToCount();
-                      missions.checkMissions();
-                    },
-                    child: Text('+'),
-                  ),
-                ));
-              })),
               Consumer<Missions>(
                 builder: ((context, missions, child) {
-                  return Container(
+                  return SizedBox(
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: ListView.builder(
@@ -74,12 +71,14 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
                           margin: const EdgeInsets.all(6.0),
                           decoration: BoxDecoration(
                             color: currentMedal.isCompleted == true
-                                ? Colors.green
-                                : Colors.red,
+                                ? currentMedal.color
+                                : currentMedal.color.withOpacity(0.25),
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.3),
+                                color: currentMedal.isCompleted == true
+                                    ? Colors.black.withOpacity(0.3)
+                                    : Colors.transparent,
                                 offset: const Offset(0, 2),
                                 blurRadius: 4,
                               )
@@ -104,7 +103,7 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
                 height: MediaQuery.of(context).size.height * 0.4,
                 child: PageView.builder(
                   controller: _pageController,
-                  itemCount: 3,
+                  itemCount: 10,
                   itemBuilder: ((context, index) {
                     return Container(
                       margin: const EdgeInsets.symmetric(
@@ -145,6 +144,31 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      SizedBox(height: 20,),
+                      Consumer<Missions>(
+                        builder: (context, missions, child){
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Supported projects:', style: statStyle,),
+                                  Text('Active discounts: ', style: statStyle,),
+                                  Text('Medals reached: ', style: statStyle,),
+                                ]
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(missions.supportedProjectsNumber.toString(), style: statStyle,),
+                                  Text('2', style: statStyle,),
+                                  Text(missions.medals.where((i)=> i.isCompleted).length.toString(), style: statStyle,)
+                                ],
+                              ),
+                            ],
+                          );
+                          }),
                     ],
                   )),
             ],
