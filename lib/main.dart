@@ -1,10 +1,15 @@
+import 'package:app_project/models/missions.dart';
+import 'package:app_project/providers/medals_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_project/screens/reward_page.dart';
+import 'package:provider/provider.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider<Missions>(
+    child: MyApp(),
+    create: (_) => Missions()));
 
 } // main
 
