@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-//import 'package:bottom_nav_layout/bottom_nav_layout.dart';
-import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
-//import 'package:motion_tab_bar_v2/motion-badge.widget.dart';
 
 import 'package:app_project/screens/login_page.dart';
 import 'package:app_project/screens/home_page.dart';
@@ -21,145 +18,149 @@ class SkeletonPage extends StatefulWidget {
 
 class _SkeletonPageState extends State<SkeletonPage>
     with SingleTickerProviderStateMixin {
-// To use it:
-// onPressed: () {final _navigationSate = navigationKey.currentState!;
-// _navigationState.setPage(0);
-// }
-// ref: https://www.youtube.com/watch?v=TX2x41h47fE
-
-  TabController? _tabController;
+  int _selIdx = 0;
   final controller = ScrollController();
 
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(
-      initialIndex: 0,
-      length: 5,
-      vsync: this,
-    );
+  List<BottomNavigationBarItem> navBarItems = [
+    const BottomNavigationBarItem(
+      icon: Icon(MdiIcons.home),
+      label: 'Home',
+      backgroundColor: Color.fromARGB(255, 1, 97, 4),
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(MdiIcons.googleFit),
+      label: 'Activity',
+      backgroundColor: Color.fromARGB(255, 1, 97, 4),
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(MdiIcons.sprout),
+      label: 'Projects',
+      backgroundColor: Color.fromARGB(255, 1, 97, 4),
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(MdiIcons.handshake),
+      label: 'Partners',
+      backgroundColor: Color.fromARGB(255, 1, 97, 4),
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(MdiIcons.medal),
+      label: 'Rewards',
+      backgroundColor: Color.fromARGB(255, 1, 97, 4),
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selIdx = index;
+      scrollUp();
+    });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _tabController!.dispose();
+  Widget _selectPage({
+    required int index,
+  }) {
+    switch (index) {
+      case 0:
+        return HomePage();
+      case 1:
+        return Activity();
+      case 2:
+        return ProjectPage();
+      case 3:
+        return Partner();
+      case 4:
+        return RewardPage();
+      default:
+        return HomePage();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      top: false,
-      left: false,
-      right: false,
-      child: ClipRect(
-        child: Container(
-          color: const Color.fromARGB(255, 254, 251, 228).withOpacity(1),
-          child: SafeArea(
-            child: Scaffold(
-              extendBody: true,
-              drawer: Drawer(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: [
-                    const DrawerHeader(
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 39, 145, 43),
+        top: false,
+        left: false,
+        right: false,
+        child: ClipRect(
+          child: Container(
+            color: const Color.fromARGB(255, 254, 251, 228).withOpacity(1),
+            child: SafeArea(
+              child: Scaffold(
+                extendBody: true,
+                drawer: Drawer(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      DrawerHeader(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                        image: AssetImage('assets/images/garden.png'),
+                        fit: BoxFit.cover,
                       ),
-                      child: Text('My Profile'),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.logout),
-                      title: const Text('logout'),
-                      onTap: () => _toLoginPage(context),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.person),
-                      title: const Text('Profile'),
-                      onTap: () => _toProfilePage(context),
-                    ),
-                  ],
+                          
+                        ),
+                        child: Text(''),
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.logout, size: 30),
+                        title: const Text('logout',
+                            style: TextStyle(fontSize: 16)),
+                        onTap: () => _toLoginPage(context),
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.person, size: 30),
+                        title: const Text('Profile',
+                            style: TextStyle(fontSize: 16)),
+                        onTap: () => _toProfilePage(context),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              body: NestedScrollView(
-                controller: controller,
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxIsScrolled) {
-                  return <Widget>[
-                    SliverAppBar(
-                      pinned: false,
-                      floating: true,
-                      forceElevated: true,
-                      leading: Builder(builder: (context) {
-                        return IconButton(
-                            onPressed: () => Scaffold.of(context).openDrawer(),
-                            icon: const Icon(MdiIcons.account,
-                                color: Color.fromARGB(255, 1, 97, 4),
-                                size: 30));
-                      }),
-                      backgroundColor: const Color.fromARGB(255, 254, 251, 228),
-                      centerTitle: true,
-                      title: SizedBox(
-                        width: 150.0,
-                        height: 50.0,
-                        child: Image.asset(
-                          "assets/images/nome.png",
-                          fit: BoxFit.contain,
+                body: NestedScrollView(
+                  controller: controller,
+                  headerSliverBuilder:
+                      (BuildContext context, bool innerBoxIsScrolled) {
+                    return <Widget>[
+                      SliverAppBar(
+                        pinned: false,
+                        floating: true,
+                        forceElevated: true,
+                        leading: Builder(builder: (context) {
+                          return IconButton(
+                              onPressed: () =>
+                                  Scaffold.of(context).openDrawer(),
+                              icon: const Icon(MdiIcons.viewHeadline,
+                                  color: Color.fromARGB(255, 1, 97, 4),
+                                  size: 35));
+                        }),
+                        backgroundColor:
+                            const Color.fromARGB(255, 254, 251, 228),
+                        centerTitle: true,
+                        title: SizedBox(
+                          width: 150.0,
+                          height: 50.0,
+                          child: Image.asset(
+                            "assets/images/nome.png",
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
-                    ),
-                  ];
-                },
-                body: TabBarView(
-                  physics:
-                      NeverScrollableScrollPhysics(), // swipe navigation handling is not supported
-                  controller: _tabController,
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: <Widget>[
-                    const HomePage(),
-                    Activity(),
-                    const ProjectPage(),
-                    const Partner(),
-                    const RewardPage(),
-                  ],
+                    ];
+                  },
+                  body: _selectPage(index: _selIdx),
                 ),
-              ),
-              bottomNavigationBar: MotionTabBar(
-                initialSelectedTab: "Home",
-                useSafeArea: true, // default: true, apply safe area wrapper
-                labels: const ["Home", "Activity", "Projects", "Partners", "Rewards"],
-                icons: const [
-                  Icons.home,
-                  Icons.sports_basketball,
-                  Icons.location_pin,
-                  Icons.people_alt,
-                  Icons.qr_code,
-                ],
-                tabSize: 50,
-                tabBarHeight: 55,
-                textStyle: const TextStyle(
-                  fontSize: 12,
-                  color: Color.fromARGB(255, 254, 251, 228),
-                  fontWeight: FontWeight.bold,
+                bottomNavigationBar: BottomNavigationBar(
+                  selectedItemColor: Color.fromARGB(255, 255, 221, 74),
+                  unselectedItemColor: Color.fromARGB(255, 254, 251, 228),
+                  iconSize: 30,
+                  items: navBarItems,
+                  currentIndex: _selIdx,
+                  onTap: _onItemTapped,
                 ),
-                tabIconColor: Color.fromARGB(255, 254, 251, 228),
-                tabIconSize: 28.0,
-                tabIconSelectedSize: 26.0,
-                tabSelectedColor: Color.fromARGB(255, 254, 251, 228),
-                tabIconSelectedColor: Color.fromARGB(255,  50, 165, 19),
-                tabBarColor: const Color.fromARGB(255, 50, 165, 19),
-                onTabItemSelected: (int value) {
-                  scrollUp();
-                  setState(() {
-                    _tabController!.index = value;
-                  });
-                },
               ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   void _toLoginPage(BuildContext context) {
