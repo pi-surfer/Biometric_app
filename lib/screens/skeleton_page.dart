@@ -34,7 +34,7 @@ class _SkeletonPageState extends State<SkeletonPage>
   void initState() {
     super.initState();
     _tabController = TabController(
-      initialIndex: 1,
+      initialIndex: 0,
       length: 5,
       vsync: this,
     );
