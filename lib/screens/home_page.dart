@@ -13,7 +13,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //int _selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -23,30 +22,32 @@ class _HomePageState extends State<HomePage> {
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.only(
-                  bottom: 100, left: 20, right: 20, top: 20),
+                  bottom: 100, left: 20, right: 20, top: 30),
               child: Column(children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      width:MediaQuery.of(context).size.width * 0.6,
+                      width:MediaQuery.of(context).size.width * 0.53,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              'Thank you, Massimo!',
+                              'Thank you, Massimo!!',
                               style: titleStyle,
                               textAlign: TextAlign.start,),
                           SizedBox(height: 5,),
                           Text(
-                              'Together we are achieving great results.',
+                              'It is nice working together for an healtier planet',
                               style: subtitleStyle,
                               textAlign: TextAlign.start,),
                         ],
                       ),
                     ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.02),
                     Container(
-                      height: MediaQuery.of(context).size.width * 0.3,
-                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: MediaQuery.of(context).size.width * 0.27,
+                      width: MediaQuery.of(context).size.width * 0.27,
                       decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/images/well_done.png'),
@@ -93,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('LoremIpsum',
+                        Text('Le api di Dario',
                             style: TextStyle(
                               color: Color.fromARGB(255, 255, 255, 255),
                               fontWeight: FontWeight.bold,
