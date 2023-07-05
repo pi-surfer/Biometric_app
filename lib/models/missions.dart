@@ -17,7 +17,6 @@ class Medal extends ChangeNotifier {
 class Missions extends ChangeNotifier{
 
   int missionsNumber = 8;
-  int supportedProjectsNumber = 0;
   final List<Medal> medals = List.generate(
     8,  // missionsNumber
       (index) => Medal(title: '$index',color: Colors.primaries[Random().nextInt(Colors.primaries.length)])
@@ -26,16 +25,11 @@ class Missions extends ChangeNotifier{
   //final List<Medal> _medals = List[Medal(title: '1'),Medal(title: '2'),Medal(title: '3')];
   //List<Medal> get medals => _medals;
 
-  void addProjectToCount(){
-    supportedProjectsNumber += 1;
-    notifyListeners();
-  }
-
-  void checkMissions(){
+  void checkMissions(int? supportedProjectsNumber){
 
     //Here we define all the missions (conditions to reach each medal)
 
-    supportedProjectsNumber >= 3 ? medals[0].setCompleted() : null;
+    supportedProjectsNumber! >= 3 ? medals[0].setCompleted() : null;
     supportedProjectsNumber >= 5 ? medals[1].setCompleted() : null;
     supportedProjectsNumber >= 10 ? medals[2].setCompleted() : null;
     supportedProjectsNumber >= 20 ? medals[3].setCompleted() : null;

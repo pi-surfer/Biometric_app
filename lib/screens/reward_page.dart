@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:app_project/models/missions.dart';
 
@@ -15,7 +16,9 @@ class RewardPage extends StatefulWidget {
 
 class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
   final _pageController = PageController(viewportFraction: 0.8);
-  TextStyle statStyle = const TextStyle(fontSize: 18,);
+  TextStyle statStyle = const TextStyle(
+    fontSize: 18,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +30,11 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
         floatingActionButton:
             Consumer<Missions>(builder: ((context, missions, child) {
           return FloatingActionButton(
-            onPressed: () {
-              missions.addProjectToCount();
-              missions.checkMissions();
+            onPressed: () async {
+              _addOne();
+              final sp = await SharedPreferences.getInstance();
+              var supportedProjectNumber = sp.getInt('supportedProjectNumber');
+              missions.checkMissions(supportedProjectNumber);
             },
             child: Text('+'),
           );
@@ -37,8 +42,8 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
         backgroundColor: const Color.fromARGB(255, 254, 251, 228),
         body: SingleChildScrollView(
           child: Padding(
-            padding:
-                const EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 400),
+            padding: const EdgeInsets.only(
+                left: 10, right: 10, top: 30, bottom: 100),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -145,31 +150,73 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 20,),
-                        Consumer<Missions>(
-                          builder: (context, missions, child){
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Column(
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Consumer<Missions>(builder: (context, missions, child) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Supported projects:', style: statStyle,),
-                                    Text('Active discounts: ', style: statStyle,),
-                                    Text('Medals reached: ', style: statStyle,),
-                                  ]
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(missions.supportedProjectsNumber.toString(), style: statStyle,),
-                                    Text('2', style: statStyle,),
-                                    Text(missions.medals.where((i)=> i.isCompleted).length.toString(), style: statStyle,)
-                                  ],
-                                ),
-                              ],
-                            );
-                            }),
+                                    Text(
+                                      'Supported projects:',
+                                      style: statStyle,
+                                    ),
+                                    Text(
+                                      'Active discounts: ',
+                                      style: statStyle,
+                                    ),
+                                    Text(
+                                      'Medals reached: ',
+                                      style: statStyle,
+                                    ),
+                                  ]),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  FutureBuilder(
+                                    future: SharedPreferences.getInstance(),
+                                    builder: ((context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        final sp =
+                                            snapshot.data as SharedPreferences;
+                                        if (sp.getInt('supportedProjectNumber') == null) {
+                                          sp.setInt('supportedProjectNumber', 0);
+                                          return Text(
+                                            '0',
+                                            style: statStyle,
+                                          );
+                                        } else {
+                                          final supportedProjectNumber = sp.getInt('supportedProjectNumber')!;
+                                          return Column(
+                                            children: [
+                                              Text(
+                                                '$supportedProjectNumber',
+                                                style: statStyle,
+                                              ),
+                                              Text(
+                                                'x',
+                                                style: statStyle,
+                                              ),
+                                              Text(
+                                                missions.medals.where((i)=> i.isCompleted).length.toString(),
+                                                style: statStyle,
+                                              ),
+                                            ],
+                                          );
+                                        }
+                                      } else {
+                                        return CircularProgressIndicator();
+                                      }
+                                    }),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        }),
                       ],
                     )),
               ],
@@ -179,4 +226,15 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
       ),
     );
   }
+
+  void _addOne() async {
+    final sp = await SharedPreferences.getInstance();
+    setState(() {
+      var supportedProjectNumber = sp.getInt('supportedProjectNumber');
+      if (supportedProjectNumber != null) {
+        supportedProjectNumber++;
+        sp.setInt('supportedProjectNumber', supportedProjectNumber);
+      }
+    });
+  } //_addOne
 }
