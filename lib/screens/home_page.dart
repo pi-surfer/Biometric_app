@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-import 'package:app_project/models/linechart_week.dart';
+import 'package:app_project/widgets/linechart_week.dart';
 import 'package:app_project/models/funky_overlays.dart';
 import 'package:app_project/models/text_styles.dart';
 

@@ -24,7 +24,6 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
 
     return SafeArea(
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton:
             Consumer<Missions>(builder: ((context, missions, child) {
           return FloatingActionButton(

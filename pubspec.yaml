@@ -50,6 +50,7 @@ dependencies:
   bottom_nav_layout: ^3.0.10
   motion_tab_bar_v2: ^0.2.6
   provider: ^6.0.5
+  shared_preferences: ^2.2.0
 
 dev_dependencies:
   flutter_test:

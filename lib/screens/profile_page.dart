@@ -5,7 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:app_project/screens/skeleton_page.dart';
-import 'package:app_project/screens/login_page.dart';
+import 'package:app_project/screens/login/login_page.dart';
 
 // TODO: SEE FIRST CONTAINER, IT'S NOT CENTERED ANYMORE WHY???
 class ProfilePage extends StatefulWidget {
