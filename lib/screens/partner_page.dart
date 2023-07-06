@@ -1,17 +1,16 @@
-//import 'dart:convert';
-//import 'dart:async';
-
+/*import 'dart:convert';
+import 'dart:async';
 //import 'package:app_project/widgets/video_widget.dart';
 //import 'package:app_project/widgets/video_widget1.dart';
-//import 'package:app_project/model/partner.dart';
-//import 'package:app_project/model/structure.dart';
+import 'package:app_project/model/partner.dart';
+import 'package:app_project/model/structure.dart';
+import 'package:app_project/screens/stacked_partner.dart';
 import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 //import 'package:http/http.dart' as http;
-//import 'package:app_project/model/partner.dart';
-
-
+import 'package:app_project/model/partner.dart';
+/*
 Uri _urlNike = Uri.parse('https://www.nike.com/it/sostenibilita');
 Uri _urlGenerali = Uri.parse('https://www.generali.it/risparmio-investimenti/investimento/generasviluppo-sostenibile');
 Uri _urlPatagonia = Uri.parse('https://eu.patagonia.com/gb/en/actionworks/campaigns/?utm_source=patagonia.com&utm_medium=referral&utm_campaign=subnav');
@@ -51,7 +50,7 @@ void _launchURL8() async {
   if (!await launchUrl(_urlNorthFace)) throw 'Could not launch $_urlNorthFace';}
 
 
-
+*/
   
 class Partner extends StatefulWidget {
   static const route = '/partnerPage/';
@@ -63,8 +62,9 @@ class Partner extends StatefulWidget {
   State<Partner> createState() => PartnerState();
 }
 
+
 class PartnerState extends State<Partner> {
-  //List _partner = [];
+  
   
 
   // Fetch content from the json file
@@ -92,33 +92,32 @@ class PartnerState extends State<Partner> {
     });
   }*/
 
-  
+
+
+/*
   @override
-  Widget build(BuildContext context) {
-    
+  Widget build(BuildContext context){
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 254, 251, 228),
-        appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 254, 251, 228),
-        ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-              child: Padding(
+      backgroundColor: const Color.fromARGB(255, 254, 251, 228),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [              
-                  const Text(
-                    'In order to support these small realities, we must thanks our partners, large companies that believe in small things',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 1, 97, 4),
-                        fontSize: 20),
-                  ),
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+              
+              const Text(
+                'In order to support these small realities, we must thanks our partners, large companies that believe in small things',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20),
+                ),
 
-                  const SizedBox(
-                    height: 20,
-                  ),
+              const SizedBox(
+                height: 20,
+                ),
 
                   
                   /*Structure(
@@ -542,6 +541,7 @@ class PartnerState extends State<Partner> {
                                    
                     ]),))));}}             
                    
- 
+ */
 
-//columnd(padding(column(space.evenly)
+*/
+
