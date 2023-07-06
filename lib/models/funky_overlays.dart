@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_project/models/switch_button.dart';
+import 'package:app_project/widgets/switch_button.dart';
 //import 'package:flutter/semantics.dart';
 
 class FunkyOverlay extends StatefulWidget {
