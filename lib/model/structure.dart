@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 //import 'package:app_project/model/partner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -77,4 +77,4 @@ class _Structure extends State<Structure>
                 )),
                 
                              
-  ));}}
+  ));}}*/

@@ -1,4 +1,4 @@
-/*import 'package:app_project/screens/partner_page.dart';
+import 'package:app_project/screens/partner_page.dart';
 import 'package:flutter/material.dart';
 //import 'package:app_project/screens/slpash.dart';
 import 'package:app_project/model/partner.dart';
@@ -17,11 +17,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Partner()
+      home: Partner(),
     );
   } // build
 } // MyApp*/
 
+
+
+/*
 import 'package:flutter/material.dart';
 import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 import 'package:app_project/model/partner.dart';
@@ -79,7 +82,7 @@ class _MyAppState extends State<MyApp> {
               name: item.name,
               phrase: item.phrase,
               imagePath: item.imagePath,
-              //imagePath: item.imagePath,
+              url: item.url,//imagePath: item.imagePath,
             );
           }).toList(),
         ),
@@ -87,3 +90,4 @@ class _MyAppState extends State<MyApp> {
 )));
 }
 }
+*/

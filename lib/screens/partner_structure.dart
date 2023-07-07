@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:app_project/model/partner.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
 
-
-//GESTISCE LA VISUALIZZAZIONE DELLE CARTE
 class PartnerItem extends StatelessWidget {
   final String name;
   final String phrase;
   final String imagePath;
-  
-  //final Uri url;
+  final Uri url;
 
   PartnerItem({
     required this.name,
     required this.phrase,
-    //required this.url,
-    required this.imagePath,
-    
+    required this.url,
+    required this.imagePath, 
   });
+
+  Future<void> _launchUrl() async {
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
+  }}
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class PartnerItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(10)),
         padding: const EdgeInsets.all(10),
         width: MediaQuery.of(context).size.width *0.97,
-        height: 400,
+        height: MediaQuery.of(context).size.height*0.75,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
@@ -47,11 +50,10 @@ class PartnerItem extends StatelessWidget {
               color: Color.fromARGB(255, 254, 251, 228),
               ),),
             FilledButton(
+              onPressed: _launchUrl,
               style: const ButtonStyle(
               backgroundColor: MaterialStatePropertyAll<Color>(Color.fromARGB(255, 254, 251, 228)),  
               ),
-            onPressed: (){},
-            //_launchURL6,
             child: const Text('Find out', style: 
               TextStyle(
                 fontSize: 16.0,
@@ -60,23 +62,7 @@ class PartnerItem extends StatelessWidget {
             ),
             ]                   
             ), ),
-
-        //const SizedBox(
-          //height: 1,
-          //),
-
     ]
-
-
-
-
-
-
-
-
-        
-            
-            
-        );
-}
-}
+    );
+    }
+  }

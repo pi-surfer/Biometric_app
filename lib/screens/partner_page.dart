@@ -1,57 +1,11 @@
-/*import 'dart:convert';
+import 'dart:convert';
 import 'dart:async';
-//import 'package:app_project/widgets/video_widget.dart';
-//import 'package:app_project/widgets/video_widget1.dart';
-import 'package:app_project/model/partner.dart';
-import 'package:app_project/model/structure.dart';
-import 'package:app_project/screens/stacked_partner.dart';
+import 'package:app_project/screens/partner_structure.dart';
 import 'package:flutter/material.dart';
-
-import 'package:url_launcher/url_launcher.dart';
-//import 'package:http/http.dart' as http;
 import 'package:app_project/model/partner.dart';
-/*
-Uri _urlNike = Uri.parse('https://www.nike.com/it/sostenibilita');
-Uri _urlGenerali = Uri.parse('https://www.generali.it/risparmio-investimenti/investimento/generasviluppo-sostenibile');
-Uri _urlPatagonia = Uri.parse('https://eu.patagonia.com/gb/en/actionworks/campaigns/?utm_source=patagonia.com&utm_medium=referral&utm_campaign=subnav');
-Uri _urlEnel = Uri.parse('https://www.enelcuore.it/');
-Uri _urlTreedom = Uri.parse('https://www.treedom.net/it');
-Uri _urlHera = Uri.parse('https://www.gruppohera.it/gruppo/sostenibilita/bilancio-di-sostenibilita/bs');
-Uri _urlSalomon = Uri.parse('https://www.salomon.com/it-it/sustainability');
-Uri _urlFjallraven = Uri.parse('https://www.fjallraven.com/eu/en-gb/about-fjallraven/sustainability');
-Uri _urlNorthFace = Uri.parse('https://www.thenorthface.it/innovation/sustainability/operations/climate-change.html');
+import 'package:carousel_slider/carousel_slider.dart';
 
 
-void _launchURL() async {
-  if (!await launchUrl(_urlNike)) throw 'Could not launch $_urlNike';}
-
-void _launchURL1() async {
-  if (!await launchUrl(_urlGenerali)) throw 'Could not launch $_urlGenerali';}
-
-void _launchURL2() async {
-  if (!await launchUrl(_urlPatagonia)) throw 'Could not launch $_urlPatagonia';}
-
-void _launchURL3() async {
-  if (!await launchUrl(_urlHera)) throw 'Could not launch $_urlHera';}
-
-void _launchURL4() async {
-  if (!await launchUrl(_urlTreedom)) throw 'Could not launch $_urlTreedom';}
-
-void _launchURL5() async {
-  if (!await launchUrl(_urlEnel)) throw 'Could not launch $_urlEnel';}
-
-void _launchURL6() async {
-  if (!await launchUrl(_urlSalomon)) throw 'Could not launch $_urlSalomon';}
-
-void _launchURL7() async {
-  if (!await launchUrl(_urlFjallraven)) throw 'Could not launch $_urlFjallraven';}
-
-void _launchURL8() async {
-  if (!await launchUrl(_urlNorthFace)) throw 'Could not launch $_urlNorthFace';}
-
-
-*/
-  
 class Partner extends StatefulWidget {
   static const route = '/partnerPage/';
   static const routeDisplayName = 'PartnerPage';
@@ -64,37 +18,55 @@ class Partner extends StatefulWidget {
 
 
 class PartnerState extends State<Partner> {
-  
-  
-
-  // Fetch content from the json file
-  /*Future<void> readJson() async {
-    final String response = await rootBundle.loadString('assets/partner.json');
-    final data = await json.decode(response);
-    setState(() {
-      _partner = data["partner"];
-    });
-  }
-  
-   
+  List<Sponsor> partners = getPartner();
   @override
-  void initState() {
-    super.initState();
-    // Call the readJson method when the app starts
-    readJson();
-  }
-*/
-  //int _selIdx = 0;
+  Widget build(BuildContext context) {
 
-  /*void _onItemTapped(int index) {
-    setState(() {
-      _selIdx = index;
-    });
-  }*/
+  
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 254, 251, 228),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+           const Text(
+                'In order to support these small realities, we must thanks our partners, large companies that believe in small things',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color.fromARGB(255, 1, 97, 4),
+                  fontSize: 20),
+                ),
 
+              const SizedBox(
+                height: 20,
+                ),
 
+          CarouselSlider(
+          options: CarouselOptions(
+            height: MediaQuery.of(context).size.height,
+            scrollDirection: Axis.vertical,
+            enableInfiniteScroll: false,
+          ),
+          items: partners.map((item) {
+            return PartnerItem(
+              name: item.name,
+              phrase: item.phrase,
+              imagePath: item.imagePath,
+              url: item.url,//imagePath: item.imagePath,
+            );
+          }).toList(),
+        ),
+    ] ),)),
+)));
+}
+}
 
 /*
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -543,5 +515,5 @@ class PartnerState extends State<Partner> {
                    
  */
 
-*/
+
 
