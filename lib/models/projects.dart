@@ -75,22 +75,33 @@ class Address {
 import 'package:flutter/material.dart';
 
 class Projects {
-  final int id; 
-  final String name;
-  final String address;
-  final String phrase;
-  final String imagePath;
-  final bool light;
-  final bool selected;
+  //final int id;
+  int id; 
+  //final String name;
+  String name;
+  //final String address;
+  String address;
+  //final String phrase;
+  String phrase;
+  //final String imagePath;
+  String imagePath;
+  //final bool light;
+  bool light;
+  //final bool selected;
+  bool selected;
 
   Projects({required this.id, required this.name, required this.address, 
   required this.phrase,required this.imagePath, required this.light, required this.selected });
 
-  get farms => length(farms);
+  //Projects({
+  //  Key? key,  
+  //}):super(key: key);
+
+  //get farms => length(farms);
   
-  length(farms) {
-    return length(farms);
-  }
+  //length(farms) {
+  //  return length(farms);
+  //}
 }
 
 List<Projects> getProject() {

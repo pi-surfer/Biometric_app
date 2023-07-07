@@ -1,4 +1,151 @@
-import 'package:app_project/models/projects.dart';
+import 'package:flutter/material.dart';
+import 'package:app_project/models/project.dart';
+
+
+class ProjectsPage extends StatefulWidget {
+
+  static const routename = 'Projectspage';
+
+  const ProjectsPage({
+    Key? key,  
+  }):super(key: key);
+
+  @override
+  State createState() => _ProjectsPageState();
+}
+
+class _ProjectsPageState extends State<ProjectsPage> {
+
+  final NameProject name = NameProject();
+  final IdProject id = IdProject();
+  final imagePathProject imagePath = imagePathProject();
+  final AddressProject address = AddressProject();
+  final PhraseProject phrase = PhraseProject();
+  List<bool> light = [false,false,false,false,false];
+  List<bool> selected = [false,false,false,false,false];
+  int index = 1;
+
+  @override
+  Widget build(BuildContext context) {   
+    print('${ProjectsPage.routename} built');
+    return Scaffold(
+      backgroundColor:  Color.fromARGB(255, 254, 251, 228),
+      body: Center( 
+        child: ListView.builder(
+          itemCount: id.ids.length,
+          itemBuilder: (context, index) {
+            return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        //children: Projects.map((projects) {
+            //return ExpansionTile(title: Projects.name),
+          //})
+        children: [
+          GestureDetector(
+            onTap: () {
+              setState(() {
+              selected[index] = !selected[index];
+              });
+            },
+            child: Center(
+            child: AnimatedContainer(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              decoration: BoxDecoration(color: Color.fromARGB(255, 254, 251, 228), borderRadius: BorderRadius.circular(30)),
+              width: selected[index] ? MediaQuery.of(context).size.width : MediaQuery.of(context).size.width,
+              height: selected[index] ? 270 : 100,
+              //color: selected_1 ? Color.fromARGB(255, 254, 251, 228) : Colors.white,
+              alignment: selected[index] ? Alignment.center : Alignment.center,
+              duration: const Duration(seconds: 1),
+              child: selected[index] ? Container(
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+                //constraints: BoxConstraints(maxWidth: 500),
+                width: 300,
+                //width: MediaQuery.of(context).size.width,
+                height: 300,
+                padding: EdgeInsets.only(left:10, right: 10, top: 15),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 270,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            CircleAvatar(backgroundImage: AssetImage(imagePath.images[index]), maxRadius: 30),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Container(
+                                  child: Text(name.names[index], style: TextStyle(color: Colors.black,  fontWeight: FontWeight.bold), textAlign: TextAlign.center)),
+                              ),
+                            ),
+                            Switch(value: light[index], onChanged: (bool value) {
+                              setState(() {
+                                light[index] = value;
+                              });
+                            }),  
+                          ],
+                                  
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:20),
+                          child: Text(address.addresses[index], style: TextStyle(color: Colors.black, fontSize: 15), textAlign: TextAlign.start, maxLines: 1),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:20),
+                          child: Text(phrase.descriptions[index], style: TextStyle(color: Colors.black, fontSize: 15), textAlign: TextAlign.start, maxLines: 4),
+                        ),
+                      ),
+                      /*Expanded(
+                        child: Switch(value: light, onChanged: (bool value) {
+                          setState(() {
+                            light = value;
+                          });
+                        }),
+                      ),*/
+                    ],
+                  ),
+                )
+              ) : Container(
+                width: MediaQuery.of(context).size.width,
+                height: 100,
+                decoration: BoxDecoration(image: DecorationImage(image: AssetImage(imagePath.images[index]), fit: BoxFit.cover, opacity: 0.8), borderRadius: BorderRadius.circular(25)),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(name.names[index], style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
+                ),alignment: Alignment.centerLeft,),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+        ]);          
+          }
+        ),
+      )
+    );
+  }
+  
+  length(id) {
+    return length(id);
+  }
+
+}
+
+
+
+
+
+
+
+
+/*import 'package:app_project/models/projects.dart';
 import 'package:app_project/models/widgetProject.dart';
 //import 'package:app_project/provider/projects_provider.dart';
 import 'package:flutter/material.dart';
@@ -336,4 +483,4 @@ class _ProjectPageState extends State<ProjectPage> {
     //  );
   }
   
-}
+}*/
