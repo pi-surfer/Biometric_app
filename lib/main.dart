@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:app_project/screens/projects_page.dart';
+import 'package:app_project/screens/project_page.dart';
 
 
 void main() {
@@ -16,11 +17,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ProjectProvider> (
-      create: (context) => ProjectProvider(),
-      child: const MaterialApp(
+    return const MaterialApp(
       home: ProjectPage()
-    )
     );
   } // build
 } // MyApp

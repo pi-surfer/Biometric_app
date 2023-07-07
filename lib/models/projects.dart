@@ -1,4 +1,4 @@
-// To parse this JSON data, do
+/*// To parse this JSON data, do
 //
 //     final projects = projectsFromJson(jsonString);
 
@@ -70,4 +70,83 @@ class Address {
         "street": street,
         "city": city,
     };
+} */
+
+import 'package:flutter/material.dart';
+
+class Projects {
+  final int id; 
+  final String name;
+  final String address;
+  final String phrase;
+  final String imagePath;
+  final bool light;
+  final bool selected;
+
+  Projects({required this.id, required this.name, required this.address, 
+  required this.phrase,required this.imagePath, required this.light, required this.selected });
+
+  get farms => length(farms);
+  
+  length(farms) {
+    return length(farms);
+  }
+}
+
+List<Projects> getProject() {
+  List<Projects> farms = [];
+
+    farms.add(Projects(
+      id: 1,
+      name: "Api di Dario",
+      address: "Via sconosciuta 1, Feltre",
+      phrase: "descrizione del posto",
+      imagePath: "assets/images/miele_Dario.jpg",
+      light: false,
+      selected: false,  
+      ));
+
+    farms.add(Projects(
+      id: 2,
+      name: "radicchio di Andrea",
+      address: "Via sconosciuta 2, Treviso",
+      phrase: "descrizione del posto",
+      imagePath: "assets/images/radicchio_Andrea.jpg",
+      light: false,
+      selected: false,  
+      ));
+
+    farms.add(Projects(
+      id: 3,
+      name: "carciofi di Matteo",
+      address: "Via sconosciuta 3, Treviso",
+      phrase: "descrizione del posto",
+      imagePath: "assets/images/carciofi_Matteo.jpg",
+      light: false,
+      selected: false,  
+      ));
+
+    farms.add(Projects(
+      id: 4,
+      name: "zucchine di Anna",
+      address: "Via sconosciuta 4, Belluno",
+      phrase: "descrizione del posto",
+      imagePath: "assets/images/zucchine_Anna.jpg",
+      light: false,
+      selected: false,  
+      ));
+
+    farms.add(Projects(
+      id: 5,
+      name: "Insalata di Jenny",
+      address: "Via sconosciuta 5, Padova",
+      phrase: "descrizione del posto",
+      imagePath: "assets/images/insalata_Jenny.jpg",
+      light: false,
+      selected: false,  
+      ));
+
+
+
+    return farms;
 }
