@@ -1,16 +1,15 @@
-import 'package:app_project/models/missions.dart';
 import 'package:flutter/material.dart';
-
-import 'package:app_project/screens/skeleton_page.dart';
 import 'package:provider/provider.dart';
 
-// VERSION 1.1
+import 'package:app_project/screens/splash.dart';
+import 'package:app_project/services/impact.dart';
+import 'package:app_project/models/missions.dart';
+import 'package:app_project/utils/shared_preferences.dart';
+
+// VERSION 1.2
 
 void main() {
-  runApp(ChangeNotifierProvider<Missions>(
-    child: MyApp(),
-    create: (_) => Missions()));
-
+  runApp(MyApp());
 } // main
 
 class MyApp extends StatelessWidget {
@@ -18,9 +17,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(fontFamily: 'Poppins'),
-      home: const SkeletonPage(),
-    );
+    return MultiProvider(
+        providers: [
+          Provider(
+            create: (context) => Preferences()..init(),
+            lazy: false,
+          ),
+          Provider(
+              create: (context) => ImpactService(
+                    Provider.of<Preferences>(context, listen: false),
+                  )),
+          ChangeNotifierProvider<Missions>(
+              child: MyApp(), create: (_) => Missions()),
+        ],
+        child: MaterialApp(
+          theme: ThemeData(fontFamily: 'Poppins'),
+          home: const Splash(),
+        ));
   } // build
 } // MyApp
