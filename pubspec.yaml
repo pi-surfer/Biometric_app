@@ -90,8 +90,6 @@ flutter:
     - assets/images/fjällräven.jpg
     - assets/images/thenorthface.jpg
     - assets/images/avatar_Carciofo.jpg
-     - assets/images/miele_Dario.jpg
-
     - assets/images/miele_Dario.jpg
     - assets/images/nome.png
     - assets/gif/hera.gif
@@ -106,7 +104,11 @@ flutter:
     - assets/images/marathon.png
     - assets/images/well_done.png
      
-     - assets/images/radicchio_Andrea.jpg
+    - assets/images/radicchio_Andrea.jpg
+    - assets/images/carciofi_Matteo.jpg
+    - assets/images/zucchine_Anna.jpg
+    - assets/images/insalata_Jenny.jpg
+    - assets/images/pomodori_Lorenzo.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
