@@ -1,3 +1,5 @@
+import 'package:app_project/models/projects.dart';
+import 'package:app_project/models/widgetProject.dart';
 import 'package:flutter/material.dart';
 import 'package:app_project/models/project.dart';
 
@@ -25,8 +27,61 @@ class _ProjectsPageState extends State<ProjectsPage> {
   List<bool> selected = [false,false,false,false,false];
   int index = 1;
 
+  final List<Projects> projects = getProject();
+  
+
   @override
-  Widget build(BuildContext context) {   
+  Widget build(BuildContext context) { 
+    Iterable<Projects> project = projects.map((e) {
+      return Projects(id: e.id, name: e.name, address: e.address, phrase: e.phrase, imagePath: e.imagePath);
+    });  
+    print('${ProjectsPage.routename} built');
+    return Scaffold(
+      backgroundColor:  Color.fromARGB(255, 254, 251, 228),
+      body: Center( 
+        child: ListView.builder(
+          itemCount: id.ids.length,
+          itemBuilder: (context, index) {
+            return ProjectItem(name: projects[index].name, address: projects[index].address, phrase: projects[index].phrase, imagePath: projects[index].imagePath);
+  })));}}
+
+
+/*import 'package:app_project/models/projects.dart';
+import 'package:flutter/material.dart';
+import 'package:app_project/models/project.dart';
+
+
+class ProjectsPage extends StatefulWidget {
+
+  static const routename = 'Projectspage';
+
+  const ProjectsPage({
+    Key? key,  
+  }):super(key: key);
+
+  @override
+  State createState() => _ProjectsPageState();
+}
+
+class _ProjectsPageState extends State<ProjectsPage> {
+
+  final NameProject name = NameProject();
+  final IdProject id = IdProject();
+  final imagePathProject imagePath = imagePathProject();
+  final AddressProject address = AddressProject();
+  final PhraseProject phrase = PhraseProject();
+  List<bool> light = [false,false,false,false,false];
+  List<bool> selected = [false,false,false,false,false];
+  int index = 1;
+
+  final List<Projects> projects = getProject();
+  
+
+  @override
+  Widget build(BuildContext context) { 
+    var project = projects.map((e) {
+      return Projects(id: e.id, name: e.name, address: e.address, phrase: e.phrase, imagePath: e.imagePath);
+    });  
     print('${ProjectsPage.routename} built');
     return Scaffold(
       backgroundColor:  Color.fromARGB(255, 254, 251, 228),
@@ -138,7 +193,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
 }
 
-
+*/
 
 
 

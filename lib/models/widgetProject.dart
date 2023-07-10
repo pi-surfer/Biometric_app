@@ -6,7 +6,7 @@ class ProjectItem extends StatefulWidget {
   final String name;
   final String address;
   final String phrase;
-  final AssetImage imagePath;
+  final String imagePath;
   bool light;
   bool selected;
 
@@ -70,7 +70,7 @@ class _ProjectItemState extends State<ProjectItem> {
                           Expanded(
                             child: Row(
                               children: [
-                                CircleAvatar(backgroundImage: widget.imagePath, maxRadius: 30),
+                                CircleAvatar(backgroundImage: AssetImage(widget.imagePath), maxRadius: 30),
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(20),
@@ -105,7 +105,7 @@ class _ProjectItemState extends State<ProjectItem> {
                   ) : Container(
                     width: MediaQuery.of(context).size.width,
                     height: 100,
-                    decoration: BoxDecoration(image: DecorationImage(image: widget.imagePath, fit: BoxFit.cover, opacity: 0.8), borderRadius: BorderRadius.circular(25)),
+                    decoration: BoxDecoration(image: DecorationImage(image: AssetImage(widget.imagePath), fit: BoxFit.cover, opacity: 0.8), borderRadius: BorderRadius.circular(25)),
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Text(widget.name, style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),

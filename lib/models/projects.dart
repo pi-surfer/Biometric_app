@@ -75,23 +75,24 @@ class Address {
 import 'package:flutter/material.dart';
 
 class Projects {
-  //final int id;
-  int id; 
-  //final String name;
-  String name;
-  //final String address;
-  String address;
-  //final String phrase;
-  String phrase;
-  //final String imagePath;
-  String imagePath;
+  final int id;
+  //int id; 
+  final String name;
+  //String name;
+  final String address;
+  //String address;
+  final String phrase;
+  //String phrase;
+  final String imagePath;
+  //String imagePath;
   //final bool light;
-  bool light;
+  //bool light;
   //final bool selected;
-  bool selected;
+  //bool selected;
 
-  Projects({required this.id, required this.name, required this.address, 
-  required this.phrase,required this.imagePath, required this.light, required this.selected });
+  Projects({required int this.id, required String this.name, required String this.address, 
+  required String this.phrase, required String this.imagePath}); // required this.light, required this.selected });
+  // const Projects(List<Projects> projects, {this.id, this.name, this.address, this.phrase, this.imagePath}); // required this.light, required this.selected });
 
   //Projects({
   //  Key? key,  
@@ -102,7 +103,10 @@ class Projects {
   //length(farms) {
   //  return length(farms);
   //}
+
+  //names() => name;
 }
+ 
 
 List<Projects> getProject() {
   List<Projects> farms = [];
@@ -113,8 +117,8 @@ List<Projects> getProject() {
       address: "Via sconosciuta 1, Feltre",
       phrase: "descrizione del posto",
       imagePath: "assets/images/miele_Dario.jpg",
-      light: false,
-      selected: false,  
+      //light: false,
+      //selected: false,  
       ));
 
     farms.add(Projects(
@@ -123,8 +127,8 @@ List<Projects> getProject() {
       address: "Via sconosciuta 2, Treviso",
       phrase: "descrizione del posto",
       imagePath: "assets/images/radicchio_Andrea.jpg",
-      light: false,
-      selected: false,  
+      //light: false,
+      //selected: false,  
       ));
 
     farms.add(Projects(
@@ -132,9 +136,9 @@ List<Projects> getProject() {
       name: "carciofi di Matteo",
       address: "Via sconosciuta 3, Treviso",
       phrase: "descrizione del posto",
-      imagePath: "assets/images/carciofi_Matteo.jpg",
-      light: false,
-      selected: false,  
+      imagePath: "images/carciofi_Matteo.jpg",
+      //light: false,
+      //selected: false,  
       ));
 
     farms.add(Projects(
@@ -142,9 +146,9 @@ List<Projects> getProject() {
       name: "zucchine di Anna",
       address: "Via sconosciuta 4, Belluno",
       phrase: "descrizione del posto",
-      imagePath: "assets/images/zucchine_Anna.jpg",
-      light: false,
-      selected: false,  
+      imagePath: "images/zucchine_Anna.jpg",
+      //light: false,
+      //selected: false,  
       ));
 
     farms.add(Projects(
@@ -152,12 +156,11 @@ List<Projects> getProject() {
       name: "Insalata di Jenny",
       address: "Via sconosciuta 5, Padova",
       phrase: "descrizione del posto",
-      imagePath: "assets/images/insalata_Jenny.jpg",
-      light: false,
-      selected: false,  
+      imagePath: "images/insalata_Jenny.jpg",
+      //light: false,
+      //selected: false,  
       ));
 
-
-
     return farms;
+
 }
