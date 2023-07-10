@@ -1,14 +1,17 @@
-//import 'package:app_project/widgets/date_widget.dart';
-import 'package:app_project/widgets/date_picker_widget.dart';
-import 'package:flutter/material.dart';
-//import 'package:intl/intl.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+//import 'package:app_project/widgets/date_widget.dart';
+import 'package:app_project/widgets/date_picker_widget.dart';
+import 'package:app_project/provider/all_providers.dart';
+import 'package:app_project/models/db.dart';
 //import 'package:app_project/gestures/tap.dart';
 
 //import 'package:progetto/widgets/custom_plot.dart';
-//import 'package:intl/intl.dart';
 
 class GDPData {
   GDPData(this.continent, this.gdp);
@@ -68,7 +71,7 @@ class _ActivityState extends State<Activity> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
+              /*Container(
                 child: DatePicker(
                   DateTime.now(),
                   width: 60,
@@ -96,36 +99,41 @@ class _ActivityState extends State<Activity> {
               ),
               SizedBox(
                 height: 20,
-              ),
+              ),*/
 
-              /*Row(
+              Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
               children: [
                 IconButton(
                   icon: const Icon(Icons.navigate_before, color: Color.fromARGB(255, 1, 97, 4),size:20,),
                   onPressed: () {
-                    setState(() {
-                      day = day.subtract(const Duration(days: 1));
-                      });
+                    final provider =
+                          Provider.of<HomeProvider>(context, listen: false);
+                      DateTime day = provider.showDate;
+                      provider
+                          .getDataOfDay(day.subtract(const Duration(days: 1)));
                     }),
-                    Text(DateFormat('dd MM yyyy').format(day), style: const TextStyle(
+                    Consumer<HomeProvider>(
+                    builder: (context, value, child) => Text(
+                        DateFormat('dd MMMM yyyy').format(value.showDate), style: const TextStyle(
                         color: Color.fromARGB(255, 1, 97, 4),
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                         fontStyle: FontStyle.normal,
                         )
-                      ),
+                      ),),
                     IconButton(
                       icon: const Icon(Icons.navigate_next, color: Color.fromARGB(255, 1, 97, 4),size: 20, ),
                       onPressed: () {
-                        setState(() {
-                          day = day.add(const Duration(days: 1));
-                          });
-                          }),],),
+                        final provider =
+                          Provider.of<HomeProvider>(context, listen: false);
+                      DateTime day = provider.showDate;
+                      provider.getDataOfDay(day.add(const Duration(days: 1)));
+                    }),
 
                     const SizedBox(
                       height: 20,
-                      ),*/
+                      ),
 
               TextButton.icon(
                   onPressed: () {},
@@ -344,9 +352,9 @@ class _ActivityState extends State<Activity> {
               ),
             ],
           ),
-        ),
+        ]),
       ),
-    );
+    ));
 
     /*    bottomNavigationBar: BottomNavigationBar(
               backgroundColor: const Color.fromARGB(255,255,255,255),
