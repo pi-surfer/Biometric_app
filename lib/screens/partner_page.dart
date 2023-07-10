@@ -1,9 +1,9 @@
 //import 'dart:convert';
-import 'dart:async';
+//import 'dart:async';
 import 'package:app_project/screens/partner_structure.dart';
 import 'package:flutter/material.dart';
 import 'package:app_project/models/partner.dart';
-//import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 
 class Partner extends StatefulWidget {
@@ -41,22 +41,44 @@ class PartnerState extends State<Partner> {
                   fontSize: 20),
                 ),
 
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  
-                  Container(
-                              decoration: BoxDecoration(
-                                image: const DecorationImage(
-                                image: AssetImage("assets/images/3.jpg"), 
-                                  fit: BoxFit.cover), 
-                                borderRadius: BorderRadius.circular(10)),
-                                padding: const EdgeInsets.all(10),
-                                width: 400.0,
-                                height: 400.0,
-                                child: const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.end,
+              const SizedBox(
+                height: 20,
+                ),
+
+          CarouselSlider(
+          options: CarouselOptions(
+            height: MediaQuery.of(context).size.height,
+            scrollDirection: Axis.vertical,
+            enableInfiniteScroll: false,
+          ),
+          items: partners.map((item) {
+            return PartnerItem(
+              name: item.name,
+              phrase: item.phrase,
+              imagePath: item.imagePath,
+              url: item.url,
+            );
+          }).toList(),
+        ),
+    ] ),)),
+)));
+}
+}
+
+/*
+
+                   Container(
+                    decoration: BoxDecoration(
+                      image: const DecorationImage(
+                        image: AssetImage("assets/images/nike.jpg"), 
+                        fit: BoxFit.cover), 
+                      borderRadius: BorderRadius.circular(10)),
+                      padding: const EdgeInsets.all(10),
+                      width: 400.0,
+                      height: 400.0,
+                      child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text('Nike',
                         style: TextStyle(
@@ -133,7 +155,7 @@ class PartnerState extends State<Partner> {
                   Container(
                     decoration: BoxDecoration(
                       image: const DecorationImage(
-                        image: AssetImage("assets/gif/patagonia.gif"), 
+                        image: AssetImage("assets/images/patagonia.jpg"), 
                         fit: BoxFit.cover, opacity: 5), 
                         borderRadius: BorderRadius.circular(10)),
                     padding: const EdgeInsets.all(10),
@@ -451,11 +473,51 @@ class PartnerState extends State<Partner> {
                       ]                   
                       ), ),
 
-                      const SizedBox(
+                   const SizedBox(
                     height: 7,
                   ),
-                  
-                  
+
+                     Container(
+                    decoration: BoxDecoration(
+                      image: const DecorationImage(
+                        image: AssetImage("assets/images/salomon.jpg"), 
+                        fit: BoxFit.cover, opacity: 5), 
+                        borderRadius: BorderRadius.circular(10)),
+                    padding: const EdgeInsets.all(10),
+                    width: 400.0,
+                    height: 400.0,
+                    child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text('Salomon',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 254, 251, 228),
+                        ),),
+                        Text('RESPONSIBLE INNOVATION',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 254, 251, 228),
+                        ),),
+                        FilledButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll<Color>(Color.fromARGB(255, 254, 251, 228)),  
+                            ),
+                            onPressed: _launchURL6,
+                            child: Text('Find out', style: 
+                            TextStyle(
+                              fontSize: 16.0,
+                              color: Color.fromARGB(255, 1, 97, 4),
+                            ),),
+                          ),
+                      ]                   
+                      ), ),
+
+                   const SizedBox(
+                    height: 7,
+                  ),
                   
                                    
                     ]),))));}}             
