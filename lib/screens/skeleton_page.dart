@@ -66,7 +66,7 @@ class _SkeletonPageState extends State<SkeletonPage>
       case 1:
         return Activity();
       case 2:
-        return ProjectPage();
+        return ProjectsPage();
       case 3:
         return Partner();
       case 4:
