@@ -3,6 +3,7 @@ import 'package:app_project/provider/projects_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+<<<<<<< HEAD
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 // import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -13,6 +14,12 @@ class ProjectsPage extends StatefulWidget {
   //const ProjectPage({Key? key}) : super(key: key);
 
   static const routename = 'Projectpage_bis';
+=======
+
+class ProjectsPage extends StatefulWidget {
+
+  static const routename = 'Projectspage';
+>>>>>>> origin/project-page
 
   const ProjectsPage({
     Key? key,  
@@ -23,6 +30,7 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> {
+<<<<<<< HEAD
   final List<Projects> projects = getProject();
   //final Projects projects = Projects(id:1,name:'x',phrase:'x',imagePath:'x', value:false,selected:false, address: 'x');
 
@@ -166,3 +174,30 @@ class _ProjectPageState extends State<ProjectPage> {
   }
   
 }*/
+=======
+
+  
+  final IdProject id = IdProject();
+  List<bool> light = [false,false,false,false,false];
+  List<bool> selected = [false,false,false,false,false];
+  int index = 1;
+  final List<Projects> projects = getProject();
+  
+
+  @override
+  Widget build(BuildContext context) {  
+    print('${ProjectsPage.routename} built');
+    return Scaffold(
+      backgroundColor:  Color.fromARGB(255, 254, 251, 228),
+      body: Center( 
+        child: ListView.builder(
+          itemCount: id.ids.length,
+          itemBuilder: (context, index) {
+            return ProjectItem(name: projects[index].name, address: projects[index].address, phrase: projects[index].phrase, imagePath: projects[index].imagePath);
+          }
+        )
+      )
+    );
+  }
+}
+>>>>>>> origin/project-page

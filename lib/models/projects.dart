@@ -74,6 +74,10 @@ class Address {
 
 import 'package:flutter/material.dart';
 
+class IdProject {
+List<int> ids = [1,2,3,4,5];
+}
+
 class Projects {
   final int id;
   //int id; 
