@@ -9,10 +9,28 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 //import 'package:progetto/widgets/custom_plot.dart';
 //import 'package:intl/intl.dart';
 
-class GDPData{
+/*class GDPData{
   GDPData(this.continent,this.gdp);
   final String continent;
   final dynamic gdp;
+}*/
+
+class Kalories{
+  Kalories(this.kalories,this.valueKalories);
+  final String kalories;
+  final dynamic valueKalories;
+}
+
+class Steps{
+  Steps(this.steps,this.valueSteps);
+  final String steps;
+  final dynamic valueSteps;
+}
+
+class Times{
+  Times(this.times,this.valueTimes);
+  final String times;
+  final dynamic valueTimes;
 }
 
 class finalOBIETTIVI{
@@ -42,22 +60,26 @@ class ActivityState extends State<Activity> {
 
   DateTime _selectedValue = DateTime.now();
 
-  late List<GDPData> _chartData;
+  //late List<GDPData> _chartData;
+  late List<Kalories> _chartData;
+  late List<Steps> _chartData2;
+  late List<Times> _chartData3;
   late TooltipBehavior _tooltipBehavior;
   late List<finalOBIETTIVI> _chartData1;
    
-
     @override
   void initState(){
     _chartData = getChartData();
     _chartData1 = getChartData1();
+    _chartData2 = getChartData2();
+    _chartData3 = getChartData3();
     _tooltipBehavior = TooltipBehavior(enable: true);
     
     super.initState();
   }
 
   DateTime day = DateTime.now();
-  
+    
   @override
   Widget build(BuildContext context) {
     
@@ -76,7 +98,7 @@ class ActivityState extends State<Activity> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [ 
-                  Container(
+                  /*Container(
                   child: DatePicker(
                   DateTime.now(),
                   width: 60,
@@ -105,13 +127,13 @@ class ActivityState extends State<Activity> {
             
               SizedBox(
                 height: 20,
-              ),
+              ),*/
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.navigate_before, color: Color.fromARGB(255, 1, 97, 4),size:20,),
+                    icon: const Icon(Icons.navigate_before, color: Color.fromARGB(255, 1, 97, 4),size:22,),
                     onPressed: () {
                       setState(() {
                         day = day.subtract(const Duration(days: 1));
@@ -120,12 +142,12 @@ class ActivityState extends State<Activity> {
                       Text(DateFormat('dd MM yyyy').format(day), style: const TextStyle(
                           color: Color.fromARGB(255, 1, 97, 4),
                           fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                          fontSize: 20,
                           fontStyle: FontStyle.normal,
                           )
                         ),
                       IconButton(
-                        icon: const Icon(Icons.navigate_next, color: Color.fromARGB(255, 1, 97, 4),size: 20, ),
+                        icon: const Icon(Icons.navigate_next, color: Color.fromARGB(255, 1, 97, 4),size: 22,),
                         onPressed: () {
                           setState(() {
                             day = day.add(const Duration(days: 1));
@@ -156,11 +178,7 @@ class ActivityState extends State<Activity> {
 
                     ),
                     
-                    const SizedBox(
-                      height: 20,
-                      ),
-
-                      Container(
+                        Container(
                       alignment: Alignment.center,
                       height: 500,
                       width: 500,
@@ -168,68 +186,163 @@ class ActivityState extends State<Activity> {
                         annotations: <CircularChartAnnotation>[
                           CircularChartAnnotation(
                             widget: Container(
-                              child: const Text('Text', style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Poppins', 
-                                color: Color.fromARGB(255, 1, 97, 4)),)
-                              ),                        
-                        )
-                      ],
-                      palette: const <Color> [
-                        Color.fromARGB(255, 255, 114, 106),
-                        Color.fromARGB(255, 255, 221, 74), 
-                        Color.fromARGB(255, 253, 176, 120)],
-                      
-                      legend: Legend(
-                        isVisible: true,
-                        //textStyle: TextStyle(
-                          //fontSize: 15, fontWeight: FontWeight.bold, fontFamily: 'Poppins'),
-
-                        position:LegendPosition.bottom,
-                        alignment: ChartAlignment.center,
-                        overflowMode: LegendItemOverflowMode.wrap, 
-                        legendItemBuilder: (String name, dynamic series, dynamic point, int index) {
-                          return Container(
-                            height: 75,
-                            width: 98,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(name, style:TextStyle(fontSize: 14, fontWeight: FontWeight.bold, fontFamily: 'Poppins')),
-                                Text(point.y.toString(), style:TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'Poppins')),
-                                Text('/1000', style:TextStyle(fontSize: 14, fontFamily: 'Poppins')),],),
-                                
-                                //Icon(point.MdiIcons.fire),
-                                //Icon(point.MdiIcons.walk),
-                                //Icon(point.MdiIcons.clock),
-                                
-                          );
-                         }, 
-                      ),
+                      alignment: Alignment.center,
+                      height: 300,
+                      width: 300,
+                      child: SfCircularChart(
+                        annotations: <CircularChartAnnotation>[
+                          CircularChartAnnotation(
+                            widget: Container(
+                              
+                      alignment: Alignment.center,
+                      height: 200,
+                      width: 200,
+                      child: SfCircularChart(   
+                      palette: const <Color> [Color.fromARGB(255, 255, 221, 74)],
                       tooltipBehavior: _tooltipBehavior,
                       series: <CircularSeries>[
-                        RadialBarSeries<GDPData,String>(
+                        RadialBarSeries<Kalories,String>(
                           useSeriesColor: true,
-                          
                           trackOpacity: 0.2,
                           dataSource: _chartData,
-                          xValueMapper: (GDPData data,_) => data.continent,
-                          yValueMapper: (GDPData data,_) => data.gdp,
+                          xValueMapper: (Kalories data,_) => data.kalories,
+                          yValueMapper: (Kalories data,_) => data.valueKalories,
                           cornerStyle: CornerStyle.endCurve,
-                          radius:'90%',
-                          gap:'6%',
+                          radius:'100%',
+                          innerRadius: '80%',
                           dataLabelSettings: const DataLabelSettings(isVisible: false),
                           enableTooltip: true,
                           maximumValue: 1000
                           )
                         ]),),
+                      )],
                 
-                
+                      
+                      palette: const <Color> [Color.fromARGB(255, 253, 176, 120)],
+                      tooltipBehavior: _tooltipBehavior,
+                      series: <CircularSeries>[
+                        RadialBarSeries<Steps,String>(
+                          useSeriesColor: true,
+                          trackOpacity: 0.2,
+                          dataSource: _chartData2,
+                          xValueMapper: (Steps data,_) => data.steps,
+                          yValueMapper: (Steps data,_) => data.valueSteps,
+                          cornerStyle: CornerStyle.endCurve,
+                          radius:'100%',
+                          innerRadius: '85%',
+                          dataLabelSettings: const DataLabelSettings(isVisible: false),
+                          enableTooltip: true,
+                          maximumValue: 1000
+                          )
+                        ]),),
+                      )],
+                      
+                      palette: const <Color> [Color.fromARGB(255, 255, 114, 106)],
+                      tooltipBehavior: _tooltipBehavior,
+                      series: <CircularSeries>[
+                        RadialBarSeries<Times,String>(
+                          useSeriesColor: true,
+                          trackOpacity: 0.2,
+                          dataSource: _chartData3,
+                          xValueMapper: (Times data,_) => data.times,
+                          yValueMapper: (Times data,_) => data.valueTimes,
+                          cornerStyle: CornerStyle.endCurve,
+                          radius:'100%',
+                          innerRadius: '90%',
+                          dataLabelSettings: const DataLabelSettings(isVisible: false),
+                          enableTooltip: true,
+                          maximumValue: 1000
+                          )
+                        ]),),
+
+                    Container(
+                      alignment: Alignment.center,
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [ 
+                          Column(
+                          children: [
+                          Icon(MdiIcons.fire, 
+                          weight: 20,
+                          color: Color.fromARGB(255, 255, 221, 74),),
+                          Text('Kalories', style: TextStyle(
+                          color: Color.fromARGB(255, 255, 221, 74),
+                          fontSize: 15,
+                          fontStyle: FontStyle.normal,
+                          ),),
+                          Text('100', style: TextStyle(
+                          color: Color.fromARGB(255, 255, 221, 74),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          fontStyle: FontStyle.normal,
+                          ),),
+                          Text('/2000', style: TextStyle(
+                          color: Color.fromARGB(255, 255, 221, 74),
+                          fontSize: 15,
+                          fontStyle: FontStyle.normal,
+                          ),),],), 
+
+                          SizedBox(
+                            width: 40,
+                          ),
+
+                          Column(
+                          children: [
+                          Icon(MdiIcons.walk, 
+                          weight: 20,
+                          color: Color.fromARGB(255, 253, 176, 120),),
+                          Text('Steps', style: TextStyle(
+                          color: Color.fromARGB(255, 253, 176, 120),
+                          fontSize: 15,
+                          fontStyle: FontStyle.normal,
+                          ),),
+                          Text('2500', style: TextStyle(
+                          color: Color.fromARGB(255, 253, 176, 120),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          fontStyle: FontStyle.normal,
+                          ),),
+                          Text('/10000', style: TextStyle(
+                          color: Color.fromARGB(255, 253, 176, 120),
+                          fontSize: 15,
+                          fontStyle: FontStyle.normal,
+                          ),),]),
+
+                          SizedBox(
+                            width: 40,
+                          ),
+
+                          Column(
+                          children: [
+                          Icon(MdiIcons.clock, 
+                          weight: 20,
+                          color: Color.fromARGB(255, 255, 114, 106),),
+                          Text('Times', style: TextStyle(
+                          color: Color.fromARGB(255, 255, 114, 106),
+                          fontSize: 15,
+                          fontStyle: FontStyle.normal,
+                          ),),
+                          Text('20', style: TextStyle(
+                          color: Color.fromARGB(255, 255, 114, 106),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          fontStyle: FontStyle.normal,
+                          ),),
+                          Text('/180', style: TextStyle(
+                          color: Color.fromARGB(255, 255, 114, 106),
+                          fontSize: 15,
+                          fontStyle: FontStyle.normal,
+                          ),),]), 
+
+
+
+                ])
+                      ,
+                    ),
+
                     const SizedBox(
                       height: 20,
-                      ),
+                    ),
 
                     const Text('Oggi hai guadagnato N crediti', style: TextStyle(
                           color: Color.fromARGB(255, 1, 97, 4),
@@ -239,15 +352,15 @@ class ActivityState extends State<Activity> {
                           ),) ,
 
                     const SizedBox(
-                      height: 20,
+                      height: 30,
                       ),
 
                               
 
                     Container(
                       alignment: Alignment.center,
-                      height: 350,
-                      width: 350,
+                      height: 200,
+                      width: 200,
                       child: SfCircularChart(
                       
                       //textStyle: const TextStyle(fontSize: 13)),
@@ -263,7 +376,7 @@ class ActivityState extends State<Activity> {
                         yValueMapper: (finalOBIETTIVI value,_) => value.value,
                         cornerStyle: CornerStyle.endCurve,
                         radius:'100%',
-                        gap:'4%',
+                        innerRadius:'80%',
                         dataLabelSettings: const DataLabelSettings(isVisible: false),
                         enableTooltip: true,
                         maximumValue: 300,
@@ -299,33 +412,26 @@ class ActivityState extends State<Activity> {
                       height: 20,
                       ),
                     
-                ],),),),),);
-              
-              /*    bottomNavigationBar: BottomNavigationBar(
-              backgroundColor: const Color.fromARGB(255,255,255,255),
-              fixedColor:  const Color.fromARGB(255, 6, 95, 9),
-              items: navBarItems,
-              //currentIndex: _selIdx,
-              //onTap: _onItemTapped,
-                  ),*/;}
-          
-
-                  List<GDPData> getChartData(){
-              final List<GDPData> chartData=[
-                GDPData('Kalories', 100),
-                GDPData('Time', 60),
-                GDPData('Steps', 8645)
-              ];
-              return chartData;}
-            
-              List<finalOBIETTIVI> getChartData1(){
-                final List<finalOBIETTIVI> chartData1=[
-                  finalOBIETTIVI('Crediti', 180),
-                ];
-                return chartData1;
-              }
+                        
+      ]),),),));
+}
            
-  } //build
- //Page
+            List<Kalories> getChartData(){
+              final List<Kalories> chartData= [Kalories('Kalories', 100)];
+              return chartData;}
+
+            List<Steps> getChartData2(){
+              final List<Steps> chartData2= [Steps('Steps', 2000)];
+              return chartData2;}
+            
+            List<Times> getChartData3(){
+              final List<Times> chartData3= [Times('Times', 100)];
+              return chartData3;}
+
+            List<finalOBIETTIVI> getChartData1(){
+              final List<finalOBIETTIVI> chartData1=[finalOBIETTIVI('Crediti', 180)];
+              return chartData1;}     
+           
+  } 
 
  
