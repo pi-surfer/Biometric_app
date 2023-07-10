@@ -53,6 +53,8 @@ dependencies:
   shared_preferences: ^2.2.0
   dio: ^5.2.1+1
   jwt_decoder: ^2.0.1
+  stacked_card_carousel: ^0.0.4
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
@@ -78,20 +80,23 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/3.jpg  
-    - assets/videos/diadora.mp4
-    - assets/images/northface.jpg
-    - assets/images/2.jpg
-    - assets/images/1.jpg
-    - assets/images/4.jpg
+    - assets/images/patagonia.jpg  
+    - assets/images/enel.jpg
+
+    - assets/images/generali.jpg
+    - assets/images/google.jpg
+    - assets/images/nike.jpg
+    - assets/images/salomon.jpg
+    - assets/images/fjällräven.jpg
+    - assets/images/thenorthface.jpg
     - assets/images/avatar_Carciofo.jpg
      - assets/images/miele_Dario.jpg
 
     - assets/images/miele_Dario.jpg
     - assets/images/nome.png
-    - assets/gif/patagonia.gif
+    - assets/gif/hera.gif
     - assets/gif/Fit2Seed.gif
-    - assets/videos/Fit2Seed.mp4
+    - assets/gif/treedom.gif
     - assets/partner.json
     - assets/images/ape_carina2.jpg
     - assets/images/logo1.png
