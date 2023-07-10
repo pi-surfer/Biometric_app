@@ -2,8 +2,7 @@ import 'package:app_project/models/missions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-//import 'package:app_project/screens/projects_page.dart';
-//import 'package:app_project/screens/project_page.dart';
+import 'package:app_project/screens/projects_page.dart';
 import 'package:app_project/screens/skeleton_page.dart';
 import 'package:provider/provider.dart';
 
