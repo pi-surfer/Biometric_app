@@ -82,7 +82,6 @@ flutter:
   assets:
     - assets/images/patagonia.jpg  
     - assets/images/enel.jpg
-
     - assets/images/generali.jpg
     - assets/images/google.jpg
     - assets/images/nike.jpg
