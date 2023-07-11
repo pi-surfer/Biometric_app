@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app_project/screens/skeleton_page.dart';
 import 'package:app_project/services/impact.dart';
-import 'package:app_project/utils/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 // COPIATO PARI PARI, DA MODIFICARE
@@ -45,7 +44,6 @@ class _ImpactOnboardingState extends State<ImpactOnboarding> {
           key: _formKey,
           child: Column(
             children: <Widget>[
-              Image.asset('assets/impact_logo.png'),
               const Text('Please authorize to use our app',
                   style: TextStyle(
                     fontSize: 16,
@@ -161,23 +159,12 @@ class _ImpactOnboardingState extends State<ImpactOnboarding> {
                       } else {
                         await Provider.of<ImpactService>(context, listen: false)
                             .getPatient();
-                        // else move to Purpleair Onboarding if we have not saved a api key yet
-                        /*if (Provider.of<Preferences>(context, listen: false)
-                                .purpleAirXApiKey !=
-                            null) {
-                          Future.delayed(
+                        Future.delayed(
                               const Duration(milliseconds: 300),
                               () => Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                      builder: (context) => const Home())));
-                        } else {
-                          Future.delayed(
-                              const Duration(milliseconds: 300),
-                              () => Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          PurpleAirOnboarding())));
-                        }*/
+                                      builder: (context) => const SkeletonPage())));
+
                       }
                     },
                     style: ButtonStyle(

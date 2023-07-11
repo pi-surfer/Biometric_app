@@ -729,7 +729,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void _toLoginPage(BuildContext context) {
     Navigator.pop(context);
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const LoginPage()));
+        .push(MaterialPageRoute(builder: (context) => LoginPage()));
   } // _toLoginPage
 
   void _toHomePage(BuildContext context) {

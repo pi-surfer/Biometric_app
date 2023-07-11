@@ -170,7 +170,7 @@ class _SkeletonPageState extends State<SkeletonPage>
 
     Navigator.pop(context);
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const LoginPage()));
+        .push(MaterialPageRoute(builder: (context) => LoginPage()));
   } // _toLoginPage
 
   void _toProfilePage(BuildContext context) {

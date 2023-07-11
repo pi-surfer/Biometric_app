@@ -1,30 +1,35 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:intl/intl.dart';
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:app_project/services/server_strings.dart';
 import 'package:app_project/utils/shared_preferences.dart';
 import 'package:app_project/models/db.dart';
 
-// PRESO PARI DA TUTOR DA MODIFICARE
 
 class ImpactService {
-  ImpactService(this.prefs) {
-    updateBearer();
-    // This function is defined below
-
-  }
 
   Preferences prefs;
 
   final Dio _dio = Dio(BaseOptions(baseUrl: ServerStrings.backendBaseUrl));
   // Here we define backendBaseUrl (defined inside server_strings.dart) as starting
-  // path to the next urls. Next URLs: backendBaseUrl/nextUrlPath
+  // path for all the future urls. URLs: backendBaseUrl/nextUrlPath
+
+  ImpactService(this.prefs) {
+    updateBearer();
+    // This helper method is defined below
+  }
 
   String? retrieveSavedToken(bool refresh) {
     if (refresh) {
+      debugPrint('ln 26 ${prefs.impactRefreshToken}');
       return prefs.impactRefreshToken;
     } else {
+      debugPrint('ln 29 ${prefs.impactAccessToken}');
       return prefs.impactAccessToken;
     }
   }
@@ -32,39 +37,56 @@ class ImpactService {
   // if not we can use the AccessToken
 
   bool checkSavedToken({bool refresh = false}) {
+    // By deafault refresh = false
+
     String? token = retrieveSavedToken(refresh);
-    //Check if there is a token. Used in the Splash page
     if (token == null) {
+      debugPrint('DEBUG: impact no token ln. 39 fnc. checkSavedToken');
       return false;
+      // no token
     }
     try {
+      debugPrint('DEBUG: impact checking token validity ln. 44 fnc. checkSavedToken');
       return ImpactService.checkToken(token);
+      // checking token validity
     } catch (_) {
       return false;
     }
   }
 
-  // this method is static because we might want to check the token
-  // outside the class itself
-  static bool checkToken(String token) {
-    
-    //Check if the token is expired
+  static bool checkToken(String token) {    
+  // this method is static because we to make it available
+  // also outside this class
+
     if (JwtDecoder.isExpired(token)) {
       return false;
     }
+    // Check if the token is expired using JwtDecoder library
+    // It is a small library for decoding a json web token
 
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+    // Decode a string JWT token into a Map<String, dynamic> containing
+    // the decoded JSON payload.
 
-    //Check the iss claim
+    // After this we need to check the iss claim.
+
+    // In the JSON Web Token (JWT) standard, the "iss" (issuer) claim is a string
+    // that identifies the principal that issued the JWT. This can be a human user,
+    // an organization, or a service. The "iss" claim is used to prevent JWT token
+    // abuse, and to provide some basic information about the context in which the
+    // JWT was issued.
+
     if (decodedToken['iss'] == null) {
       return false;
     } else {
       if (decodedToken['iss'] != ServerStrings.issClaim) {
         return false;
+        // if the issuer is not the expected one
       } //else
     } //if-else
 
-    //Check that the user is a patient
+    // Check that the user is a patient/researcher or whatever
+    // stated into server_strings.dart
     if (decodedToken['role'] == null) {
       return false;
     } else {
@@ -74,24 +96,27 @@ class ImpactService {
     } //if-else
 
     return true;
+    // if none of the previous undesired conditions occurs the token is valid
   } //checkToken
 
-  // make the call to get the tokens
+  // This method makes the call to get the tokens
   Future<bool> getTokens(String username, String password) async {
     try {
-      Response response = await _dio.post(
-          '${ServerStrings.authServerUrl}token/',
-          data: {'username': username, 'password': password},
-          options: Options(
-              contentType: 'application/json',
-              followRedirects: false,
-              validateStatus: (status) => true,
-              headers: {"Accept": "application/json"}));
+    // We use a try loop to handle exceptions
 
-      if (ImpactService.checkToken(response.data['access']) &&
-          ImpactService.checkToken(response.data['refresh'])) {
-        prefs.impactRefreshToken = response.data['refresh'];
-        prefs.impactAccessToken = response.data['access'];
+    const url = ServerStrings.backendBaseUrl + ServerStrings.tokenEndpoint;
+    final body = {'username': username, 'password': password};
+
+    //Get the response
+    final response = await http.post(Uri.parse(url), body: body);
+    final decodedResponse = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        prefs.impactRefreshToken = decodedResponse['refresh'];
+        prefs.impactAccessToken = decodedResponse['access'];
+        debugPrint('ACCESS: ${prefs.impactAccessToken}');
+        // get and save refresh and access tokens
+        
         return true;
       } else {
         return false;
@@ -104,20 +129,23 @@ class ImpactService {
 
   Future<bool> refreshTokens() async {
     String? refToken = await retrieveSavedToken(true);
-    try {
-      Response response = await _dio.post(
-          '${ServerStrings.authServerUrl}refresh/',
-          data: {'refresh': refToken},
-          options: Options(
-              contentType: 'application/json',
-              followRedirects: false,
-              validateStatus: (status) => true,
-              headers: {"Accept": "application/json"}));
+    debugPrint('DEBUG: $refToken');
+    // now we are trying to refresh a token so we pass refresh = true
+    // to [retrieveSavedToken()]
 
-      if (ImpactService.checkToken(response.data['access']) &&
-          ImpactService.checkToken(response.data['refresh'])) {
-        prefs.impactRefreshToken = response.data['refresh'];
-        prefs.impactAccessToken = response.data['access'];
+    try {
+    final url = ServerStrings.backendBaseUrl + ServerStrings.refreshEndpoint;
+    final body = {'refresh': refToken};
+
+    //Get the response
+    final response = await http.post(Uri.parse(url), body: body);
+    final decodedResponse = jsonDecode(response.body);
+
+    debugPrint('CIAO $decodedResponse');
+
+      if (response.statusCode == 200) {
+        prefs.impactRefreshToken = decodedResponse['refresh'];
+        prefs.impactAccessToken = decodedResponse['access'];
         return true;
       } else {
         return false;
@@ -128,15 +156,23 @@ class ImpactService {
     }
   }
 
+  // helper method used in the first lines of this class
   Future<void> updateBearer() async {
     if (!await checkSavedToken()) {
       await refreshTokens();
+      // if the access token is no more valid we have to perform a refresh to
+      // obtain new tokens by using the method defined above
     }
     String? token = await prefs.impactAccessToken;
     if (token != null) {
       _dio.options.headers = {'Authorization': 'Bearer $token'};
+      // We are changing the headers cause we want to ask for authorization.
+      // Bearer authentication (also called token authentication) is an HTTP
+      // authentication scheme that involves security tokens called bearer tokens.
     }
   }
+
+  // Method to retrieve a patient:
 
   Future<void> getPatient() async {
     await updateBearer();
@@ -144,6 +180,8 @@ class ImpactService {
     prefs.impactUsername = r.data['data'][0]['username'];
     return r.data['data'][0]['username'];
   }
+
+  // Method to retrieve HR data of a single day:
 
   Future<List<HR>> getDataFromDay(DateTime startTime) async {
     await updateBearer();

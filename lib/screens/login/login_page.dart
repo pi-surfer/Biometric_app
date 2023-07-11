@@ -1,70 +1,187 @@
+import 'package:app_project/screens/onboarding/impact_ob.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login/flutter_login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
-import 'package:app_project/screens/skeleton_page.dart';
+import 'package:app_project/utils/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  static const route = '/login/';
+  static const routeDisplayName = 'LoginPage';
 
-  static const routename = 'LoginPage';
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  @override
-  void initState() {
-    super.initState();
-    //Check if the user is already logged in before rendering the login page
-    _checkLogin();
-  }//initState
+  static bool _passwordVisible = false;
+  final TextEditingController userController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  void _showPassword() {
+    setState(() {
+      _passwordVisible = !_passwordVisible;
+    });
+  }
 
-  void _checkLogin() async {
-    //Get the SharedPreference instance and check if the value of the 'username' filed is set or not
-    final sp = await SharedPreferences.getInstance();
-    if(sp.getString('username') != null){
-      //If 'username is set, push the HomePage
-      _toSkeletonPage(context);
-    }//if
-  }//_checkLogin
-
-  Future<String> _loginUser(LoginData data) async {
-    if(data.name == 'bug@expert.com' && data.password == '5TrNgP5Wd'){
-
-      final sp = await SharedPreferences.getInstance();
-      sp.setString('username', data.name);
-
-      return '';
-    } else {
-      return 'Wrong credentials';
-    }
-  } 
- // _loginUser
-  Future<String> _signUpUser(SignupData data) async {
-    return 'To be implemented';
-  } 
- // _signUpUser
-  Future<String> _recoverPassword(String email) async {
-    return 'Recover password functionality needs to be implemented';
-  } 
- // _recoverPassword
   @override
   Widget build(BuildContext context) {
-    
-    return FlutterLogin(
-      title: 'login_flow',
-      onLogin: _loginUser,
-      onSignup: _signUpUser,
-      onRecoverPassword: _recoverPassword,
-      onSubmitAnimationCompleted: () async{
-        _toSkeletonPage(context);
-      },
+    return Scaffold(
+      backgroundColor: const Color(0xFFE4DFD4),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: const Color(0xFFE4DFD4),
+        title: const Text('Fit2Seed',
+            style: TextStyle(
+                color: Color(0xFF83AA99),
+                fontSize: 28,
+                fontWeight: FontWeight.bold)),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              const Text('Login',
+                  style: TextStyle(
+                      color: Color(0xFF89453C),
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold)),
+              const Text('Please login to use our app',
+                  style: TextStyle(
+                    fontSize: 16,
+                  )),
+              const SizedBox(
+                height: 20,
+              ),
+              const Align(
+                alignment: Alignment.topLeft,
+                child: Text('Username',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
+              const SizedBox(
+                height: 7,
+              ),
+              TextFormField(
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Username is required';
+                  } else if (value != 'username') {
+                    return 'Username is wrong';
+                  }
+                  return null;
+                },
+                controller: userController,
+                cursorColor: const Color(0xFF83AA99),
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(
+                      color: Color(0xFF89453C),
+                    ),
+                  ),
+                  border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  prefixIcon: const Icon(
+                    Icons.person,
+                    color: Color(0xFF89453C),
+                  ),
+                  hintText: 'Username',
+                  hintStyle: const TextStyle(color: Color(0xFF89453C)),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const Align(
+                alignment: Alignment.topLeft,
+                child: Text('Password',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
+              const SizedBox(
+                height: 7,
+              ),
+              TextFormField(
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Password is required';
+                  } else if (value != 'password') {
+                    return 'Password is wrong';
+                  }
+                  return null;
+                },
+                controller: passwordController,
+                cursorColor: const Color(0xFF83AA99),
+                obscureText: !_passwordVisible,
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(
+                      color: Color(0xFF89453C),
+                    ),
+                  ),
+                  border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  prefixIcon: const Icon(
+                    Icons.lock,
+                    color: Color(0xFF89453C),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      // Based on passwordVisible state choose the icon
+                      _passwordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {
+                      _showPassword();
+                    },
+                  ),
+                  hintText: 'Password',
+                  hintStyle: const TextStyle(color: Color(0xFF89453C)),
+                ),
+              ),
+              const Spacer(),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        var prefs =
+                            Provider.of<Preferences>(context, listen: false);
+                        prefs.username = userController.text;
+                        prefs.password = passwordController.text;
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => ImpactOnboarding()));
+                      }
+                    },
+                    style: ButtonStyle(
+                        //maximumSize: const MaterialStatePropertyAll(Size(50, 20)),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                        elevation: MaterialStateProperty.all(0),
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                            const EdgeInsets.symmetric(
+                                horizontal: 80, vertical: 12)),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color(0xFF89453C))),
+                    child: const Text('Log In'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
-  } // build
-  void _toSkeletonPage(BuildContext context){
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SkeletonPage()));
-  }//_toHomePage
-  
-  } // LoginScreen
+  }
+}
