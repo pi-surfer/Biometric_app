@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:intl/intl.dart';
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:app_project/services/server_strings.dart';
 import 'package:app_project/utils/shared_preferences.dart';
@@ -22,8 +26,10 @@ class ImpactService {
 
   String? retrieveSavedToken(bool refresh) {
     if (refresh) {
+      debugPrint('ln 26 ${prefs.impactRefreshToken}');
       return prefs.impactRefreshToken;
     } else {
+      debugPrint('ln 29 ${prefs.impactAccessToken}');
       return prefs.impactAccessToken;
     }
   }
@@ -35,10 +41,12 @@ class ImpactService {
 
     String? token = retrieveSavedToken(refresh);
     if (token == null) {
+      debugPrint('DEBUG: impact no token ln. 39 fnc. checkSavedToken');
       return false;
       // no token
     }
     try {
+      debugPrint('DEBUG: impact checking token validity ln. 44 fnc. checkSavedToken');
       return ImpactService.checkToken(token);
       // checking token validity
     } catch (_) {
@@ -96,23 +104,17 @@ class ImpactService {
     try {
     // We use a try loop to handle exceptions
 
-      Response response = await _dio.post(
-        // Handy method to make http POST request
+    const url = ServerStrings.backendBaseUrl + ServerStrings.tokenEndpoint;
+    final body = {'username': username, 'password': password};
 
-          '${ServerStrings.authServerUrl}token/',
-          data: {'username': username, 'password': password},
-          // We pass authentication credentials
+    //Get the response
+    final response = await http.post(Uri.parse(url), body: body);
+    final decodedResponse = jsonDecode(response.body);
 
-          options: Options(
-              contentType: 'application/json',
-              followRedirects: false,
-              validateStatus: (status) => true,
-              headers: {"Accept": "application/json"}));
-
-      if (ImpactService.checkToken(response.data['access']) &&
-          ImpactService.checkToken(response.data['refresh'])) {
-        prefs.impactRefreshToken = response.data['refresh'];
-        prefs.impactAccessToken = response.data['access'];
+      if (response.statusCode == 200) {
+        prefs.impactRefreshToken = decodedResponse['refresh'];
+        prefs.impactAccessToken = decodedResponse['access'];
+        debugPrint('ACCESS: ${prefs.impactAccessToken}');
         // get and save refresh and access tokens
         
         return true;
@@ -127,23 +129,23 @@ class ImpactService {
 
   Future<bool> refreshTokens() async {
     String? refToken = await retrieveSavedToken(true);
+    debugPrint('DEBUG: $refToken');
     // now we are trying to refresh a token so we pass refresh = true
     // to [retrieveSavedToken()]
 
     try {
-      Response response = await _dio.post(
-          '${ServerStrings.authServerUrl}refresh/',
-          data: {'refresh': refToken},
-          options: Options(
-              contentType: 'application/json',
-              followRedirects: false,
-              validateStatus: (status) => true,
-              headers: {"Accept": "application/json"}));
+    final url = ServerStrings.backendBaseUrl + ServerStrings.refreshEndpoint;
+    final body = {'refresh': refToken};
 
-      if (ImpactService.checkToken(response.data['access']) &&
-          ImpactService.checkToken(response.data['refresh'])) {
-        prefs.impactRefreshToken = response.data['refresh'];
-        prefs.impactAccessToken = response.data['access'];
+    //Get the response
+    final response = await http.post(Uri.parse(url), body: body);
+    final decodedResponse = jsonDecode(response.body);
+
+    debugPrint('CIAO $decodedResponse');
+
+      if (response.statusCode == 200) {
+        prefs.impactRefreshToken = decodedResponse['refresh'];
+        prefs.impactAccessToken = decodedResponse['access'];
         return true;
       } else {
         return false;

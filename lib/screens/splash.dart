@@ -1,5 +1,7 @@
+import 'package:app_project/services/server_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:app_project/services/impact.dart';
 import 'package:app_project/utils/shared_preferences.dart';
@@ -49,13 +51,16 @@ class Splash extends StatelessWidget {
     // no user logged in the app (authentication check)
     if (username == null || password == null) {
       Future.delayed(const Duration(seconds: 1), () => _toLoginPage(context));
-      debugPrint('DEBUG: $routeDisplayName ln. 52 fnc. __checkAuth');
+      debugPrint('DEBUG: $routeDisplayName ln. 52 fnc. _checkAuth');
     } else {
+
+      debugPrint('DEBUG: $routeDisplayName ln. 57 fnc. _checkAuth');
 
       // Tokens check
       ImpactService service =
           Provider.of<ImpactService>(context, listen: false);
       bool responseAccessToken = service.checkSavedToken();
+      debugPrint('DEBUG: $routeDisplayName ln. 63 fnc. _checkAuth $responseAccessToken');
       bool refreshAccessToken = service.checkSavedToken(refresh: true);
 
       // if we have a valid token for impact, proceed
@@ -68,11 +73,31 @@ class Splash extends StatelessWidget {
     }
   }
 
+  Future<bool> _isImpactUp() async {
+
+    //Create the request
+    final url = ServerStrings.backendBaseUrl + ServerStrings.pingEndpoint;
+
+    //Get the response
+    print('Calling: $url');
+    final response = await http.get(Uri.parse(url));
+
+    //Just return if the status code is OK
+    return response.statusCode == 200;
+  } //_isImpactUp
+
 
   // User Interface (TO BE REARRANGED)
   @override
   Widget build(BuildContext context) {
     //Future.delayed(const Duration(seconds: 5), () => _toLoginPage(context));
+    Future.delayed(const Duration(seconds: 1), () async {
+      final result = await _isImpactUp();
+      final message =
+          result ? 'IMPACT backend is up!' : 'IMPACT backend is down!';
+      debugPrint(message);
+      // NOTE: debugPrint extension is neccessary to visualize this debug checkpoint
+    });
     Future.delayed(const Duration(seconds: 1), () => _checkAuth(context));
     return Material(
       child: Container(
