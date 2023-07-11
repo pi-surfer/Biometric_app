@@ -6,16 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-//import 'package:app_project/gestures/tap.dart';
 
-//import 'package:progetto/widgets/custom_plot.dart';
-//import 'package:intl/intl.dart';
-
-/*class GDPData{
-  GDPData(this.continent,this.gdp);
-  final String continent;
-  final dynamic gdp;
-}*/
 
 class Kalories {
   Kalories(this.kalories, this.valueKalories);
