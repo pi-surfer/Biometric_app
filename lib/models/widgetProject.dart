@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app_project/models/projects.dart';
+import 'package:provider/provider.dart';
 
 class ProjectItem extends StatefulWidget {
   //final items;
@@ -38,7 +39,8 @@ class _ProjectItemState extends State<ProjectItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ChangeNotifierProvider<SelectedProject>(create: (context) => SelectedProject(), 
+    child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
@@ -78,11 +80,15 @@ class _ProjectItemState extends State<ProjectItem> {
                                       child: Text(widget.name, style: TextStyle(color: Colors.black,  fontWeight: FontWeight.bold), textAlign: TextAlign.center)),
                                   ),
                                 ),
-                                Switch(value: widget.light, onChanged: (bool value) {
-                                  setState(() {
-                                    widget.light = value;
-                                  });
-                                }),  
+                                Switch(onChanged: (bool value) {
+                                  Provider.of<SelectedProject>(context, listen: false).toggledNotification(islight: !value);
+                                  //setState(() {
+                                    //widget.light = value;
+                                  //});
+                                }, 
+                                //value: widget.light,
+                                value: Provider.of<SelectedProject>(context, listen:false).islight,
+                                ),  
                               ],
                                       
                             ),
@@ -117,6 +123,7 @@ class _ProjectItemState extends State<ProjectItem> {
             height: 20,
           )
       ],
+    )
     );
   }
 }

@@ -1,10 +1,14 @@
 import 'dart:math';
+import 'package:app_project/models/missions.dart';
+import 'package:app_project/screens/partner_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app_project/models/db.dart';
 import 'package:app_project/utils/algorithm.dart';
 import 'package:app_project/utils/shared_preferences.dart';
 import 'package:app_project/services/impact.dart';
 import 'package:app_project/services/server_strings.dart';
+
+import '../models/projects.dart';
 
 class HomeProvider extends ChangeNotifier {
    late List<HR> heartRates;
@@ -14,9 +18,9 @@ class HomeProvider extends ChangeNotifier {
 
    late List<Projects> progetto;
    late int score;
-   late List<Reward> reward;
-   late List<Mission> mission;
-   late List<Parters> partners; 
+   //late List<Reward> reward;
+   late List<Missions> mission;
+   late List<Partner> partners; 
 
    late List<HR> _heartRatesDB;
    late List<Times> _timesDB;
@@ -70,5 +74,7 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+
 
 

@@ -168,3 +168,20 @@ List<Projects> getProject() {
     return farms;
 
 }
+
+
+class SelectedProject extends ChangeNotifier {
+  List<Projects> proj = [];
+
+  bool islight = false;
+
+  void toggledNotification({bool islight = true}) {
+    this.islight = islight;
+    notifyListeners();
+  }
+
+  void selectProject(Projects toAdd) {
+    proj.add(toAdd);
+    notifyListeners();
+  }
+}
