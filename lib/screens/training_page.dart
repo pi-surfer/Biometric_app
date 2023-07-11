@@ -1,15 +1,17 @@
-//import 'package:app_project/widgets/date_widget.dart';
-import 'package:app_project/widgets/date_picker_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-//import 'package:intl/intl.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+//import 'package:app_project/widgets/date_widget.dart';
+import 'package:app_project/widgets/date_picker_widget.dart';
+import 'package:app_project/provider/all_providers.dart';
+import 'package:app_project/models/db.dart';
 //import 'package:app_project/gestures/tap.dart';
 
 //import 'package:progetto/widgets/custom_plot.dart';
-//import 'package:intl/intl.dart';
 
 /*class GDPData{
   GDPData(this.continent,this.gdp);
@@ -84,295 +86,195 @@ class _ActivityState extends State<Activity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 254, 251, 228),
-        appBar: AppBar(
-          centerTitle: true,
-          toolbarHeight: 65,
-          elevation: 0,
-          backgroundColor: const Color.fromARGB(255, 254, 251, 228),
-        ),
-        body: SafeArea(
-            child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      IconButton(
-                          icon: const Icon(
-                            Icons.navigate_before,
-                            color: Color.fromARGB(255, 1, 97, 4),
-                            size: 22,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              day = day.subtract(const Duration(days: 1));
-                            });
-                          }),
-                      Text(DateFormat('dd MM yyyy').format(day),
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 1, 97, 4),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            fontStyle: FontStyle.normal,
-                          )),
-                      IconButton(
-                          icon: const Icon(
-                            Icons.navigate_next,
-                            color: Color.fromARGB(255, 1, 97, 4),
-                            size: 22,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              day = day.add(const Duration(days: 1));
-                            });
-                          }),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(MdiIcons.reload,
-                          size: 18, color: Color.fromARGB(255, 254, 251, 228)),
-                      label: const Text(
-                        "Update your data",
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 254, 251, 228),
-                            fontSize: 16),
+      backgroundColor: const Color.fromARGB(255, 254, 251, 228),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              /*Container(
+                child: DatePicker(
+                  DateTime.now(),
+                  width: 60,
+                  height: 90,
+                  controller: _controller,
+                  //startDate: DateTime.now(),
+                  selectionColor: Color.fromARGB(100, 1, 97, 4),
+                  selectedTextColor: Color.fromARGB(255, 254, 251, 228),
+                  /*inactiveDates: [
+                  DateTime.now().add(Duration(days: 1)),
+                  DateTime.now().add(Duration(days: 2)),
+                  DateTime.now().add(Duration(days: 3)),
+                  DateTime.now().add(Duration(days: 4)),
+                  DateTime.now().add(Duration(days: 5)),
+                  DateTime.now().add(Duration(days: 6)),
+                  DateTime.now().add(Duration(days: 7))
+                ],*/
+                  onDateChange: (date) {
+                    // New date selected
+                    setState(() {
+                      _selectedValue = date;
+                    });
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),*/
+
+              Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.navigate_before, color: Color.fromARGB(255, 1, 97, 4),size:20,),
+                  onPressed: () {
+                    final provider =
+                          Provider.of<HomeProvider>(context, listen: false);
+                      DateTime day = provider.showDate;
+                      provider
+                          .getDataOfDay(day.subtract(const Duration(days: 1)));
+                    }),
+                    Consumer<HomeProvider>(
+                    builder: (context, value, child) => Text(
+                        DateFormat('dd MMMM yyyy').format(value.showDate), style: const TextStyle(
+                        color: Color.fromARGB(255, 1, 97, 4),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        fontStyle: FontStyle.normal,
+                        )
+                      ),),
+                    IconButton(
+                      icon: const Icon(Icons.navigate_next, color: Color.fromARGB(255, 1, 97, 4),size: 20, ),
+                      onPressed: () {
+                        final provider =
+                          Provider.of<HomeProvider>(context, listen: false);
+                      DateTime day = provider.showDate;
+                      provider.getDataOfDay(day.add(const Duration(days: 1)));
+                    }),
+
+                    const SizedBox(
+                      height: 20,
                       ),
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.all(12),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(28.0),
-                          ),
-                        ),
-                        backgroundColor: const Color.fromARGB(255, 1, 97, 4),
-                      )),
-                  Container(
-                    alignment: Alignment.center,
-                    height: 500,
-                    width: 500,
-                    child: SfCircularChart(
-                        annotations: <CircularChartAnnotation>[
-                          CircularChartAnnotation(
-                            widget: Container(
-                              alignment: Alignment.center,
-                              height: 300,
-                              width: 300,
-                              child: SfCircularChart(
-                                  annotations: <CircularChartAnnotation>[
-                                    CircularChartAnnotation(
-                                      widget: Container(
-                                        alignment: Alignment.center,
-                                        height: 200,
-                                        width: 200,
-                                        child: SfCircularChart(
-                                            palette: const <Color>[
-                                              Color.fromARGB(255, 255, 221, 74)
-                                            ],
-                                            tooltipBehavior: _tooltipBehavior,
-                                            series: <CircularSeries>[
-                                              RadialBarSeries<Kalories, String>(
-                                                  useSeriesColor: true,
-                                                  trackOpacity: 0.2,
-                                                  dataSource: _chartData,
-                                                  xValueMapper:
-                                                      (Kalories data, _) =>
-                                                          data.kalories,
-                                                  yValueMapper:
-                                                      (Kalories data, _) =>
-                                                          data.valueKalories,
-                                                  cornerStyle:
-                                                      CornerStyle.endCurve,
-                                                  radius: '100%',
-                                                  innerRadius: '80%',
-                                                  dataLabelSettings:
-                                                      const DataLabelSettings(
-                                                          isVisible: false),
-                                                  enableTooltip: true,
-                                                  maximumValue: 1000)
-                                            ]),
-                                      ),
-                                    )
-                                  ],
-                                  palette: const <Color>[
-                                    Color.fromARGB(255, 253, 176, 120)
-                                  ],
-                                  tooltipBehavior: _tooltipBehavior,
-                                  series: <CircularSeries>[
-                                    RadialBarSeries<Steps, String>(
-                                        useSeriesColor: true,
-                                        trackOpacity: 0.2,
-                                        dataSource: _chartData2,
-                                        xValueMapper: (Steps data, _) =>
-                                            data.steps,
-                                        yValueMapper: (Steps data, _) =>
-                                            data.valueSteps,
-                                        cornerStyle: CornerStyle.endCurve,
-                                        radius: '100%',
-                                        innerRadius: '85%',
-                                        dataLabelSettings:
-                                            const DataLabelSettings(
-                                                isVisible: false),
-                                        enableTooltip: true,
-                                        maximumValue: 1000)
-                                  ]),
-                            ),
-                          )
-                        ],
-                        palette: const <Color>[
-                          Color.fromARGB(255, 255, 114, 106)
-                        ],
-                        tooltipBehavior: _tooltipBehavior,
-                        series: <CircularSeries>[
-                          RadialBarSeries<Times, String>(
-                              useSeriesColor: true,
-                              trackOpacity: 0.2,
-                              dataSource: _chartData3,
-                              xValueMapper: (Times data, _) => data.times,
-                              yValueMapper: (Times data, _) => data.valueTimes,
-                              cornerStyle: CornerStyle.endCurve,
-                              radius: '100%',
-                              innerRadius: '90%',
-                              dataLabelSettings:
-                                  const DataLabelSettings(isVisible: false),
-                              enableTooltip: true,
-                              maximumValue: 1000)
-                        ]),
+
+              TextButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(MdiIcons.reload,
+                      size: 18, color: Color.fromARGB(255, 254, 251, 228)),
+                  label: const Text(
+                    "Update your data",
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 254, 251, 228),
+                        fontSize: 16),
                   ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.all(12),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(28.0),
+                      ),
+                    ),
+                    backgroundColor: const Color.fromARGB(255, 1, 97, 4),
+                  )),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                alignment: Alignment.center,
+                height: 400,
+                width: 400,
+                child: SfCircularChart(
+                    annotations: <CircularChartAnnotation>[
+                      CircularChartAnnotation(
+                        widget: Container(
+                            child: const Text(
+                          'Text',
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins',
+                              color: Color.fromARGB(255, 1, 97, 4)),
+                        )),
+                      )
+                    ],
+                    palette: const <Color>[
+                      Color.fromARGB(255, 255, 114, 106),
+                      Color.fromARGB(255, 255, 221, 74),
+                      Color.fromARGB(255, 253, 176, 120)
+                    ],
+                    legend: Legend(
+                      isVisible: true,
+                      //textStyle: TextStyle(
+                      //fontSize: 15, fontWeight: FontWeight.bold, fontFamily: 'Poppins'),
+
+                      position: LegendPosition.bottom,
+                      alignment: ChartAlignment.center,
+                      overflowMode: LegendItemOverflowMode.wrap,
+                      legendItemBuilder: (String name, dynamic series,
+                          dynamic point, int index) {
+                        return Container(
+                          height: 75,
+                          width: 98,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                MdiIcons.fire,
-                                weight: 20,
-                                color: Color.fromARGB(255, 255, 221, 74),
-                              ),
-                              Text(
-                                'Kalories',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 221, 74),
-                                  fontSize: 15,
-                                  fontStyle: FontStyle.normal,
-                                ),
-                              ),
-                              Text(
-                                '100',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 221, 74),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  fontStyle: FontStyle.normal,
-                                ),
-                              ),
-                              Text(
-                                '/2000',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 221, 74),
-                                  fontSize: 15,
-                                  fontStyle: FontStyle.normal,
-                                ),
-                              ),
+                              Text(name,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Poppins')),
+                              Text(point.y.toString(),
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Poppins')),
+                              Text('/1000',
+                                  style: TextStyle(
+                                      fontSize: 14, fontFamily: 'Poppins')),
                             ],
                           ),
-                          SizedBox(
-                            width: 40,
-                          ),
-                          Column(children: [
-                            Icon(
-                              MdiIcons.walk,
-                              weight: 20,
-                              color: Color.fromARGB(255, 253, 176, 120),
-                            ),
-                            Text(
-                              'Steps',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 253, 176, 120),
-                                fontSize: 15,
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                            Text(
-                              '2500',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 253, 176, 120),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                            Text(
-                              '/10000',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 253, 176, 120),
-                                fontSize: 15,
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                          ]),
-                          SizedBox(
-                            width: 40,
-                          ),
-                          Column(children: [
-                            Icon(
-                              MdiIcons.clock,
-                              weight: 20,
-                              color: Color.fromARGB(255, 255, 114, 106),
-                            ),
-                            Text(
-                              'Times',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 114, 106),
-                                fontSize: 15,
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                            Text(
-                              '20',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 114, 106),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                            Text(
-                              '/180',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 114, 106),
-                                fontSize: 15,
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                          ]),
-                        ]),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Text(
-                    'Oggi hai guadagnato N crediti',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 1, 97, 4),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      fontStyle: FontStyle.normal,
+
+                          //Icon(point.MdiIcons.fire),
+                          //Icon(point.MdiIcons.walk),
+                          //Icon(point.MdiIcons.clock),
+                        );
+                      },
                     ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Container(
+                    tooltipBehavior: _tooltipBehavior,
+                    series: <CircularSeries>[
+                      RadialBarSeries<GDPData, String>(
+                          useSeriesColor: true,
+                          trackOpacity: 0.2,
+                          dataSource: _chartData,
+                          xValueMapper: (GDPData data, _) => data.continent,
+                          yValueMapper: (GDPData data, _) => data.gdp,
+                          cornerStyle: CornerStyle.endCurve,
+                          radius: '90%',
+                          gap: '6%',
+                          dataLabelSettings:
+                              const DataLabelSettings(isVisible: false),
+                          enableTooltip: true,
+                          maximumValue: 1000)
+                    ]),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'Oggi hai guadagnato N crediti',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 1, 97, 4),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  fontStyle: FontStyle.normal,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+
+              /*Container(
                     alignment: Alignment.center,
                     height: 200,
                     width: 200,
@@ -467,7 +369,17 @@ class _ActivityState extends State<Activity> {
                   ]),
                 ]),
           ),
-        )));
+        ]),
+      ),
+    ));
+
+    /*    bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: const Color.fromARGB(255,255,255,255),
+              fixedColor:  const Color.fromARGB(255, 6, 95, 9),
+              items: navBarItems,
+              //currentIndex: _selIdx,
+              //onTap: _onItemTapped,
+                  ),*/
   }
 
   List<Kalories> getChartData() {
