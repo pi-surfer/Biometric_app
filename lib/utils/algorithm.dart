@@ -2,7 +2,7 @@ import 'package:app_project/models/db.dart';
 
 
 int getAerobicTime(List<HR> hr) {
-  List<int> hrValues = [];
+  List<int> hrValues = List.generate(hr.length, (index) => 0);
   int aerobicTime = 0; // time in minutes
 
   for (int idx = 0; idx < hr.length; idx++){

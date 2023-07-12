@@ -68,8 +68,8 @@ List<Projects> getProject() {
 class SelectedProject extends ChangeNotifier {
 
   List<Projects> proj = getProject();
-  List<int> ids = [1, 2, 3, 4, 5];
-  int i = 1;
+  List<int> ids = [0, 1, 2, 3, 4];
+  int i = 0;
 
   void selectProject(id) {
     for (i in ids){proj[i].light = false;}

@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:intl/intl.dart';
-import 'package:dio/dio.dart';
+//import 'package:intl/intl.dart';
+//import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:app_project/services/server_strings.dart';
@@ -14,9 +14,10 @@ import 'package:app_project/models/db.dart';
 
 class ImpactService {
 
+  Map<String, String>? headersBearer = {HttpHeaders.authorizationHeader: ''};
   Preferences prefs;
 
-  final Dio _dio = Dio(BaseOptions(baseUrl: ServerStrings.backendBaseUrl));
+  //final Dio _dio = Dio(BaseOptions(baseUrl: ServerStrings.backendBaseUrl));
   // Here we define backendBaseUrl (defined inside server_strings.dart) as starting
   // path for all the future urls. URLs: backendBaseUrl/nextUrlPath
 
@@ -159,7 +160,8 @@ class ImpactService {
     }
     String? token = await prefs.impactAccessToken;
     if (token != null) {
-      _dio.options.headers = {'Authorization': 'Bearer $token'};
+      headersBearer = {HttpHeaders.authorizationHeader: 'Bearer $token'};
+      //_dio.options.headers = {'Authorization': 'Bearer $token'};
       // We are changing the headers cause we want to ask for authorization.
       // Bearer authentication (also called token authentication) is an HTTP
       // authentication scheme that involves security tokens called bearer tokens.
@@ -170,9 +172,11 @@ class ImpactService {
 
   Future<void> getPatient() async {
     await updateBearer();
-    Response r = await _dio.get('study/v1/patients/active');
-    prefs.impactUsername = r.data['data'][0]['username'];
-    return r.data['data'][0]['username'];
+    final r = await http.get(Uri.parse('study/v1/patients/active'), headers: headersBearer);
+    //Response r = await _dio.get('study/v1/patients/active');
+    final decodedR = jsonDecode(r.body);
+    prefs.impactUsername = decodedR ['data'][0]['username'];
+    return decodedR ['data'][0]['username'];
   }
 
   // Method to retrieve HR, Steps, Kalories data of a single day:
