@@ -8,7 +8,7 @@ import 'package:app_project/services/impact.dart';
 import 'package:app_project/utils/shared_preferences.dart';
 
 import 'package:app_project/screens/skeleton_page.dart';
-import 'package:app_project/screens/login/login_page.dart';
+//import 'package:app_project/screens/login/login_page.dart';
 import 'package:app_project/screens/onboarding/impact_ob.dart';
 
 // MUST MODIFY THE UI (ln. 68 to end), THE OTHER LINES ARE OK
@@ -103,15 +103,28 @@ class Splash extends StatelessWidget {
     return Material(
       child: Container(
         color: const Color.fromARGB(255, 1, 97, 4),
-        child: const Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Text(
-              'Fit2Seed',
-              style: TextStyle(
-                  color: Color.fromARGB(255, 253, 176, 120),
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold),
+            RichText(
+              textAlign: TextAlign.center,
+                text: TextSpan(
+                  text: 'Fit',
+                    style: TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255,255, 114, 106),
+                    ),
+                  children: [
+                    TextSpan(
+                      text: '2',
+                      style: TextStyle(color: Color.fromARGB(255, 255, 221, 74), fontSize: 50),
+                    ),
+                    TextSpan(
+                      text: 'Seed',
+                        style: TextStyle(color: Color.fromARGB(255,50, 165, 19), fontSize: 50),
+                    ),
+                  ]),
             ),
             Center(
               child: CircularProgressIndicator(

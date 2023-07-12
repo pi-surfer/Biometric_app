@@ -1,4 +1,4 @@
-import 'dart:math';
+/*import 'dart:math';
 
 import 'package:app_project/models/CustomClipper.dart';
 import 'package:app_project/screens/login_page.dart';
@@ -156,7 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onTap: () => Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LoginScreen(),
+                          builder: (context) => LoginPage(),
                         ),
                       ),
                       child: Container(
@@ -193,7 +193,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+                                builder: (context) => LoginPage()));
                       },
                       child: Container(
                         margin: EdgeInsets.symmetric(vertical: 20),
@@ -254,4 +254,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-}
+}*/

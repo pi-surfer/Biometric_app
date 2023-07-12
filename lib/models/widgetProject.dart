@@ -106,6 +106,7 @@ class _ProjectItemState extends State<ProjectItem> {
                               child: Text(widget.phrase, style: TextStyle(color: Colors.black, fontSize: 15), textAlign: TextAlign.start, maxLines: 4),
                             ),
                           ),
+                          
                         ],
                       ),
                     )

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:app_project/screens/login/login_page.dart';
+//import 'package:app_project/screens/login/login_page.dart';
 import 'package:app_project/screens/home_page.dart';
 import 'package:app_project/screens/projects_page.dart';
 import 'package:app_project/screens/training_page.dart';
