@@ -1,8 +1,9 @@
+import 'package:app_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:app_project/screens/login/login_page.dart';
+//import 'package:app_project/screens/login/login_page.dart';
 import 'package:app_project/screens/home_page.dart';
 import 'package:app_project/screens/projects_page.dart';
 import 'package:app_project/screens/training_page.dart';
@@ -170,7 +171,7 @@ class _SkeletonPageState extends State<SkeletonPage>
 
     Navigator.pop(context);
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => LoginPage()));
+        .push(MaterialPageRoute(builder: (context) => LoginScreen()));
   } // _toLoginPage
 
   void _toProfilePage(BuildContext context) {

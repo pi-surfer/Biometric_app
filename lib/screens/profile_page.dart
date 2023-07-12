@@ -2,12 +2,17 @@
 
 import 'dart:math';
 
+import 'package:app_project/models/projects.dart';
+import 'package:app_project/screens/login_page.dart';
+import 'package:app_project/screens/reward_page.dart';
+import 'package:app_project/screens/training_page.dart';
 import 'package:app_project/widgets/funky_overlay.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_project/screens/skeleton_page.dart';
 import 'package:app_project/screens/login/login_page.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 
 // TODO: SEE FIRST CONTAINER, IT'S NOT CENTERED ANYMORE WHY???
 class ProfilePage extends StatefulWidget {
@@ -75,19 +80,6 @@ class _ProfilePageState extends State<ProfilePage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color.fromARGB(255, 254, 251, 228),
-        /*appBar: AppBar(
-          leadingWidth: 50,
-          title: Text('Hello Bob!', textAlign: TextAlign.left, style: TextStyle(fontWeight: FontWeight.bold)),
-          centerTitle: true,
-          leading: Icon(Icons.account_circle),
-          actions: [
-              const Icon(Icons.access_time)
-        ],
-          automaticallyImplyLeading: false, // per tornare indietro con la navigazione
-          foregroundColor: Colors.black,
-          backgroundColor: Color.fromARGB(255, 1, 97, 4),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25))
-        ),*/
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -266,20 +258,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                     ),
                     ),
-                      
-    
-                  // pensavo di rimandare alla pagina progetti o di mettere un expansion tile ma non riesco a farlo
-                  /*SizedBox(height: 30),
-                  ElevatedButton(onPressed: () {},
-                    child: Text('Stai sostenendo: ... '),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 50, 165, 19),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 20),
-                      textStyle: TextStyle(
-                        fontSize: 25, fontWeight: FontWeight.bold)
-                    )
-                  ),*/
                   SizedBox(height: 30),
                   Center(
                     child: Container(
@@ -521,91 +499,73 @@ class _ProfilePageState extends State<ProfilePage> {
                         onTap: (){showDialog(
                       barrierColor: const Color.fromARGB(255, 56, 56, 56).withOpacity(0.3),
                       context: context,
-                      builder: (_) => FunkyOverlay(
-                        mainImage: AssetImage('assets/images/miele_Dario.jpg'),
-                        title: 'Le api di Dario',
-                        subtitle: 'The way of the bees',
-                        body: 'prova',
-                        isSelected: true,
-                        ),
+                      builder: (_) => Consumer<SelectedProject>(builder: (context, project, child) {
+                        return FunkyOverlay(
+                          mainImage: AssetImage(project.proj[id].imagePath),
+                          title: project.name,
+                          subtitle: project.address,
+                          body: project.phrase,
+                          isSelected: project.ligth,
+                          );}
+                      ),
                     );},
-                        child: Container(
-                          height: 200.0,
-                          width: 400.0,
-                          margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/miele_Dario.jpg'),
-                              fit: BoxFit.cover,
-                            ),
-                            shape: BoxShape.rectangle,
-                            color: Colors.white,
-                            /*border: Border.all(
-                                  width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                                offset: Offset(0, 3), // changes position of shadow
+                        child: Consumer<SelectedProject>(builder: (context, project, child) {
+                          return Container(
+                            height: 200.0,
+                            width: 400.0,
+                            margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(project.imagePath),
+                                fit: BoxFit.cover,
                               ),
-                            ],
-                          ),
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text('LoremIpsum',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                    background: Paint()
-                                      ..color = Colors.black.withOpacity(0.4)
-                                      ..style = PaintingStyle.fill,
-                                  )),
-                              Text('The way of the bees',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    background: Paint()
-                                      ..color = Colors.black.withOpacity(0.4)
-                                      ..style = PaintingStyle.fill,
-                                  )),
-                              SizedBox(height: 15)
-                            ],
-                          ),
+                              shape: BoxShape.rectangle,
+                              color: Colors.white,
+                              /*border: Border.all(
+                                    width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
+                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(project.name,
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30,
+                                      background: Paint()
+                                        ..color = Colors.black.withOpacity(0.4)
+                                        ..style = PaintingStyle.fill,
+                                    )),
+                                Text(project.address,
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      background: Paint()
+                                        ..color = Colors.black.withOpacity(0.4)
+                                        ..style = PaintingStyle.fill,
+                                    )),
+                                SizedBox(height: 15)
+                              ],
+                            ),
+                          );}
                         ),
                       ),
-              
-            
-                  /*Container(
-                    height: 300,
-                    width: MediaQuery.of(context).size.width*0.8,
-                    padding: EdgeInsets.only(left: 30, right: 30),
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 254, 251, 228),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                        bottomLeft:Radius.circular(20),
-                        bottomRight:Radius.circular(20) 
-                      ),
-                      border: Border.all(
-                      color: Colors.grey.shade400,
-                     )  
-                    ),
-                    child: Text('YOUR PROJECT',
-                      textAlign: TextAlign.center, 
-                      style: TextStyle(fontWeight: FontWeight.bold),),
-                  ),*/
                   SizedBox(
                     height: 30
                   ),
                   Container(
-                    height: 200,
+                    height: 80,
                     width: MediaQuery.of(context).size.width*0.8,
                     padding: EdgeInsets.only(left: 30, right: 30),
                     decoration: BoxDecoration(
@@ -622,56 +582,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     child: Row(
                       children: [
-                        Expanded(
-                          child: Container(
-                            child: Column(
-                              children: [
-                                Text('REWARD'),
-                                IconButton(onPressed: () {}, icon: Icon(MdiIcons.qrcode, color: Color.fromARGB(255, 1, 97, 4), size:18))
-                              ],
-                            ),
-                            //height: 300,
-                            //width: 320,
-                            padding: EdgeInsets.all(20),
-                            margin: EdgeInsets.only(right:20),
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 254, 251, 228),
-                              borderRadius: BorderRadius.all(Radius.circular(20)),
-                              border: Border.all(
-                              color: Colors.grey.shade400,
-                              )  
-                            )
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            child: Column(
-                              children: [
-                                Text('BADGE'),
-                                IconButton(onPressed: () {}, icon: Icon(MdiIcons.crown, color: Color.fromARGB(255, 1, 97, 4), size:18))
-                              ],
-                            ),
-                            //height: 300,
-                            //width: 320,
-                            padding: EdgeInsets.all(20),
-                            margin: EdgeInsets.only(left: 20),
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 254, 251, 228),
-                              borderRadius: BorderRadius.all(Radius.circular(20)),
-                              border: Border.all(
-                              color: Colors.grey.shade400,
-                              )  
-                            )
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                        IconButton(onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => RewardPage()));
+                                }, icon: Icon(MdiIcons.crown, color: Color.fromARGB(255, 1, 97, 4), size:18)),
+                        Text('YOUR MISSIONS AND REWARDS',textAlign: TextAlign.center, 
+                          style: TextStyle(fontWeight: FontWeight.bold)),])),  
                   SizedBox(
                     height: 30
                   ),
                   Container(
-                    height: 125,
+                    height: 80,
                     width: MediaQuery.of(context).size.width*0.8,
                     padding: EdgeInsets.only(left: 30, right: 30),
                     decoration: BoxDecoration(
@@ -681,19 +601,43 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.grey.shade400,
                      )  
                     ),
-                    child: Column(
+                    child: Row(
                       children: [
+                        IconButton(onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Activity()));
+                        },
+                         icon: Icon(Icons.fitness_center, color: Color.fromARGB(255, 1, 97, 4), size:18)),
                         Text('YOUR WEEKLY ACTIVITY',
                           textAlign: TextAlign.center, 
                           style: TextStyle(fontWeight: FontWeight.bold)
-                        ),
-                        Expanded(
-                          child: Container(
-                            padding: EdgeInsets.all(20),
-                            child: Text('Average Time ... 67 min ', textAlign: TextAlign.start,)),
-                        ),
-                        IconButton(onPressed: () {},
-                         icon: Icon(Icons.fitness_center, color: Color.fromARGB(255, 1, 97, 4), size:18))
+                        ),  
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30
+                  ),
+                  Container(
+                    height: 80,
+                    width: MediaQuery.of(context).size.width*0.8,
+                    padding: EdgeInsets.only(left: 30, right: 30),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 254, 251, 228),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(
+                      color: Colors.grey.shade400,
+                     )  
+                    ),
+                    child: Row(
+                      children: [
+                        IconButton(onPressed: () {
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SkeletonPage()));
+                        },
+                         icon: Icon(Icons.home, color: Color.fromARGB(255, 1, 97, 4), size:18)),
+                        Text('Back to Home',
+                          textAlign: TextAlign.center, 
+                          style: TextStyle(fontWeight: FontWeight.bold)
+                        ),  
                       ],
                     ),
                   ),

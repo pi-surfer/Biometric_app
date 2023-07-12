@@ -1,4 +1,5 @@
 import 'package:app_project/models/projects.dart';
+import 'package:app_project/screens/login_page.dart';
 import 'package:app_project/provider/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,9 +9,11 @@ import 'package:app_project/services/impact.dart';
 import 'package:app_project/models/missions.dart';
 import 'package:app_project/utils/shared_preferences.dart';
 
+import 'screens/login/login_page.dart';
+
 // VERSION 1.2
 
-void main() {
+/*void main() {
   runApp(MyApp());
 } // main
 
@@ -41,5 +44,21 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(fontFamily: 'Poppins'),
           home: const Splash(),
         ));
+  } // build
+} // MyApp */
+
+void main() {
+  runApp(const MyApp());
+
+} // main
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: LoginScreen()
+    );
   } // build
 } // MyApp
