@@ -183,7 +183,7 @@ class ImpactService {
 
   // Method to retrieve HR data of a single day:
 
-  Future<List<HR>> getDataFromDay(DateTime startTime) async {
+  Future<List<HR>> getHRFromDay(DateTime startTime) async {
     await updateBearer();
     Response r = await _dio.get(
         'data/v1/heart_rate/patients/${prefs.impactUsername}/daterange/start_date/${DateFormat('y-M-d').format(startTime)}/end_date/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/');
@@ -204,6 +204,52 @@ class ImpactService {
     var hrlist = hr.toList()
       ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
     return hrlist;
+  }
+
+  Future<List<Steps>> getStepFromDay(DateTime startTime) async {
+    await updateBearer();
+    Response r = await _dio.get(
+        'data/v1/steps/patients/${prefs.impactUsername}/daterange/start_date/${DateFormat('y-M-d').format(startTime)}/end_date/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/');
+    List<dynamic> data = r.data['data'];
+    List<Steps> steps = [];
+    for (var daydata in data) {
+      String day = daydata['date'];
+      for (var dataday in daydata['data']) {
+        String hour = dataday['time'];
+        String datetime = '${day}T$hour';
+        DateTime timestamp = _truncateSeconds(DateTime.parse(datetime));
+        Steps stepsnew = Steps(timestamp: timestamp, value: dataday['value']);
+        if (!steps.any((e) => e.timestamp.isAtSameMomentAs(stepsnew.timestamp))) {
+          steps.add(stepsnew);
+        }
+      }
+    }
+    var stepslist = steps.toList()
+      ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
+    return stepslist;
+  }
+
+  Future<List<Kalories>> getKalFromDay(DateTime startTime) async {
+    await updateBearer();
+    Response r = await _dio.get(
+        'data/v1/kalories/patients/${prefs.impactUsername}/daterange/start_date/${DateFormat('y-M-d').format(startTime)}/end_date/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/');
+    List<dynamic> data = r.data['data'];
+    List<Kalories> kalories = [];
+    for (var daydata in data) {
+      String day = daydata['date'];
+      for (var dataday in daydata['data']) {
+        String hour = dataday['time'];
+        String datetime = '${day}T$hour';
+        DateTime timestamp = _truncateSeconds(DateTime.parse(datetime));
+        Kalories kaloriesnew = Kalories(timestamp: timestamp, value: dataday['value']);
+        if (!kalories.any((e) => e.timestamp.isAtSameMomentAs(kaloriesnew.timestamp))) {
+          kalories.add(kaloriesnew);
+        }
+      }
+    }
+    var kalorieslist = kalories.toList()
+      ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
+    return kalorieslist;
   }
 
   DateTime _truncateSeconds(DateTime input) {

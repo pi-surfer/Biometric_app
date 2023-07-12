@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:intl/intl.dart';
+
 // We create a different class for each type of data and
 // each one is characterized by the properties of interest
 
@@ -12,13 +14,21 @@ class HR {
 }
 
 
-class Steps {
+class Steps{
   final DateTime timestamp;
   final int value;
 
   Steps({required this.timestamp, required this.value});
 
-}
+  Steps.fromJson(String date, Map<String, dynamic> json) :
+      timestamp = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
+      value = int.parse(json["value"]);
+
+  @override
+  String toString() {
+    return 'Steps(time: $timestamp, value: $value)';
+  }//toString
+}//Steps
 
 class Kalories {
   final DateTime timestamp;
@@ -28,13 +38,12 @@ class Kalories {
 
 }
 
-class Times {
+/*class Times {
   final DateTime timestamp;
   final double value;
 
   Times({required this.timestamp, required this.value});
-
-}
+}*/
 
 class FitbitGen {
   final Random _random = Random();
@@ -63,11 +72,11 @@ class FitbitGen {
             value: _random.nextInt(50000)));
   }
 
-  List<Times> fetchTimes() {
+  /*List<Times> fetchTimes() {
     return List.generate(
         100,
         (index) => Times(
             timestamp: DateTime.now().subtract(Duration(hours: index)),
             value: _random.nextDouble()));
-  }
+  }*/
 }

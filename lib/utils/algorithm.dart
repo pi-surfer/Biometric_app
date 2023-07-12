@@ -1,11 +1,23 @@
 import 'dart:math';
-
+import 'package:collection/collection.dart';
 import 'package:app_project/models/db.dart';
+
+
+int getAerobicTime(List<HR> hr) {
+  List<int> hrValues = [];
+  int aerobicTime = 0;
+
+  for (int idx = 0; idx < hr.length; idx++){
+    hrValues[idx] = hr[idx].value;
+  }
+
+
+  return aerobicTime;
+}
 
 
 // funzione per avere l'indice di miglioramento dello stato di salute
 // serve scegliere come calcolarlo magari tenendo conto dell'articolo sul drive
-
 
 // funzione che calcola lo Score che incrementa giornalmente
  List<Score> getGlobalScore(List<Kalories> kalories, List<Steps> steps, List<Times> times) {
