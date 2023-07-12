@@ -1,3 +1,4 @@
+import 'package:app_project/models/projects.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
                   )),
           ChangeNotifierProvider<Missions>(
               child: MyApp(), create: (_) => Missions()),
+          ChangeNotifierProvider<SelectedProject>(
+            child: MyApp(), create: (_) => SelectedProject()
+          ),
         ],
         child: MaterialApp(
           theme: ThemeData(fontFamily: 'Poppins'),

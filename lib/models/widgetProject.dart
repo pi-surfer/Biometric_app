@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:app_project/models/projects.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class ProjectItem extends StatefulWidget {
   //final items;
   final String name;
   final String address;
   final String phrase;
   final String imagePath;
+  final int projectId;
   bool light;
   bool selected;
 
@@ -16,7 +18,8 @@ class ProjectItem extends StatefulWidget {
     required this.name, 
     required this.address, 
     required this.phrase, 
-    required this.imagePath, 
+    required this.imagePath,
+    required this.projectId, 
     this.light=false,
     this.selected=false,
   }) : super(key: key);
@@ -33,14 +36,11 @@ class _ProjectItemState extends State<ProjectItem> {
   @override
   void initState() {
     super.initState();
-  }
-  
-  
+  }    
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SelectedProject>(create: (context) => SelectedProject(), 
-    child: Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
@@ -79,17 +79,18 @@ class _ProjectItemState extends State<ProjectItem> {
                                     child: Container(
                                       child: Text(widget.name, style: TextStyle(color: Colors.black,  fontWeight: FontWeight.bold), textAlign: TextAlign.center)),
                                   ),
-                                ),
-                                Switch(onChanged: (bool value) {
-                                  Provider.of<SelectedProject>(context, listen: false).toggledNotification(islight: !value);
-                                  //setState(() {
-                                    //widget.light = value;
-                                  //});
-                                }, 
-                                //value: widget.light,
-                                value: Provider.of<SelectedProject>(context, listen:false).islight,
-                                ),  
-                              ],
+                                  ),
+                                  Consumer<SelectedProject>(builder:
+                                      ((context, projectProvider, child) {
+                                    return Switch(
+                                        value: projectProvider
+                                            .proj[widget.projectId].light,
+                                        onChanged: (bool value) {
+                                          projectProvider
+                                              .selectProject(widget.projectId);
+                                        });
+                                  })),
+                                ],
                                       
                             ),
                           ),
@@ -123,7 +124,6 @@ class _ProjectItemState extends State<ProjectItem> {
             height: 20,
           )
       ],
-    )
     );
   }
 }
