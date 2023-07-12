@@ -2,6 +2,7 @@
 
 import 'dart:math';
 
+import 'package:app_project/screens/login_page.dart';
 import 'package:app_project/widgets/funky_overlay.dart';
 import 'package:flutter/material.dart';
 
@@ -729,7 +730,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void _toLoginPage(BuildContext context) {
     Navigator.pop(context);
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => LoginPage()));
+        .push(MaterialPageRoute(builder: (context) => LoginScreen()));
   } // _toLoginPage
 
   void _toHomePage(BuildContext context) {

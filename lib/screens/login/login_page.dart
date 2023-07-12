@@ -1,4 +1,4 @@
-import 'package:app_project/screens/onboarding/impact_ob.dart';
+/*import 'package:app_project/screens/onboarding/impact_ob.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -184,4 +184,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-}
+}*/

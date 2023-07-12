@@ -1,3 +1,4 @@
+import 'package:app_project/screens/login_page.dart';
 import 'package:app_project/services/server_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class Splash extends StatelessWidget {
   void _toLoginPage(BuildContext context) {
     debugPrint('DEBUG: $routeDisplayName ln. 21 fnc. _toLoginPage');
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: ((context) => LoginPage())));
+        MaterialPageRoute(builder: ((context) => LoginScreen())));
         debugPrint('DEBUG: $routeDisplayName ln. 24 fnc. _toLoginPage');
   } //_toLoginPage
 
