@@ -42,7 +42,7 @@ List<Projects> getProject() {
       name: "carciofi di Matteo",
       address: "Via sconosciuta 3, Treviso",
       phrase: "Organic artichoke production, hand-harvested from March. Come visit our store, we offer many other fruits and vegetables",
-      imagePath: "images/carciofi_Matteo.jpg",
+      imagePath: "assets/images/carciofi_Matteo.jpg",
       ));
 
     farms.add(Projects(
@@ -50,7 +50,7 @@ List<Projects> getProject() {
       name: "zucchine di Anna",
       address: "Via sconosciuta 4, Belluno",
       phrase: "Are you looking for a zucchini producer and supplier? Come visit us! Since 2005, we have specialized in the production of zucchini, hand-picked and high quality",
-      imagePath: "images/zucchine_Anna.jpg",
+      imagePath: "assets/images/zucchine_Anna.jpg",
       ));
 
     farms.add(Projects(
@@ -58,7 +58,7 @@ List<Projects> getProject() {
       name: "Insalata di Jenny",
       address: "Via sconosciuta 5, Padova",
       phrase: "Every day on the table with freshness, taste and crispness. We take care of everything from growing to packing. Any type of salad from the local area",
-      imagePath: "images/insalata_Jenny.jpg",
+      imagePath: "assets/images/insalata_Jenny.jpg",
       ));
 
     return farms;

@@ -1,4 +1,5 @@
 import 'package:app_project/models/projects.dart';
+import 'package:app_project/provider/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,11 +29,13 @@ class MyApp extends StatelessWidget {
               create: (context) => ImpactService(
                     Provider.of<Preferences>(context, listen: false),
                   )),
+          ChangeNotifierProvider<HomeProvider>(
+              create: (context) => HomeProvider(
+                  Provider.of<ImpactService>(context, listen: false))),
           ChangeNotifierProvider<Missions>(
               child: MyApp(), create: (_) => Missions()),
           ChangeNotifierProvider<SelectedProject>(
-            child: MyApp(), create: (_) => SelectedProject()
-          ),
+              child: MyApp(), create: (_) => SelectedProject()),
         ],
         child: MaterialApp(
           theme: ThemeData(fontFamily: 'Poppins'),

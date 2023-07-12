@@ -20,10 +20,8 @@ class Splash extends StatelessWidget {
 
   // Method for navigation SplashPage -> LoginPage
   void _toLoginPage(BuildContext context) {
-    debugPrint('DEBUG: $routeDisplayName ln. 21 fnc. _toLoginPage');
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: ((context) => LoginPage())));
-        debugPrint('DEBUG: $routeDisplayName ln. 24 fnc. _toLoginPage');
   } //_toLoginPage
 
   // Method for navigation SplashPage -> HomePage
@@ -44,23 +42,18 @@ class Splash extends StatelessWidget {
     var prefs = Provider.of<Preferences>(context, listen: false);
     String? username = prefs.username;
     String? password = prefs.password;
-    debugPrint('DEBUG: $routeDisplayName ln. 44 fnc. _checkAuth');
 
     // username and password were defined inside the shared preferences
 
     // no user logged in the app (authentication check)
     if (username == null || password == null) {
       Future.delayed(const Duration(seconds: 1), () => _toLoginPage(context));
-      debugPrint('DEBUG: $routeDisplayName ln. 52 fnc. _checkAuth');
     } else {
-
-      debugPrint('DEBUG: $routeDisplayName ln. 57 fnc. _checkAuth');
 
       // Tokens check
       ImpactService service =
           Provider.of<ImpactService>(context, listen: false);
       bool responseAccessToken = service.checkSavedToken();
-      debugPrint('DEBUG: $routeDisplayName ln. 63 fnc. _checkAuth $responseAccessToken');
       bool refreshAccessToken = service.checkSavedToken(refresh: true);
 
       // if we have a valid token for impact, proceed
@@ -79,7 +72,6 @@ class Splash extends StatelessWidget {
     final url = ServerStrings.backendBaseUrl + ServerStrings.pingEndpoint;
 
     //Get the response
-    print('Calling: $url');
     final response = await http.get(Uri.parse(url));
 
     //Just return if the status code is OK

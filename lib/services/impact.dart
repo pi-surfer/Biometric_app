@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -26,10 +27,8 @@ class ImpactService {
 
   String? retrieveSavedToken(bool refresh) {
     if (refresh) {
-      debugPrint('ln 26 ${prefs.impactRefreshToken}');
       return prefs.impactRefreshToken;
     } else {
-      debugPrint('ln 29 ${prefs.impactAccessToken}');
       return prefs.impactAccessToken;
     }
   }
@@ -41,12 +40,10 @@ class ImpactService {
 
     String? token = retrieveSavedToken(refresh);
     if (token == null) {
-      debugPrint('DEBUG: impact no token ln. 39 fnc. checkSavedToken');
       return false;
       // no token
     }
     try {
-      debugPrint('DEBUG: impact checking token validity ln. 44 fnc. checkSavedToken');
       return ImpactService.checkToken(token);
       // checking token validity
     } catch (_) {
@@ -122,14 +119,13 @@ class ImpactService {
         return false;
       }
     } catch (e) {
-      print(e);
+      debugPrint('$e');
       return false;
     }
   }
 
   Future<bool> refreshTokens() async {
     String? refToken = await retrieveSavedToken(true);
-    debugPrint('DEBUG: $refToken');
     // now we are trying to refresh a token so we pass refresh = true
     // to [retrieveSavedToken()]
 
@@ -141,8 +137,6 @@ class ImpactService {
     final response = await http.post(Uri.parse(url), body: body);
     final decodedResponse = jsonDecode(response.body);
 
-    debugPrint('CIAO $decodedResponse');
-
       if (response.statusCode == 200) {
         prefs.impactRefreshToken = decodedResponse['refresh'];
         prefs.impactAccessToken = decodedResponse['access'];
@@ -151,7 +145,7 @@ class ImpactService {
         return false;
       }
     } catch (e) {
-      print(e);
+      debugPrint('$e');
       return false;
     }
   }
@@ -206,27 +200,27 @@ class ImpactService {
     return hrlist;
   }
 
-  Future<List<Steps>> getStepFromDay(DateTime startTime) async {
+  Future<List<Steps>> getStepFromDay(DateTime day) async {
     await updateBearer();
-    Response r = await _dio.get(
-        'data/v1/steps/patients/${prefs.impactUsername}/daterange/start_date/${DateFormat('y-M-d').format(startTime)}/end_date/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/');
-    List<dynamic> data = r.data['data'];
-    List<Steps> steps = [];
-    for (var daydata in data) {
-      String day = daydata['date'];
-      for (var dataday in daydata['data']) {
-        String hour = dataday['time'];
-        String datetime = '${day}T$hour';
-        DateTime timestamp = _truncateSeconds(DateTime.parse(datetime));
-        Steps stepsnew = Steps(timestamp: timestamp, value: dataday['value']);
-        if (!steps.any((e) => e.timestamp.isAtSameMomentAs(stepsnew.timestamp))) {
-          steps.add(stepsnew);
-        }
-      }
+    List<Steps> result;
+
+    final url = ServerStrings.backendBaseUrl + ServerStrings.stepsEndpoint + ServerStrings.patientUsername + '/day/$day/';    var access = retrieveSavedToken(false);
+    final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
+
+    final response = await http.get(Uri.parse(url), headers: headers);
+
+    if (response.statusCode == 200) {
+      final decodedResponse = jsonDecode(response.body);
+      result = [];
+      for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
+        result.add(Steps.fromJson(decodedResponse['data']['date'], decodedResponse['data']['data'][i]));
+      }//for
+    } //if
+    else{
+      result = [Steps(timestamp: day, value: 0)];
     }
-    var stepslist = steps.toList()
-      ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
-    return stepslist;
+
+    return result;
   }
 
   Future<List<Kalories>> getKalFromDay(DateTime startTime) async {

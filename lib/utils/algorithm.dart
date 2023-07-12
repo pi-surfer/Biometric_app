@@ -1,5 +1,3 @@
-import 'dart:math';
-import 'package:collection/collection.dart';
 import 'package:app_project/models/db.dart';
 
 
@@ -32,12 +30,7 @@ double getTotalKalories(List<Kalories> kalories) {
   return totalKalories;
 }
 
-
-// funzione per avere l'indice di miglioramento dello stato di salute
-// serve scegliere come calcolarlo magari tenendo conto dell'articolo sul drive
-
-// funzione che calcola lo Score che incrementa giornalmente
- List<Score> getGlobalScore(double totalKalories, int totalSteps, int aerobicTime) {
+ int getDailyScore(double totalKalories, int totalSteps, int aerobicTime) {
 
   int dailyScore = 0;
 
@@ -53,23 +46,6 @@ double getTotalKalories(List<Kalories> kalories) {
     dailyScore = dailyScore + 1;
   }
 
-  return dailyScore as List<Score>;
+  return dailyScore;
 
 }
-
-
-class Score {
-}
-
-
-// funzione per calcolare se si sta eseguendo attività aerobica sulla base
-// dell'heart rate
-
-
-// funzione che calcola per quanto tempo si mantiene l'attività aerobica
-
-
-// funzione che calcola i passi totali nella giornata (in teoria basta prenderli
-// semplicemente dal database)
-
-

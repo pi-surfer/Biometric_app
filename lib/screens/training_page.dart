@@ -6,7 +6,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 import 'package:app_project/widgets/date_picker_widget.dart';
-import 'package:app_project/provider/all_providers.dart';
+import 'package:app_project/provider/home_provider.dart';
 import 'package:app_project/models/db.dart' as db;
 
 

@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 import 'package:app_project/models/missions.dart';
 import 'package:app_project/models/db.dart' as db;
-import 'package:app_project/provider/all_providers.dart';
+import 'package:app_project/provider/home_provider.dart';
 
 //import 'package:app_project/providers/medals_provider.dart';
 //import 'package:app_project/screens/login_page.dart';

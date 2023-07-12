@@ -1,28 +1,25 @@
 import 'dart:math';
-import 'package:app_project/models/missions.dart';
-import 'package:app_project/screens/partner_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app_project/models/db.dart';
 import 'package:app_project/utils/algorithm.dart';
 import 'package:app_project/utils/shared_preferences.dart';
 import 'package:app_project/services/impact.dart';
-import 'package:app_project/services/server_strings.dart';
 
 import '../models/projects.dart';
 
 class HomeProvider extends ChangeNotifier {
    late List<HR> heartRates;
-   late int times;
+   late int aerobicTime;
    late List<Kalories> kalories;
    late double totalKalories;
    late List<Steps> steps;
    late int totalSteps;
 
-   late List<Projects> progetto;
-   late int score;
+   late List<Projects> projects;
+   late int score = 0;
    //late List<Reward> reward;
-   late List<Missions> mission;
-   late List<Partner> partners; 
+   //late List<Missions> mission;
+   //late List<Partner> partners; 
 
    late List<HR> _heartRatesDB;
    //late List<Times> _timesDB;
@@ -55,7 +52,7 @@ class HomeProvider extends ChangeNotifier {
     _heartRatesDB = await impactService.getHRFromDay(lastFetch);
     _stepsDB = await impactService.getStepFromDay(lastFetch);
     _kaloriesDB = await impactService.getKalFromDay(lastFetch);
-    times = getAerobicTime(_heartRatesDB);
+    aerobicTime = getAerobicTime(_heartRatesDB);
     totalKalories = getTotalKalories(_kaloriesDB);
     totalSteps = getTotalSteps(_stepsDB);
     
@@ -83,6 +80,10 @@ class HomeProvider extends ChangeNotifier {
         .toList()
         .reversed
         .toList();
+    aerobicTime = getAerobicTime(heartRates);
+    totalSteps = getTotalSteps(steps);
+    totalKalories = getTotalKalories(kalories);
+    score = getDailyScore(totalKalories, totalSteps, aerobicTime);
     /*times = _timesDB
         .where((element) => element.timestamp.day == showDate.day)
         .toList()

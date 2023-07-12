@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:app_project/widgets/linechart_week.dart';
 import 'package:app_project/models/funky_overlays.dart';
 import 'package:app_project/models/text_styles.dart';
-import 'package:app_project/provider/all_providers.dart';
-import 'package:app_project/models/db.dart' as db;
+import 'package:app_project/provider/home_provider.dart';
+//import 'package:app_project/models/db.dart' as db;
 
 
 class HomePage extends StatefulWidget {
@@ -160,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           SizedBox(width: 25),
-                          Text(provider.score.toString(),
+                          Text('${provider.score}',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 17,
