@@ -17,6 +17,8 @@ class ServerStrings {
   static const refreshEndpoint = 'gate/v1/refresh/';
   
   static String stepsEndpoint = 'data/v1/steps/patients/';
+  static String kaloriesEndpoint = 'data/v1/calories/patients/';
+  static String hrEndpoint = 'data/v1/heart_rate/patients/';
 
   static String patientUsername = 'Jpefaq6m58';
 }

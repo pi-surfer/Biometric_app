@@ -175,30 +175,7 @@ class ImpactService {
     return r.data['data'][0]['username'];
   }
 
-  // Method to retrieve HR data of a single day:
-
-  Future<List<HR>> getHRFromDay(DateTime startTime) async {
-    await updateBearer();
-    Response r = await _dio.get(
-        'data/v1/heart_rate/patients/${prefs.impactUsername}/daterange/start_date/${DateFormat('y-M-d').format(startTime)}/end_date/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/');
-    List<dynamic> data = r.data['data'];
-    List<HR> hr = [];
-    for (var daydata in data) {
-      String day = daydata['date'];
-      for (var dataday in daydata['data']) {
-        String hour = dataday['time'];
-        String datetime = '${day}T$hour';
-        DateTime timestamp = _truncateSeconds(DateTime.parse(datetime));
-        HR hrnew = HR(timestamp: timestamp, value: dataday['value']);
-        if (!hr.any((e) => e.timestamp.isAtSameMomentAs(hrnew.timestamp))) {
-          hr.add(hrnew);
-        }
-      }
-    }
-    var hrlist = hr.toList()
-      ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
-    return hrlist;
-  }
+  // Method to retrieve HR, Steps, Kalories data of a single day:
 
   Future<List<Steps>> getStepFromDay(DateTime day) async {
     await updateBearer();
@@ -223,7 +200,81 @@ class ImpactService {
     return result;
   }
 
-  Future<List<Kalories>> getKalFromDay(DateTime startTime) async {
+  Future<List<HR>> getHRFromDay(DateTime day) async {
+    await updateBearer();
+    List<HR> result;
+
+    final url = ServerStrings.backendBaseUrl + ServerStrings.hrEndpoint + ServerStrings.patientUsername + '/day/$day/';    var access = retrieveSavedToken(false);
+    final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
+
+    final response = await http.get(Uri.parse(url), headers: headers);
+
+    if (response.statusCode == 200) {
+      final decodedResponse = jsonDecode(response.body);
+      result = [];
+      for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
+        result.add(HR.fromJson(decodedResponse['data']['date'], decodedResponse['data']['data'][i]));
+      }//for
+    } //if
+    else{
+      result = [HR(timestamp: day, value: 0)];
+    }
+
+    return result;
+  }
+
+  Future<List<Kalories>> getKalFromDay(DateTime day) async {
+    await updateBearer();
+    List<Kalories> result;
+
+    final url = ServerStrings.backendBaseUrl + ServerStrings.kaloriesEndpoint + ServerStrings.patientUsername + '/day/$day/';    var access = retrieveSavedToken(false);
+    final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
+
+    final response = await http.get(Uri.parse(url), headers: headers);
+
+    if (response.statusCode == 200) {
+      final decodedResponse = jsonDecode(response.body);
+      result = [];
+      for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
+        result.add(Kalories.fromJson(decodedResponse['data']['date'], decodedResponse['data']['data'][i]));
+      }//for
+    } //if
+    else{
+      result = [Kalories(timestamp: day, value: 0)];
+    }
+
+    return result;
+  }
+
+  DateTime _truncateSeconds(DateTime input) {
+    return DateTime(
+        input.year, input.month, input.day, input.hour, input.minute);
+  }
+
+  /*Future<List<HR>> getHRFromDay(DateTime startTime) async {
+    await updateBearer();
+    Response r = await _dio.get(
+        'data/v1/heart_rate/patients/${prefs.impactUsername}/daterange/start_date/${DateFormat('y-M-d').format(startTime)}/end_date/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/');
+    List<dynamic> data = r.data['data'];
+    List<HR> hr = [];
+    for (var daydata in data) {
+      String day = daydata['date'];
+      for (var dataday in daydata['data']) {
+        String hour = dataday['time'];
+        String datetime = '${day}T$hour';
+        DateTime timestamp = _truncateSeconds(DateTime.parse(datetime));
+        HR hrnew = HR(timestamp: timestamp, value: dataday['value']);
+        if (!hr.any((e) => e.timestamp.isAtSameMomentAs(hrnew.timestamp))) {
+          hr.add(hrnew);
+        }
+      }
+    }
+    var hrlist = hr.toList()
+      ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
+    return hrlist;
+  }*/
+
+  /*Future<List<Kalories>> getKalFromDay(DateTime startTime) async {
     await updateBearer();
     Response r = await _dio.get(
         'data/v1/kalories/patients/${prefs.impactUsername}/daterange/start_date/${DateFormat('y-M-d').format(startTime)}/end_date/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/');
@@ -244,10 +295,6 @@ class ImpactService {
     var kalorieslist = kalories.toList()
       ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
     return kalorieslist;
-  }
+  }*/
 
-  DateTime _truncateSeconds(DateTime input) {
-    return DateTime(
-        input.year, input.month, input.day, input.hour, input.minute);
-  }
 }
