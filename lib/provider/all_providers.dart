@@ -12,9 +12,11 @@ import '../models/projects.dart';
 
 class HomeProvider extends ChangeNotifier {
    late List<HR> heartRates;
-   late List<Times> times;
+   late int times;
    late List<Kalories> kalories;
+   late double totalKalories;
    late List<Steps> steps;
+   late int totalSteps;
 
    late List<Projects> progetto;
    late int score;
@@ -23,7 +25,7 @@ class HomeProvider extends ChangeNotifier {
    late List<Partner> partners; 
 
    late List<HR> _heartRatesDB;
-   late List<Times> _timesDB;
+   //late List<Times> _timesDB;
    late List<Kalories> _kaloriesDB;
    late List<Steps> _stepsDB; 
 
@@ -34,14 +36,33 @@ class HomeProvider extends ChangeNotifier {
    final FitbitGen fitbitGen = FitbitGen();
    final ImpactService impactService;
    final Random _random = Random();
+   bool doneInit = false;
+
+   HomeProvider(this.impactService) {
+    _init();
+  }
+
+  Future<void> _init() async {
+    await _fetchAndCalculate();
+    getDataOfDay(showDate);
+    doneInit = true;
+    notifyListeners();
+  }
 
    DateTime lastFetch = DateTime.now().subtract(Duration(days: 7));
 
-  void _fetchAndCalculate() {
-    _heartRatesDB = fitbitGen.fetchHR();
-    _timesDB = fitbitGen.fetchTimes();
-    _stepsDB = fitbitGen.fetchSteps();
-    _kaloriesDB = fitbitGen.fetchKalories();
+  Future<void> _fetchAndCalculate() async {
+    _heartRatesDB = await impactService.getHRFromDay(lastFetch);
+    _stepsDB = await impactService.getStepFromDay(lastFetch);
+    _kaloriesDB = await impactService.getKalFromDay(lastFetch);
+    times = getAerobicTime(_heartRatesDB);
+    totalKalories = getTotalKalories(_kaloriesDB);
+    totalSteps = getTotalSteps(_stepsDB);
+    
+    //_heartRatesDB = fitbitGen.fetchHR();
+    //_timesDB = fitbitGen.fetchTimes();
+    //_stepsDB = fitbitGen.fetchSteps();
+    //_kaloriesDB = fitbitGen.fetchKalories();
     
   }
 
@@ -62,11 +83,11 @@ class HomeProvider extends ChangeNotifier {
         .toList()
         .reversed
         .toList();
-    times = _timesDB
+    /*times = _timesDB
         .where((element) => element.timestamp.day == showDate.day)
         .toList()
         .reversed
-        .toList();
+        .toList(); */
     //fullexposure = exposure.map((e) => e.value).reduce(
       //    (value, element) => value + element,
       //  );

@@ -11,6 +11,15 @@ class HR {
   final int value;
 
   HR({required this.timestamp, required this.value});
+
+  HR.fromJson(String date, Map<String, dynamic> json) :
+      timestamp = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
+      value = int.parse(json["value"]);
+
+  @override
+  String toString() {
+    return 'heartRate(time: $timestamp, value: $value)';
+  }//toString
 }
 
 
@@ -36,14 +45,16 @@ class Kalories {
 
   Kalories({required this.timestamp, required this.value});
 
+  Kalories.fromJson(String date, Map<String, dynamic> json) :
+      timestamp = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
+      value = int.parse(json["value"]);
+
+  @override
+  String toString() {
+    return 'Kalories(time: $timestamp, value: $value)';
+  }//toString
+
 }
-
-/*class Times {
-  final DateTime timestamp;
-  final double value;
-
-  Times({required this.timestamp, required this.value});
-}*/
 
 class FitbitGen {
   final Random _random = Random();
@@ -72,11 +83,4 @@ class FitbitGen {
             value: _random.nextInt(50000)));
   }
 
-  /*List<Times> fetchTimes() {
-    return List.generate(
-        100,
-        (index) => Times(
-            timestamp: DateTime.now().subtract(Duration(hours: index)),
-            value: _random.nextDouble()));
-  }*/
 }

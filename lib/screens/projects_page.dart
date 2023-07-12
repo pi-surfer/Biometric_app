@@ -19,7 +19,7 @@ class ProjectsPage extends StatefulWidget {
 class _ProjectsPageState extends State<ProjectsPage> {
 
   
-  final IdProject id = IdProject();
+  //final IdProject id = IdProject();
   List<bool> light = [false,false,false,false,false];
   List<bool> selected = [false,false,false,false,false];
   int index = 1;
@@ -33,9 +33,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
       backgroundColor:  Color.fromARGB(255, 254, 251, 228),
       body: Center( 
         child: ListView.builder(
-          itemCount: id.ids.length,
+          itemCount: projects.length,
           itemBuilder: (context, index) {
-            return ProjectItem(name: projects[index].name, address: projects[index].address, phrase: projects[index].phrase, imagePath: projects[index].imagePath);
+            return ProjectItem(projectId:projects[index].id, name: projects[index].name, address: projects[index].address, phrase: projects[index].phrase, imagePath: projects[index].imagePath);
           }
         )
       )

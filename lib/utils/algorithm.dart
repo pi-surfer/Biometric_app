@@ -5,14 +5,31 @@ import 'package:app_project/models/db.dart';
 
 int getAerobicTime(List<HR> hr) {
   List<int> hrValues = [];
-  int aerobicTime = 0;
+  int aerobicTime = 0; // time in minutes
 
   for (int idx = 0; idx < hr.length; idx++){
     hrValues[idx] = hr[idx].value;
+    if (hrValues[idx] > 120) {
+      aerobicTime = aerobicTime + 1;
+    }
   }
-
-
   return aerobicTime;
+}
+
+int getTotalSteps(List<Steps> steps) {
+  int totalSteps = 0;
+  for(Steps stp in steps) {
+    totalSteps = totalSteps + stp.value;
+  }
+  return totalSteps;
+}
+
+double getTotalKalories(List<Kalories> kalories) {
+  double totalKalories = 0;
+  for(Kalories kcal in kalories) {
+    totalKalories = totalKalories + kcal.value;
+  }
+  return totalKalories;
 }
 
 
@@ -20,39 +37,23 @@ int getAerobicTime(List<HR> hr) {
 // serve scegliere come calcolarlo magari tenendo conto dell'articolo sul drive
 
 // funzione che calcola lo Score che incrementa giornalmente
- List<Score> getGlobalScore(List<Kalories> kalories, List<Steps> steps, List<Times> times) {
+ List<Score> getGlobalScore(double totalKalories, int totalSteps, int aerobicTime) {
 
   int dailyScore = 0;
-   for (Kalories kcal in kalories) {
-    int valKcal = kcal.value;
-    if (valKcal != 0) {
-      if (valKcal >= 300) {
-        dailyScore = dailyScore + 1;
-      }
-    }
 
-   }
+  if (aerobicTime >= 60) {
+    dailyScore = dailyScore + 1;
+  }
 
-   for (Steps stp in steps) {
-    int valStep = stp.value;
-    if (valStep != 0) {
-      if (valStep >= 6000) {
-        dailyScore = dailyScore + 1;
-      }
-    }
-   }
+  if (totalSteps >= 6000) {
+    dailyScore = dailyScore + 1;
+  }
 
-   for (Times tm in times) {
-    double valTime = tm.value;
-    if (valTime != 0) {
-      if (valTime >= 60) {
-        dailyScore = dailyScore + 1;
-      }
-    }
+  if (totalKalories >= 300) {
+    dailyScore = dailyScore + 1;
+  }
 
-   }
-
-   return dailyScore as List<Score>;
+  return dailyScore as List<Score>;
 
 }
 
@@ -70,4 +71,5 @@ class Score {
 
 // funzione che calcola i passi totali nella giornata (in teoria basta prenderli
 // semplicemente dal database)
+
 
