@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 //import 'package:intl/intl.dart';
 //import 'package:dio/dio.dart';
@@ -11,15 +12,10 @@ import 'package:app_project/services/server_strings.dart';
 import 'package:app_project/utils/shared_preferences.dart';
 import 'package:app_project/models/db.dart';
 
-
 class ImpactService {
-
-  Map<String, String>? headersBearer = {HttpHeaders.authorizationHeader: ''};
   Preferences prefs;
-
-  //final Dio _dio = Dio(BaseOptions(baseUrl: ServerStrings.backendBaseUrl));
-  // Here we define backendBaseUrl (defined inside server_strings.dart) as starting
-  // path for all the future urls. URLs: backendBaseUrl/nextUrlPath
+  Map<String, String>? headersBearer;
+  //= {HttpHeaders.authorizationHeader: 'Bearer $token'};
 
   ImpactService(this.prefs) {
     updateBearer();
@@ -52,9 +48,9 @@ class ImpactService {
     }
   }
 
-  static bool checkToken(String token) {    
-  // this method is static because we to make it available
-  // also outside this class
+  static bool checkToken(String token) {
+    // this method is static because we to make it available
+    // also outside this class
 
     if (JwtDecoder.isExpired(token)) {
       return false;
@@ -100,21 +96,20 @@ class ImpactService {
   // This method makes the call to get the tokens
   Future<bool> getTokens(String username, String password) async {
     try {
-    // We use a try loop to handle exceptions
+      // We use a try loop to handle exceptions
 
-    const url = ServerStrings.backendBaseUrl + ServerStrings.tokenEndpoint;
-    final body = {'username': username, 'password': password};
+      const url = ServerStrings.backendBaseUrl + ServerStrings.tokenEndpoint;
+      final body = {'username': username, 'password': password};
 
-    //Get the response
-    final response = await http.post(Uri.parse(url), body: body);
-    final decodedResponse = jsonDecode(response.body);
+      //Get the response
+      final response = await http.post(Uri.parse(url), body: body);
+      final decodedResponse = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
         prefs.impactRefreshToken = decodedResponse['refresh'];
         prefs.impactAccessToken = decodedResponse['access'];
-        debugPrint('ACCESS: ${prefs.impactAccessToken}');
         // get and save refresh and access tokens
-        
+
         return true;
       } else {
         return false;
@@ -131,12 +126,12 @@ class ImpactService {
     // to [retrieveSavedToken()]
 
     try {
-    final url = ServerStrings.backendBaseUrl + ServerStrings.refreshEndpoint;
-    final body = {'refresh': refToken};
+      final url = ServerStrings.backendBaseUrl + ServerStrings.refreshEndpoint;
+      final body = {'refresh': refToken};
 
-    //Get the response
-    final response = await http.post(Uri.parse(url), body: body);
-    final decodedResponse = jsonDecode(response.body);
+      //Get the response
+      final response = await http.post(Uri.parse(url), body: body);
+      final decodedResponse = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
         prefs.impactRefreshToken = decodedResponse['refresh'];
@@ -172,11 +167,13 @@ class ImpactService {
 
   Future<void> getPatient() async {
     await updateBearer();
-    final r = await http.get(Uri.parse('${ServerStrings.backendBaseUrl}study/v1/patients/active'), headers: headersBearer);
+    final r = await http.get(
+        Uri.parse('${ServerStrings.backendBaseUrl}study/v1/patients/active'),
+        headers: headersBearer);
     //Response r = await _dio.get('study/v1/patients/active');
     final decodedR = jsonDecode(r.body);
-    prefs.impactUsername = decodedR ['data'][0]['username'];
-    return decodedR ['data'][0]['username'];
+    prefs.impactUsername = decodedR['data'][0]['username'];
+    return decodedR['data'][0]['username'];
   }
 
   // Method to retrieve HR, Steps, Kalories data of a single day:
@@ -184,8 +181,10 @@ class ImpactService {
   Future<List<Steps>> getStepFromDay(DateTime day) async {
     await updateBearer();
     List<Steps> result;
-
-    final url = ServerStrings.backendBaseUrl + ServerStrings.stepsEndpoint + ServerStrings.patientUsername + '/day/$day/';    var access = retrieveSavedToken(false);
+    String formattedDate = DateFormat('yyyy-MM-dd').format(day);
+    debugPrint('day = $formattedDate');
+    final url = '${ServerStrings.backendBaseUrl}${ServerStrings.stepsEndpoint}${ServerStrings.patientUsername}/day/$formattedDate/';
+    var access = retrieveSavedToken(false);
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
     final response = await http.get(Uri.parse(url), headers: headers);
@@ -194,21 +193,30 @@ class ImpactService {
       final decodedResponse = jsonDecode(response.body);
       result = [];
       for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
-        result.add(Steps.fromJson(decodedResponse['data']['date'], decodedResponse['data']['data'][i]));
-      }//for
+        result.add(Steps.fromJson(decodedResponse['data']['date'],
+            decodedResponse['data']['data'][i]));
+      } //for
     } //if
-    else{
+    else {
+      //debugPrint('ln 203 ${response.statusCode} ${response.reasonPhrase}');
+      //debugPrint('body = ${response.body} \n headers = ${response.headers}');
       result = [Steps(timestamp: day, value: 0)];
     }
-
+    //debugPrint('Steps = $result');
     return result;
   }
 
   Future<List<HR>> getHRFromDay(DateTime day) async {
     await updateBearer();
     List<HR> result;
+    String formattedDate = DateFormat('yyyy-MM-dd').format(day);
 
-    final url = ServerStrings.backendBaseUrl + ServerStrings.hrEndpoint + ServerStrings.patientUsername + '/day/$day/';    var access = retrieveSavedToken(false);
+    final url = ServerStrings.backendBaseUrl +
+        ServerStrings.hrEndpoint +
+        ServerStrings.patientUsername +
+        '/day/$formattedDate/';
+    //debugPrint('$url');
+    var access = retrieveSavedToken(false);
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
     final response = await http.get(Uri.parse(url), headers: headers);
@@ -217,21 +225,28 @@ class ImpactService {
       final decodedResponse = jsonDecode(response.body);
       result = [];
       for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
-        result.add(HR.fromJson(decodedResponse['data']['date'], decodedResponse['data']['data'][i]));
-      }//for
+        result.add(HR.fromJson(decodedResponse['data']['date'],
+            decodedResponse['data']['data'][i]));
+      } //for
     } //if
-    else{
+    else {
       result = [HR(timestamp: day, value: 0)];
     }
 
+    //debugPrint('HR = $result');
     return result;
   }
 
   Future<List<Kalories>> getKalFromDay(DateTime day) async {
     await updateBearer();
     List<Kalories> result;
+    String formattedDate = DateFormat('yyyy-MM-dd').format(day);
 
-    final url = ServerStrings.backendBaseUrl + ServerStrings.kaloriesEndpoint + ServerStrings.patientUsername + '/day/$day/';    var access = retrieveSavedToken(false);
+    final url = ServerStrings.backendBaseUrl +
+        ServerStrings.kaloriesEndpoint +
+        ServerStrings.patientUsername +
+        '/day/$formattedDate/';
+    var access = retrieveSavedToken(false);
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
     final response = await http.get(Uri.parse(url), headers: headers);
@@ -240,13 +255,15 @@ class ImpactService {
       final decodedResponse = jsonDecode(response.body);
       result = [];
       for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
-        result.add(Kalories.fromJson(decodedResponse['data']['date'], decodedResponse['data']['data'][i]));
-      }//for
+        result.add(Kalories.fromJson(decodedResponse['data']['date'],
+            decodedResponse['data']['data'][i]));
+      } //for
     } //if
-    else{
+    else {
       result = [Kalories(timestamp: day, value: 0)];
     }
 
+    //debugPrint('Kalories = $result');
     return result;
   }
 
@@ -254,51 +271,4 @@ class ImpactService {
     return DateTime(
         input.year, input.month, input.day, input.hour, input.minute);
   }
-
-  /*Future<List<HR>> getHRFromDay(DateTime startTime) async {
-    await updateBearer();
-    Response r = await _dio.get(
-        'data/v1/heart_rate/patients/${prefs.impactUsername}/daterange/start_date/${DateFormat('y-M-d').format(startTime)}/end_date/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/');
-    List<dynamic> data = r.data['data'];
-    List<HR> hr = [];
-    for (var daydata in data) {
-      String day = daydata['date'];
-      for (var dataday in daydata['data']) {
-        String hour = dataday['time'];
-        String datetime = '${day}T$hour';
-        DateTime timestamp = _truncateSeconds(DateTime.parse(datetime));
-        HR hrnew = HR(timestamp: timestamp, value: dataday['value']);
-        if (!hr.any((e) => e.timestamp.isAtSameMomentAs(hrnew.timestamp))) {
-          hr.add(hrnew);
-        }
-      }
-    }
-    var hrlist = hr.toList()
-      ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
-    return hrlist;
-  }*/
-
-  /*Future<List<Kalories>> getKalFromDay(DateTime startTime) async {
-    await updateBearer();
-    Response r = await _dio.get(
-        'data/v1/kalories/patients/${prefs.impactUsername}/daterange/start_date/${DateFormat('y-M-d').format(startTime)}/end_date/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/');
-    List<dynamic> data = r.data['data'];
-    List<Kalories> kalories = [];
-    for (var daydata in data) {
-      String day = daydata['date'];
-      for (var dataday in daydata['data']) {
-        String hour = dataday['time'];
-        String datetime = '${day}T$hour';
-        DateTime timestamp = _truncateSeconds(DateTime.parse(datetime));
-        Kalories kaloriesnew = Kalories(timestamp: timestamp, value: dataday['value']);
-        if (!kalories.any((e) => e.timestamp.isAtSameMomentAs(kaloriesnew.timestamp))) {
-          kalories.add(kaloriesnew);
-        }
-      }
-    }
-    var kalorieslist = kalories.toList()
-      ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
-    return kalorieslist;
-  }*/
-
 }

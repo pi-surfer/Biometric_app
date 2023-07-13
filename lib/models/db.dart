@@ -14,7 +14,7 @@ class HR {
 
   HR.fromJson(String date, Map<String, dynamic> json) :
       timestamp = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
-      value = int.parse(json["value"]);
+      value = json["value"];
 
   @override
   String toString() {
@@ -41,13 +41,13 @@ class Steps{
 
 class Kalories {
   final DateTime timestamp;
-  final int value;
+  final double value;
 
   Kalories({required this.timestamp, required this.value});
 
   Kalories.fromJson(String date, Map<String, dynamic> json) :
       timestamp = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
-      value = int.parse(json["value"]);
+      value = double.parse(json["value"]);
 
   @override
   String toString() {
@@ -72,7 +72,7 @@ class FitbitGen {
         100,
         (index) => Kalories(
             timestamp: DateTime.now().subtract(Duration(hours: index)),
-            value: _random.nextInt(4000)));
+            value: _random.nextDouble()));
   }
 
   List<Steps> fetchSteps() {

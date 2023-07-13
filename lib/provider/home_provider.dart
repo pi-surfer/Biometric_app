@@ -4,6 +4,7 @@ import 'package:app_project/models/db.dart';
 import 'package:app_project/utils/algorithm.dart';
 import 'package:app_project/utils/shared_preferences.dart';
 import 'package:app_project/services/impact.dart';
+import 'package:intl/intl.dart';
 
 import '../models/projects.dart';
 
@@ -46,7 +47,8 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-   DateTime lastFetch = DateTime.now().subtract(Duration(days: 7));
+  //DateTime lastFetch = DateTime.now().subtract(Duration(days: 7));
+  DateTime lastFetch = DateTime.now().subtract(Duration(days: 1));
 
   Future<void> _fetchAndCalculate() async {
     _heartRatesDB = await impactService.getHRFromDay(lastFetch);
@@ -55,6 +57,10 @@ class HomeProvider extends ChangeNotifier {
     aerobicTime = getAerobicTime(_heartRatesDB);
     totalKalories = getTotalKalories(_kaloriesDB);
     totalSteps = getTotalSteps(_stepsDB);
+
+    debugPrint('\naerobicTime = $aerobicTime min');
+    debugPrint('totalKalories = $totalKalories kal');
+    debugPrint('totalSteps = $totalSteps steps \n');
     
     //_heartRatesDB = fitbitGen.fetchHR();
     //_timesDB = fitbitGen.fetchTimes();
@@ -84,6 +90,7 @@ class HomeProvider extends ChangeNotifier {
     totalSteps = getTotalSteps(steps);
     totalKalories = getTotalKalories(kalories);
     score = getDailyScore(totalKalories, totalSteps, aerobicTime);
+    debugPrint('$score');
     /*times = _timesDB
         .where((element) => element.timestamp.day == showDate.day)
         .toList()

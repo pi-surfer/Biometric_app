@@ -9,8 +9,6 @@ import 'package:app_project/services/impact.dart';
 import 'package:app_project/models/missions.dart';
 import 'package:app_project/utils/shared_preferences.dart';
 
-import 'screens/login/login_page.dart';
-
 // VERSION 1.2
 
 void main() {

@@ -34,11 +34,11 @@ double getTotalKalories(List<Kalories> kalories) {
 
   int dailyScore = 0;
 
-  if (aerobicTime >= 60) {
+  if (aerobicTime >= 30) {
     dailyScore = dailyScore + 1;
   }
 
-  if (totalSteps >= 6000) {
+  if (totalSteps >= 2500) {
     dailyScore = dailyScore + 1;
   }
 
