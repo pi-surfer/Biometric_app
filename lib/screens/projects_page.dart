@@ -26,20 +26,25 @@ class _ProjectsPageState extends State<ProjectsPage> {
   Widget build(BuildContext context) {
     print('${ProjectsPage.routename} built');
     return Padding(
-      padding: EdgeInsets.only(top: 20, bottom: 50),
-      child: Scaffold(
-          backgroundColor: Color.fromARGB(255, 254, 251, 228),
-          body: Center(
-              child: ListView.builder(
-                  itemCount: projects.length,
-                  itemBuilder: (context, index) {
-                    return ProjectItem(
-                        projectId: projects[index].id,
-                        name: projects[index].name,
-                        address: projects[index].address,
-                        phrase: projects[index].phrase,
-                        imagePath: projects[index].imagePath);
-                  }))),
+      padding: EdgeInsets.only(bottom: 50),
+      
+        child: Scaffold(
+          
+            backgroundColor: Color.fromARGB(255, 254, 251, 228),
+            body: Padding(
+              padding: const EdgeInsets.only(top: 30, left:8.0,right:8.0),
+              child: Center(
+                  child: ListView.builder(
+                      itemCount: projects.length,
+                      itemBuilder: (context, index) {
+                        return ProjectItem(
+                            projectId: projects[index].id,
+                            name: projects[index].name,
+                            address: projects[index].address,
+                            phrase: projects[index].phrase,
+                            imagePath: projects[index].imagePath);
+                      })),
+            )),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:app_project/models/reward_structure.dart';
+import 'package:app_project/models/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,6 +8,8 @@ import 'package:intl/intl.dart';
 import 'package:app_project/models/missions.dart';
 import 'package:app_project/models/db.dart' as db;
 import 'package:app_project/provider/home_provider.dart';
+import 'package:app_project/models/reward.dart';
+import 'package:app_project/models/reward_structure.dart';
 
 //import 'package:app_project/providers/medals_provider.dart';
 //import 'package:app_project/screens/login_page.dart';
@@ -17,11 +21,15 @@ class RewardPage extends StatefulWidget {
   State createState() => _RewardPageState();
 }
 
-class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
+class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin
+ {
+  final List<Reward> rewards= getReward();
   final _pageController = PageController(viewportFraction: 0.8);
   TextStyle statStyle = const TextStyle(
     fontSize: 18,
   );
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -46,25 +54,26 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(
-                left: 10, right: 10, top: 30, bottom: 100),
+                left: 8, right: 8, top: 30, bottom: 100),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
+                    height: MediaQuery.of(context).size.height * 0.06,
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: Column(
                       children: [
                         Text(
                           'Hard work pays off!!',
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
+                          style: titleStyle,
+                          //TextStyle(
+                              //fontSize: 30, fontWeight: FontWeight.bold),
                         ),
                       ],
                     )),
-                const SizedBox(
-                  height: 20,
-                ),
+                
+                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                
                 Consumer<Missions>(
                   builder: ((context, missions, child) {
                     return SizedBox(
@@ -94,7 +103,10 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
                               ],
                             ),
                             child: Center(
-                                child: Text(
+                                child: 
+                                //Image(
+                                  //image: AssetImage('assets/images/costa.png'),),
+                                Text(
                               currentMedal.title,
                               style: TextStyle(
                                   color: Colors.white,
@@ -108,14 +120,27 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
                     );
                   }),
                 ),
+
+                SizedBox(height: MediaQuery.of(context).size.height *0.04),
+
+
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  //width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.5,
                   child: PageView.builder(
                     controller: _pageController,
-                    itemCount: 10,
+                    itemCount: 5,
                     itemBuilder: ((context, index) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(
+                      return RewardItem(
+                        //id: rewards[index].id,
+                        name: rewards[index].name,
+                        qrcode: rewards[index].qrcode,
+                        phrase: rewards[index].phrase,
+                        imagePath: rewards[index].imagePath);
+                    }))),
+                        
+                        
+                        /*margin: const EdgeInsets.symmetric(
                           vertical: 16,
                           horizontal: 16,
                         ),
@@ -124,7 +149,7 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
+                              color: Colors.black.withOpacity(0.2),
                               offset: const Offset(0, 6),
                               blurRadius: 8,
                             )
@@ -136,10 +161,8 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
                       );
                     }),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
+                ),*/
+                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 SizedBox(
                     height: MediaQuery.of(context).size.height * 0.3,
                     width: MediaQuery.of(context).size.width * 0.85,
@@ -148,14 +171,11 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
                         Text(
                           'Statistics:',
                           textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: titleStyle,
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                        
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+
                         Consumer<Missions>(builder: (context, missions, child) {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -222,12 +242,9 @@ class _RewardPageState extends State<RewardPage> with TickerProviderStateMixin {
                         }),
                       ],
                     )),
-              ],
+        ])),
             ),
-          ),
-        ),
-      ),
-    );
+          ));
   }
 
   void _addOne() async {
