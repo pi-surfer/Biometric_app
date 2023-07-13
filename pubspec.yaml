@@ -102,6 +102,12 @@ flutter:
     - assets/images/garden.png
     - assets/images/marathon.png
     - assets/images/well_done.png
+    - assets/images/coste.png
+    - assets/images/qrcode.png
+    - assets/images/marmellata.jpg
+    - assets/images/miele.jpg
+    - assets/images/rucola.jpg
+    - assets/images/zucchine.jpg
      
     - assets/images/radicchio_Andrea.jpg
     - assets/images/carciofi_Matteo.jpg
@@ -124,6 +130,7 @@ flutter:
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-SemiBold.ttf
         - asset: assets/fonts/Poppins-Italic.ttf
           style: italic
   #   - family: Trajan Pro

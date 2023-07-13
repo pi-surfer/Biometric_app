@@ -1,5 +1,6 @@
 //import 'dart:convert';
 //import 'dart:async';
+import 'package:app_project/models/text_styles.dart';
 import 'package:app_project/screens/partner_structure.dart';
 import 'package:flutter/material.dart';
 import 'package:app_project/models/partner.dart';
@@ -23,27 +24,21 @@ class PartnerState extends State<Partner> {
   Widget build(BuildContext context) {
 
   
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         backgroundColor: const Color.fromARGB(255, 254, 251, 228),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 30, left: 8.0, right: 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-           const Text(
-                'In order to support these small realities, we must thanks our partners, large companies that believe in small things',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color.fromARGB(255, 1, 97, 4),
-                  fontSize: 20),
-                ),
+              Text(
+                'In order to support these small realities, we must thank our partners, large companies that believe in small things',
+                textAlign: TextAlign.start,
+                style: subtitleStyle),
 
-              const SizedBox(
-                height: 20,
-                ),
+              //SizedBox(height: MediaQuery.of(context).size.height *0.2),
 
           CarouselSlider(
           options: CarouselOptions(
@@ -61,7 +56,7 @@ class PartnerState extends State<Partner> {
           }).toList(),
         ),
     ] ),)),
-)));
+));
 }
 }
 
