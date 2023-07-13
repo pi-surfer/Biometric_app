@@ -172,7 +172,7 @@ class ImpactService {
 
   Future<void> getPatient() async {
     await updateBearer();
-    final r = await http.get(Uri.parse('study/v1/patients/active'), headers: headersBearer);
+    final r = await http.get(Uri.parse('${ServerStrings.backendBaseUrl}study/v1/patients/active'), headers: headersBearer);
     //Response r = await _dio.get('study/v1/patients/active');
     final decodedR = jsonDecode(r.body);
     prefs.impactUsername = decodedR ['data'][0]['username'];
