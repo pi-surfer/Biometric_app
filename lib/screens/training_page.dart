@@ -1,3 +1,4 @@
+import 'package:app_project/models/projects.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -190,7 +191,7 @@ class _ActivityState extends State<Activity> {
                                                         const DataLabelSettings(
                                                             isVisible: false),
                                                     enableTooltip: true,
-                                                    maximumValue: 1000)
+                                                    maximumValue: 5000)
                                               ]),
                                         ),
                                       )
@@ -215,7 +216,7 @@ class _ActivityState extends State<Activity> {
                                               const DataLabelSettings(
                                                   isVisible: false),
                                           enableTooltip: true,
-                                          maximumValue: 1000)
+                                          maximumValue: 50000)
                                     ]),
                               ),
                             )
@@ -237,12 +238,12 @@ class _ActivityState extends State<Activity> {
                                 dataLabelSettings:
                                     const DataLabelSettings(isVisible: false),
                                 enableTooltip: true,
-                                maximumValue: 1000)
+                                maximumValue: 500)
                           ]),
                     ),
                     Container(
                       alignment: Alignment.center,
-                      child: const Row(
+                      child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Column(
@@ -261,7 +262,7 @@ class _ActivityState extends State<Activity> {
                                   ),
                                 ),
                                 Text(
-                                  '100',
+                                  provider.totalKalories.toStringAsFixed(1),
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 255, 221, 74),
                                     fontWeight: FontWeight.bold,
@@ -297,7 +298,7 @@ class _ActivityState extends State<Activity> {
                                 ),
                               ),
                               Text(
-                                '2500',
+                                provider.totalSteps.toString(),
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 253, 176, 120),
                                   fontWeight: FontWeight.bold,
@@ -306,7 +307,7 @@ class _ActivityState extends State<Activity> {
                                 ),
                               ),
                               Text(
-                                '/10000',
+                                '/6000',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 253, 176, 120),
                                   fontSize: 15,
@@ -332,7 +333,7 @@ class _ActivityState extends State<Activity> {
                                 ),
                               ),
                               Text(
-                                '20',
+                                provider.aerobicTime.toString(),
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 255, 114, 106),
                                   fontWeight: FontWeight.bold,
@@ -341,7 +342,7 @@ class _ActivityState extends State<Activity> {
                                 ),
                               ),
                               Text(
-                                '/180',
+                                '/60',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 255, 114, 106),
                                   fontSize: 15,
@@ -351,11 +352,11 @@ class _ActivityState extends State<Activity> {
                             ]),
                           ]),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 20,
                     ),
-                    const Text(
-                      'Oggi hai guadagnato N crediti',
+                    Text(
+                      'Oggi hai guadagnato' + provider.dailyScore.toString() + 'crediti',
                       style: TextStyle(
                         color: Color.fromARGB(255, 1, 97, 4),
                         fontWeight: FontWeight.bold,
@@ -417,7 +418,7 @@ class _ActivityState extends State<Activity> {
                     Row(children: [
                       SizedBox(width: 25),
                       Text(
-                        '65 pt',
+                        provider.GlobalScore.toString(),
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 17,
@@ -435,8 +436,8 @@ class _ActivityState extends State<Activity> {
                       const SizedBox(
                         height: 15,
                       ),
-                      const Text(
-                        'ti mancano ancora X punti per finanziare',
+                      Text(
+                        'ti mancano ancora' + (90-provider.GlobalScore).toString() + 'punti per finanziare',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Color.fromARGB(255, 6, 95, 9),
@@ -445,15 +446,20 @@ class _ActivityState extends State<Activity> {
                           fontStyle: FontStyle.normal,
                         ),
                       ),
-                      const Text(
-                        'LE API DI DARIO',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 6, 95, 9),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          fontStyle: FontStyle.normal,
-                        ),
+                      Consumer<SelectedProject>(builder:
+                        ((context, project, child) {
+                          Projects selectedProject =
+                            project.proj[project.getSelectedProject()];
+                          return Text(
+                          selectedProject.name,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 6, 95, 9),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            fontStyle: FontStyle.normal,
+                          ),
+                        );})
                       ),
                       const SizedBox(
                         height: 20,
@@ -466,22 +472,22 @@ class _ActivityState extends State<Activity> {
   }
 
   List<Kalories> getChartData() {
-    final List<Kalories> chartData = [Kalories('Kalories', 100)];
+    final List<Kalories> chartData = [Kalories('Kalories', 2000)];
     return chartData;
   }
 
   List<Steps> getChartData2() {
-    final List<Steps> chartData2 = [Steps('Steps', 2000)];
+    final List<Steps> chartData2 = [Steps('Steps', 6000)];
     return chartData2;
   }
 
   List<Times> getChartData3() {
-    final List<Times> chartData3 = [Times('Times', 100)];
+    final List<Times> chartData3 = [Times('Times', 60)];
     return chartData3;
   }
 
   List<finalOBIETTIVI> getChartData1() {
-    final List<finalOBIETTIVI> chartData1 = [finalOBIETTIVI('Crediti', 180)];
+    final List<finalOBIETTIVI> chartData1 = [finalOBIETTIVI('Crediti', 90)];
     return chartData1;
   }
 }

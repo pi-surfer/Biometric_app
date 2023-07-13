@@ -108,6 +108,7 @@ flutter:
     - assets/images/zucchine_Anna.jpg
     - assets/images/insalata_Jenny.jpg
     - assets/images/pomodori_Lorenzo.jpg
+    - assets/images/semino.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

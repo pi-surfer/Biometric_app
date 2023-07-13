@@ -2,6 +2,7 @@ import 'package:app_project/models/projects.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:app_project/widgets/linechart_week.dart';
 import 'package:app_project/models/funky_overlays.dart';
@@ -18,6 +19,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // TODO : VORREI ACCEDER ALLA SHARED PREFERENCE SALVATA NEL PROFILO IN MODO DA SOSTITUIRE 'MASSIMO' CON IL NOME INSERITO, NON SO COME FARLO 
+  String name = await _getName();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                'Thank you, Massimo!!',
+                                'Thank you,' '$name' '!',
                                 style: titleStyle,
                                 textAlign: TextAlign.start,),
                             SizedBox(height: 5,),
@@ -191,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           SizedBox(width: 25),
-                          Text('${provider.score}',
+                          Text('${provider.GlobalScore}',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 17,
@@ -228,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Text(
                                 /// qui cambiamo con punteggio perchè non facciamo i giorni
-                                  'Not bad! \nIf you will continue like this you will reach your goal within: 15 days',
+                                  'Not bad! \nIf you will continue like this you will reach your goal',
                                   textAlign: TextAlign.start,
                                   style: bodyStyle),
                             ],
