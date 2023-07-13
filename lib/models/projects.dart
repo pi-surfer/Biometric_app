@@ -1,4 +1,6 @@
+import 'package:app_project/utils/algorithm.dart';
 import 'package:flutter/material.dart';
+import 'package:app_project/provider/home_provider.dart';
 
 class Projects extends ChangeNotifier {
   final int id;
@@ -17,6 +19,7 @@ class Projects extends ChangeNotifier {
       bool this.light = false});
 }
 
+// TODO : RENDERE POSSIBILE LA SELEZONE DI UN ALTRO PROGETTO SOLO QUANDO IL GLOBALSCORE E' 0 
 
 List<Projects> getProject() {
   List<Projects> farms = [];
@@ -70,6 +73,8 @@ class SelectedProject extends ChangeNotifier {
   List<Projects> proj = getProject();
   List<int> ids = [0, 1, 2, 3, 4];
   int i = 0;
+
+  //int GlobalScore = getGlobalScore();
 
   void selectProject(id) {
     for (i in ids) {

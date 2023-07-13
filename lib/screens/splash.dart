@@ -95,7 +95,7 @@ class Splash extends StatelessWidget {
     Future.delayed(const Duration(seconds: 1), () => _checkAuth(context));
     return Material(
       child: Container(
-        color: const Color.fromARGB(255, 1, 97, 4),
+        color: Color.fromARGB(255, 254, 251, 228),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -118,6 +118,13 @@ class Splash extends StatelessWidget {
                         style: TextStyle(color: Color.fromARGB(255,50, 165, 19), fontSize: 50),
                     ),
                   ]),
+            ),
+            Center(
+              child: Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/semino.jpg'), fit: BoxFit.cover,)),
+              ),
             ),
             Center(
               child: CircularProgressIndicator(

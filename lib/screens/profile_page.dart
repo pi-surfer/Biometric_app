@@ -13,8 +13,10 @@ import 'package:app_project/screens/skeleton_page.dart';
 import 'package:app_project/screens/login/login_page.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-// TODO: SEE FIRST CONTAINER, IT'S NOT CENTERED ANYMORE WHY???
+// TODO: CONTROLLARE SHARED PREFERENCES!! LE PARTI COMMENTATE CON LA NAVIGATION VERSO L'ACTIVITY E LA REWARD DOVREBBERO PASSARE PRIMA PER LA SKELETON
+// PERCHE' SENNO' RIMANDA ALLE PAGINE SENZA LA BOTTOMNAVIGATION
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -27,15 +29,80 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
+  final TextEditingController names = TextEditingController();
+  final TextEditingController age = TextEditingController();
+  final TextEditingController email = TextEditingController();
+    //TextEditingController password = TextEditingController();
 
   double? bmi;
   String errorText = '';
   String status = '';
   int? radioValue;
 
-  void calculateBMI() {
-    final double? height = double.tryParse(_heightController.value.text);
-    final double? weight = double.tryParse(_weightController.value.text);
+  Future<bool> _saveName() async {
+    String sp_name = names.text;
+    SharedPreferences prefs_name = await SharedPreferences.getInstance();
+    return prefs_name.setString('name', sp_name);
+  }
+
+  Future<String?> _getName() async{
+    SharedPreferences prefs_name = await SharedPreferences.getInstance();
+    return prefs_name.getString('name');
+  }
+
+  Future<bool> _saveAge() async {
+    double? sp_age = double.tryParse(age.value.text);
+    SharedPreferences prefs_age = await SharedPreferences.getInstance();
+    return prefs_age.setDouble('age', sp_age!);
+  }
+
+  Future<double?> _getAge() async{
+    SharedPreferences prefs_age = await SharedPreferences.getInstance();
+    return prefs_age.getDouble('age');
+  }
+
+  Future<bool> _saveEmail() async {
+    String sp_mail = email.text;
+    SharedPreferences prefs_mail = await SharedPreferences.getInstance();
+    return prefs_mail.setString('email', sp_mail);
+  }
+
+  Future<String?> _getEmail() async{
+    SharedPreferences prefs_mail = await SharedPreferences.getInstance();
+    return prefs_mail.getString('email');
+  }
+
+  Future<bool> _saveHeight() async{
+    final double? sp_height = double.tryParse(_heightController.value.text);
+    final prefs_height = await SharedPreferences.getInstance();
+    return prefs_height.setDouble('personalHeight', sp_height!);
+  }
+
+  Future<double?> _getHeight() async{
+    SharedPreferences prefs_height = await SharedPreferences.getInstance();
+    return prefs_height.getDouble('personalHeight');
+  }
+  
+  Future<bool> _saveWeight() async{
+    final double? sp_weight = double.tryParse(_weightController.value.text);
+    final prefs_weight = await SharedPreferences.getInstance();
+    return prefs_weight.setDouble('personalWeight', sp_weight!);
+  }
+
+  Future<double?> _getWeight() async{
+    SharedPreferences prefs_weight = await SharedPreferences.getInstance();
+    return prefs_weight.getDouble('personalWeight');
+  }
+
+  void calculateBMI() async {
+    double? height = await _getHeight();
+    double? weight = await _getWeight();
+    //final prefs = await SharedPreferences.getInstance();
+    //double? height = prefs.getDouble('personalHeight');
+    //final sp = await SharedPreferences.getInstance();
+    //double? weight = sp.getDouble('personalWeight');
+    //final double? height = double.tryParse(_heightController.value.text);
+    //final double? weight = double.tryParse(_weightController.value.text);
 
     if (height == null || weight == null) {
       setState(() {
@@ -72,10 +139,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     print('${ProfilePage.routename} built');
-    TextEditingController names = TextEditingController();
-    TextEditingController username = TextEditingController();
-    TextEditingController email = TextEditingController();
-    TextEditingController password = TextEditingController();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color.fromARGB(255, 254, 251, 228),
@@ -121,17 +184,41 @@ class _ProfilePageState extends State<ProfilePage> {
                                       enabledBorder: myInputBorder(),
                                       focusedBorder: myFocusBorder()),
                                 ),
+                                SizedBox(height: 10,),
+                                ElevatedButton(
+                                  onPressed: () async{_saveName();},
+                                  child: Text('Update'),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Color.fromARGB(255, 50, 165, 19),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 25, vertical: 20),
+                                      textStyle: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold)),
+                                ),
                                 SizedBox(
                                   height: 15,
                                 ),
                                 TextField(
-                                  controller: username,
+                                  controller: age,
                                   decoration: InputDecoration(
-                                      labelText: 'Username',
+                                      labelText: 'Age',
                                       prefixIcon: Icon(Icons.people),
                                       border: myInputBorder(),
                                       enabledBorder: myInputBorder(),
                                       focusedBorder: myFocusBorder()),
+                                ),
+                                SizedBox(height: 10,),
+                                ElevatedButton(
+                                  onPressed: () async{_saveAge();},
+                                  child: Text('Update'),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Color.fromARGB(255, 50, 165, 19),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 25, vertical: 20),
+                                      textStyle: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold)),
                                 ),
                                 SizedBox(
                                   height: 15,
@@ -145,7 +232,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       enabledBorder: myInputBorder(),
                                       focusedBorder: myFocusBorder()),
                                 ),
-                                SizedBox(
+                                /*SizedBox(
                                   height: 15,
                                 ),
                                 TextField(
@@ -156,17 +243,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                       border: myInputBorder(),
                                       enabledBorder: myInputBorder(),
                                       focusedBorder: myFocusBorder()),
-                                ),
-                                SizedBox(height: 15),
+                                ),*/
+                                SizedBox(height: 10),
                                 ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () async{_saveEmail();},
                                   child: Text('Update'),
                                   style: ElevatedButton.styleFrom(
                                       primary: Color.fromARGB(255, 50, 165, 19),
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 25, vertical: 20),
                                       textStyle: TextStyle(
-                                          fontSize: 25,
+                                          fontSize: 15,
                                           fontWeight: FontWeight.bold)),
                                 ),
                               ],
@@ -202,7 +289,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               SizedBox(height: 15),
-              Container(
+              /*Container(
                 margin: EdgeInsets.only(left: 15, right: 15),
                 child: Row(
                   children: [
@@ -255,7 +342,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
-              ),
+              ),*/
               SizedBox(height: 30),
               Center(
                 child: Container(
@@ -293,6 +380,26 @@ class _ProfilePageState extends State<ProfilePage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        ElevatedButton(
+                          onPressed:()async{ _saveHeight;},
+                          child: const Text('Save height'),
+                          style: ElevatedButton.styleFrom(
+                              primary: Color.fromARGB(255, 50, 165, 19),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 25, vertical: 20),
+                              textStyle: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold)),
+                        ),
+                        ElevatedButton(
+                          onPressed:() async{ _saveWeight;},
+                          child: const Text('Save weight'),
+                          style: ElevatedButton.styleFrom(
+                              primary: Color.fromARGB(255, 50, 165, 19),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 25, vertical: 20),
+                              textStyle: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold)),
+                        ),
                         ElevatedButton(
                           onPressed: calculateBMI,
                           child: const Text('Calculate'),
@@ -624,7 +731,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ));
                 }
               }),
-              SizedBox(height: 30),
+              /*SizedBox(height: 30),
               Container(
                   height: 80,
                   width: MediaQuery.of(context).size.width * 0.8,
@@ -676,7 +783,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: TextStyle(fontWeight: FontWeight.bold)),
                   ],
                 ),
-              ),
+              ),*/
               SizedBox(height: 30),
               Container(
                 height: 80,
@@ -741,4 +848,5 @@ class _ProfilePageState extends State<ProfilePage> {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => SkeletonPage()));
   } // _toLoginPage
+
 }

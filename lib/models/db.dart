@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:app_project/utils/algorithm.dart';
 import 'package:intl/intl.dart';
 
 // We create a different class for each type of data and
@@ -82,5 +83,6 @@ class FitbitGen {
             timestamp: DateTime.now().subtract(Duration(hours: index)),
             value: _random.nextInt(50000)));
   }
+
 
 }

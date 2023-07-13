@@ -5,6 +5,7 @@ import 'package:app_project/utils/algorithm.dart';
 import 'package:app_project/utils/shared_preferences.dart';
 import 'package:app_project/services/impact.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/projects.dart';
 
@@ -17,7 +18,8 @@ class HomeProvider extends ChangeNotifier {
    late int totalSteps;
 
    late List<Projects> projects;
-   late int score = 0;
+   late int dailyScore = 0;
+   late int GlobalScore = 0;
    //late List<Reward> reward;
    //late List<Missions> mission;
    //late List<Partner> partners; 
@@ -57,6 +59,8 @@ class HomeProvider extends ChangeNotifier {
     aerobicTime = getAerobicTime(_heartRatesDB);
     totalKalories = getTotalKalories(_kaloriesDB);
     totalSteps = getTotalSteps(_stepsDB);
+    GlobalScore = getGlobalScore() as int;
+    dailyScore = getDailyScore(totalKalories, totalSteps, aerobicTime);
 
     debugPrint('\naerobicTime = $aerobicTime min');
     debugPrint('totalKalories = $totalKalories kal');
@@ -89,8 +93,8 @@ class HomeProvider extends ChangeNotifier {
     aerobicTime = getAerobicTime(heartRates);
     totalSteps = getTotalSteps(steps);
     totalKalories = getTotalKalories(kalories);
-    score = getDailyScore(totalKalories, totalSteps, aerobicTime);
-    debugPrint('$score');
+    dailyScore = getDailyScore(totalKalories, totalSteps, aerobicTime);
+    debugPrint('$dailyScore');
     /*times = _timesDB
         .where((element) => element.timestamp.day == showDate.day)
         .toList()
@@ -101,6 +105,41 @@ class HomeProvider extends ChangeNotifier {
       //  );
     // after selecting all data we notify all consumers to rebuild
     notifyListeners();
+  }
+
+  Future<bool> _saveDailyScore() async {
+    //final score = getDailyScore(totalKalories, totalSteps, aerobicTime);
+    final score = dailyScore;
+    SharedPreferences prefs_score = await SharedPreferences.getInstance();
+    return prefs_score.setInt('dailyScore', score);
+  }
+
+  Future<int?> _getDailyScore() async{
+    SharedPreferences prefs_score = await SharedPreferences.getInstance();
+    return prefs_score.getInt('dailyScore');
+  }
+
+  Future<int> getGlobalScore() async{
+    int GlobalScore = 0;
+    int ds = dailyScore;
+    //int ds = getDailyScore(totalKalories, totalSteps, aerobicTime);
+    //int? ds = await _getDailyScore();
+    GlobalScore = GlobalScore + ds;
+    if (GlobalScore > 90) {
+      GlobalScore = 0;
+    }
+    return GlobalScore;
+  }
+
+  Future<bool> _saveGlobalScore() async {
+    final gscore = getGlobalScore();
+    SharedPreferences prefs_gscore = await SharedPreferences.getInstance();
+    return prefs_gscore.setInt('globalScore', gscore as int);
+  }
+
+  Future<int?> _getGlobalScore() async{
+    SharedPreferences prefs_gscore = await SharedPreferences.getInstance();
+    return prefs_gscore.getInt('globalScore');
   }
 }
 
