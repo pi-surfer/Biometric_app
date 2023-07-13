@@ -1,4 +1,5 @@
 import 'package:app_project/models/projects.dart';
+import 'package:app_project/models/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -6,11 +7,11 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
-
 import 'package:app_project/widgets/date_picker_widget.dart';
-import 'package:app_project/models/text_styles.dart';
 import 'package:app_project/provider/home_provider.dart';
 import 'package:app_project/models/db.dart' as db;
+
+
 
 class Kalories {
   Kalories(this.kalories, this.valueKalories);
@@ -83,12 +84,9 @@ class _ActivityState extends State<Activity> {
         body: SafeArea(
             child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8, top: 30),
-            child: 
-            //Consumer<HomeProvider> (
-                //builder:(context, provider, child) => 
-                Column(
-                  
+            padding: const EdgeInsets.all(8.0),
+            child: Consumer<HomeProvider> (
+                builder:(context, provider, child) => Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -96,26 +94,26 @@ class _ActivityState extends State<Activity> {
                         IconButton(
                             icon: const Icon(
                               Icons.navigate_before,
-                              color: Colors.black,
-                              size: 25,
+                              color: Color.fromARGB(255, 1, 97, 4),
+                              size: 22,
                             ),
                             onPressed: () {
-                              //final provider =
-                          //Provider.of<HomeProvider>(context, listen: false);
-                      //DateTime day = provider.showDate;
-                      //provider
-                        //  .getDataOfDay(day.subtract(const Duration(days: 1)));
-                    }),
-                        /*Consumer<HomeProvider>(
-                    builder: (context, value, child) => Text(
+                              final provider =
+                          Provider.of<HomeProvider>(context, listen: false);
+                          DateTime day = provider.showDate;
+                          provider
+                          .getDataOfDay(day.subtract(const Duration(days: 1)));
+                            }
+                        ),
+                        Consumer<HomeProvider>(
+                        builder: (context, value, child) => Text(
                         DateFormat('dd MMMM yyyy').format(value.showDate),
-                            style: subtytleStyle 
-                            /*TextStyle(
+                            style: const TextStyle(
                               color: Color.fromARGB(255, 1, 97, 4),
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                               fontStyle: FontStyle.normal,
-                            ))),*/*/
+                            ))),
                         IconButton(
                             icon: const Icon(
                               Icons.navigate_next,
@@ -123,10 +121,10 @@ class _ActivityState extends State<Activity> {
                               size: 25,
                             ),
                             onPressed: () {
-                              /*final provider =
+                              final provider =
                           Provider.of<HomeProvider>(context, listen: false);
                       DateTime day = provider.showDate;
-                      provider.getDataOfDay(day.add(const Duration(days: 1)));*/
+                      provider.getDataOfDay(day.add(const Duration(days: 1)));
                     }),
                       ],
                     ),
@@ -152,7 +150,6 @@ class _ActivityState extends State<Activity> {
                           ),
                           backgroundColor: const Color.fromARGB(255, 1, 97, 4),
                         )),
-                        //SizedBox(height:MediaQuery.of(context).size.height * 0.1),
                     Container(
                       alignment: Alignment.topLeft,
                       height: MediaQuery.of(context).size.height * 0.50,
@@ -220,7 +217,7 @@ class _ActivityState extends State<Activity> {
                                               const DataLabelSettings(
                                                   isVisible: false),
                                           enableTooltip: true,
-                                          maximumValue: 50000)
+                                          maximumValue: 6000)
                                     ]),
                               ),
                             )
@@ -242,7 +239,7 @@ class _ActivityState extends State<Activity> {
                                 dataLabelSettings:
                                     const DataLabelSettings(isVisible: false),
                                 enableTooltip: true,
-                                maximumValue: 500)
+                                maximumValue: 60)
                           ]),
                     ),
                     Container(
@@ -258,7 +255,7 @@ class _ActivityState extends State<Activity> {
                                   color: Color.fromARGB(255, 255, 221, 74),
                                 ),
                                 Text(
-                                  'Calories',
+                                  'Kalories',
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 255, 221, 74),
                                     fontSize: 15,
@@ -356,44 +353,23 @@ class _ActivityState extends State<Activity> {
                             ]),
                           ]),
                     ),
-
-                    SizedBox(height: MediaQuery.of(context).size.height *0.04),
-                    
+                    SizedBox(
+                      height: 20,
+                    ),
                     Text(
-                      'Oggi hai guadagnato' + provider.dailyScore.toString() + 'crediti',
+                      'Today, you have earned' + provider.dailyScore.toString() + 'points',
                       style: subtitleStyle,
                       textAlign: TextAlign.start,
-                      /*TextStyle(
-                        color: Color.fromARGB(255, 1, 97, 4),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        fontStyle: FontStyle.normal,
-                      ),*/
-                    ),
-
-                    SizedBox(height: MediaQuery.of(context).size.height *0.06),
+                      ),
                     
-                    Padding(
-                          padding: EdgeInsets.all(15),
-                          child: Column(
-                            children: [
-                              
-                                                    
-                    Text('Well done!',
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height *0.06,
+                    ),
+                    
+                      Text(
+                        'You are still' + (90-provider.GlobalScore).toString() + 'points away from funding the project:',
                         textAlign: TextAlign.start,
-                        style: titleStyle),
-                      
-                     SizedBox(height: MediaQuery.of(context).size.height *0.01),
-                      
-                    Text(
-                        'ti mancano ancora' + (90-provider.GlobalScore).toString() + 'punti per finanziare',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 6, 95, 9),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          fontStyle: FontStyle.normal,
-                        ),
+                      style: subtitleStyle
                       ),
                       Consumer<SelectedProject>(builder:
                         ((context, project, child) {
@@ -401,101 +377,21 @@ class _ActivityState extends State<Activity> {
                             project.proj[project.getSelectedProject()];
                           return Text(
                           selectedProject.name,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 6, 95, 9),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            fontStyle: FontStyle.normal,
-                          ),
+                          textAlign: TextAlign.start,
+                      style: subtitleStyle
                         );})
                       ),
-
-                            ])),                
-
-                      SizedBox(height: MediaQuery.of(context).size.height *0.01),
-                            
-
-                      LinearPercentIndicator(
-                        animation: true,
-                        width: 360.0,
-                        lineHeight: 30,
-                        percent: 0.7,
-                        barRadius: Radius.circular(20),
-                        backgroundColor: Color.fromARGB(90, 255, 221, 74)
-                            .withOpacity(0.4),
-                        linearGradient: LinearGradient(colors: [
-                          Color.fromARGB(255, 255, 221, 74),
-                          Color.fromARGB(255, 255, 114, 106),
-                        ]),
-                        widgetIndicator: Container(
-                            height: 60,
-                            width: 60,
-                            color: Colors.transparent,
-                            child: Icon(Icons.star, size: 25)),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height *0.01,
                       ),
-                      SizedBox(height: 5),
-                      Row(
-                        children: [
-                          SizedBox(width: 25),
-                          Text('SCORE',
-                          //${provider.score}',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 17,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.start,
-                          ),
-                          Text(' /90 pt',
-                            style: TextStyle(
-                              color: Colors.black.withOpacity(0.5),
-                              fontSize: 17,
-                            ),
-                            textAlign: TextAlign.start,
-                          ),
-                        ],
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      height: 200,
-                      width: 200,
-                      child: SfCircularChart(
-            
-                          //textStyle: const TextStyle(fontSize: 13)),
-                          //tooltipBehavior: _tooltipBehavior,
-                          series: <CircularSeries>[
-                            RadialBarSeries<finalOBIETTIVI, String>(
-                              pointColorMapper: (finalOBIETTIVI, _) =>
-                                  const Color.fromARGB(255, 10, 159, 12),
-                              dataSource: _chartData1,
-                              useSeriesColor: true,
-                              trackOpacity: 0.2,
-                              xValueMapper: (finalOBIETTIVI value, _) =>
-                                  value.crediti,
-                              yValueMapper: (finalOBIETTIVI value, _) =>
-                                  value.value,
-                              cornerStyle: CornerStyle.endCurve,
-                              radius: '100%',
-                              innerRadius: '80%',
-                              dataLabelSettings:
-                                  const DataLabelSettings(isVisible: false),
-                              enableTooltip: true,
-                              maximumValue: 300,
-                            )
-                          ]),
-                    ),
-                    LinearPercentIndicator(
+                      LinearPercentIndicator(
                       animation: true,
                       width: 360.0,
                       lineHeight: 30,
                       percent: 0.7,
                       barRadius: Radius.circular(20),
                       backgroundColor:
-                          Color.fromARGB(255, 255, 221, 74).withOpacity(0.6),
+                          Color.fromARGB(255, 255, 221, 74).withOpacity(0.4),
                       linearGradient: LinearGradient(colors: [
                         Color.fromARGB(255, 255, 221, 74),
                         Color.fromARGB(255, 255, 192, 74),
@@ -509,7 +405,7 @@ class _ActivityState extends State<Activity> {
                     SizedBox(height: 5),
                     Row(children: [
                       SizedBox(width: 25),
-                      Text(
+                      Text('SCORE' +
                         provider.GlobalScore.toString(),
                         style: TextStyle(
                           color: Colors.black,
@@ -525,42 +421,14 @@ class _ActivityState extends State<Activity> {
                           fontSize: 17,
                         ),
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        'ti mancano ancora' + (90-provider.GlobalScore).toString() + 'punti per finanziare',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 6, 95, 9),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                      Consumer<SelectedProject>(builder:
-                        ((context, project, child) {
-                          Projects selectedProject =
-                            project.proj[project.getSelectedProject()];
-                          return Text(
-                          selectedProject.name,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 6, 95, 9),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        );})
-                      ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height *0.03,
                       ),
                     ]),
-                  ),
+                  ]),
             ),
           ),
-        );
+        )));
   }
 
   List<Kalories> getChartData() {

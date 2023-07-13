@@ -32,8 +32,8 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(
                   bottom: 100, left: 8, right: 8, top: 30),
               child: 
-              //Consumer<HomeProvider> (
-                //builder:(context, provider, child) => 
+              Consumer<HomeProvider> (
+                builder:(context, provider, child) => 
                 Column(
                 children: [
                   Row(
@@ -160,20 +160,20 @@ class _HomePageState extends State<HomePage> {
                 }
               }
                   ),
-                  const SizedBox(height: 15,),
+                  SizedBox(height: 15,),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Row(
                         children: [
-                          const SizedBox(width:25),
+                          SizedBox(width:25),
                           Text('Your Progress',
                               style: titleStyle,
                               textAlign: TextAlign.start,),
                         ],
                       ),
-                      const SizedBox(height:15),
+                      SizedBox(height:15),
                       LinearPercentIndicator(
                         animation: true,
                         width: 360.0,
@@ -383,7 +383,7 @@ class _HomePageState extends State<HomePage> {
                 ]),
               ),
             ),
-          ]),
+    )]),
         );
   }
 }
