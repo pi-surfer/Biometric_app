@@ -1,3 +1,4 @@
+import 'package:app_project/models/projects.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -61,34 +62,85 @@ class _HomePageState extends State<HomePage> {
                         ),),),],
                   ),
                   SizedBox(height: 25,),
-                  GestureDetector(
-                    onTap: (){showDialog(
-                  barrierColor: const Color.fromARGB(255, 56, 56, 56).withOpacity(0.3),
-                  context: context,
-                  builder: (_) => FunkyOverlay(
-                    mainImage: AssetImage('assets/images/arnie.png'),
-                    title: 'Le api di Dario',
-                    subtitle: 'The way of the bees',
-                    body: 'prova',
-                    isSelected: true,
+                  Consumer<SelectedProject>(builder: (context, project, child) {
+                if (project.getSelectedProject() >= 0) {
+                  Projects selectedProject =
+                      project.proj[project.getSelectedProject()];
+                  debugPrint('${project.getSelectedProject()}');
+                  return GestureDetector(
+                      onTap: (){showDialog(
+                    barrierColor: const Color.fromARGB(255, 56, 56, 56).withOpacity(0.3),
+                    context: context,
+                    builder: (_) => FunkyOverlay(
+                      mainImage: AssetImage(selectedProject.imagePath),
+                      title: selectedProject.name,
+                      subtitle: selectedProject.address,
+                      body: selectedProject.phrase,
+                      isSelected: selectedProject.light,
                     ),
-                );},
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.25,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/arnie.png'),
-                          fit: BoxFit.cover,
+                                  );},
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.25,
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(selectedProject.imagePath),
+                            fit: BoxFit.cover,
+                          ),
+                          shape: BoxShape.rectangle,
+                          color: Colors.white,
+                          /*border: Border.all(
+                                width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
                         ),
-                        shape: BoxShape.rectangle,
-                        color: Colors.white,
-                        /*border: Border.all(
-                              width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        boxShadow: [
-                          BoxShadow(
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(selectedProject.name,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                  background: Paint()
+                                    ..color = Colors.black.withOpacity(0.4)
+                                    ..style = PaintingStyle.fill,
+                                )),
+                            Text(selectedProject.address,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  background: Paint()
+                                    ..color = Colors.black.withOpacity(0.4)
+                                    ..style = PaintingStyle.fill,
+                                )),
+                            SizedBox(height: 15)
+                          ],
+                        ),
+                      ),
+                    ); }else {
+                          return Container(
+                            height: 200.0,
+                            width: 400.0,
+                            margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
+                            decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            color: Colors.white,
+                            /*border: Border.all(
+                                  width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            boxShadow: [
+                              BoxShadow(
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 5,
                             blurRadius: 7,
@@ -97,31 +149,11 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text('Le api di Dario',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                                background: Paint()
-                                  ..color = Colors.black.withOpacity(0.4)
-                                  ..style = PaintingStyle.fill,
-                              )),
-                          Text('The way of the bees',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                background: Paint()
-                                  ..color = Colors.black.withOpacity(0.4)
-                                  ..style = PaintingStyle.fill,
-                              )),
-                          SizedBox(height: 15)
-                        ],
-                      ),
-                    ),
+                      child: Center(
+                        child: Text('No project was selected'),
+                      ));
+                }
+              }
                   ),
                   SizedBox(height: 15,),
                   Column(
