@@ -1,4 +1,5 @@
 import 'package:app_project/models/projects.dart';
+import 'package:app_project/repository/databaseRepository.dart';
 import 'package:app_project/screens/login_page.dart';
 import 'package:app_project/provider/home_provider.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,11 @@ import 'package:app_project/utils/shared_preferences.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final db = await $FloorDatabaseFit.databaseBuilder('app_database.db').build();
-  runApp(Provider<DatabaseFit>.value(value: db, child: MyApp()));
+
+  final databaseRepository = DatabaseRepository(database: db);
+
+  runApp(ChangeNotifierProvider<DatabaseRepository>(create: (context) => databaseRepository,
+  child: MyApp()));
 } // main
 
 class MyApp extends StatelessWidget {
