@@ -3,6 +3,7 @@ import 'package:app_project/screens/login_page.dart';
 import 'package:app_project/provider/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:app_project/database/db.dart';
 
 import 'package:app_project/screens/splash.dart';
 import 'package:app_project/services/impact.dart';
@@ -11,8 +12,10 @@ import 'package:app_project/utils/shared_preferences.dart';
 
 // VERSION 1.2
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final db = await $FloorDatabaseFit.databaseBuilder('app_database.db').build();
+  runApp(Provider<DatabaseFit>.value(value: db, child: MyApp()));
 } // main
 
 class MyApp extends StatelessWidget {
