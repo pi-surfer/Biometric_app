@@ -46,36 +46,3 @@ double getTotalKalories(List<Kalories> kalories) {
   }
   return dailyScore;
 }
-
-/*Future<bool> _saveDailyScore() async {
-  final score = getDailyScore(getTotalKalories(getKalFromDay()), getTotalSteps(steps), getAerobicTime(hr));
-  SharedPreferences prefs_score = await SharedPreferences.getInstance();
-   return prefs_score.setInt('dailyScore', score);
-}
-
-Future<int?> _getDailyScore() async{
-  SharedPreferences prefs_score = await SharedPreferences.getInstance();
-  return prefs_score.getInt('dailyScore');
-}*/
-
-/*Future<int> getGlobalScore() async{
-  int GlobalScore = 0;
-  int ds = getDailyScore(totalKalories, totalSteps, aerobicTime)
-  //int? ds = await _getDailyScore();
-  GlobalScore = GlobalScore + ds!;
-  if (GlobalScore > 90) {
-    GlobalScore = 0;
-  }
-  return GlobalScore;
-}
-
-Future<bool> _saveGlobalScore() async {
-  final gscore = getGlobalScore();
-  SharedPreferences prefs_gscore = await SharedPreferences.getInstance();
-   return prefs_gscore.setInt('globalScore', gscore as int);
-}
-
-Future<int?> _getGlobalScore() async{
-  SharedPreferences prefs_gscore = await SharedPreferences.getInstance();
-  return prefs_gscore.getInt('globalScore');
-}*/

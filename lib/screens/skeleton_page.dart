@@ -60,6 +60,8 @@ class _SkeletonPageState extends State<SkeletonPage>
 
   Widget _selectPage({
     required int index,
+
+
   }) {
     switch (index) {
       case 0:

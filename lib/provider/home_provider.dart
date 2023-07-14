@@ -59,7 +59,7 @@ class HomeProvider extends ChangeNotifier {
     aerobicTime = getAerobicTime(_heartRatesDB);
     totalKalories = getTotalKalories(_kaloriesDB);
     totalSteps = getTotalSteps(_stepsDB);
-    GlobalScore = getGlobalScore() as int;
+    GlobalScore = getGlobalScore(dailyScore);
     dailyScore = getDailyScore(totalKalories, totalSteps, aerobicTime);
 
     debugPrint('\naerobicTime = $aerobicTime min');
@@ -107,7 +107,7 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> _saveDailyScore() async {
+  /*Future<bool> _saveDailyScore() async {
     //final score = getDailyScore(totalKalories, totalSteps, aerobicTime);
     final score = dailyScore;
     SharedPreferences prefs_score = await SharedPreferences.getInstance();
@@ -117,21 +117,21 @@ class HomeProvider extends ChangeNotifier {
   Future<int?> _getDailyScore() async{
     SharedPreferences prefs_score = await SharedPreferences.getInstance();
     return prefs_score.getInt('dailyScore');
-  }
+  }*/
 
-  Future<int> getGlobalScore() async{
+  int getGlobalScore(int dailyScore) {
     int GlobalScore = 0;
-    int ds = dailyScore;
+    //int ds = dailyScore;
     //int ds = getDailyScore(totalKalories, totalSteps, aerobicTime);
     //int? ds = await _getDailyScore();
-    GlobalScore = GlobalScore + ds;
+    GlobalScore = GlobalScore + dailyScore;
     if (GlobalScore > 90) {
       GlobalScore = 0;
     }
     return GlobalScore;
   }
 
-  Future<bool> _saveGlobalScore() async {
+  /*Future<bool> _saveGlobalScore() async {
     final gscore = getGlobalScore();
     SharedPreferences prefs_gscore = await SharedPreferences.getInstance();
     return prefs_gscore.setInt('globalScore', gscore as int);
@@ -140,7 +140,7 @@ class HomeProvider extends ChangeNotifier {
   Future<int?> _getGlobalScore() async{
     SharedPreferences prefs_gscore = await SharedPreferences.getInstance();
     return prefs_gscore.getInt('globalScore');
-  }
+  }*/
 }
 
 

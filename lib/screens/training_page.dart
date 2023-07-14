@@ -388,7 +388,7 @@ class _ActivityState extends State<Activity> {
                       animation: true,
                       width: 360.0,
                       lineHeight: 30,
-                      percent: 0.7,
+                      percent: provider.GlobalScore/90,
                       barRadius: Radius.circular(20),
                       backgroundColor:
                           Color.fromARGB(255, 255, 221, 74).withOpacity(0.4),
