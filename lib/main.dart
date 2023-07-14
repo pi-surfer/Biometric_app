@@ -1,3 +1,4 @@
+import 'package:app_project/models/partner.dart';
 import 'package:app_project/models/projects.dart';
 import 'package:app_project/screens/login_page.dart';
 import 'package:app_project/provider/home_provider.dart';
@@ -37,6 +38,8 @@ class MyApp extends StatelessWidget {
               child: MyApp(), create: (_) => Missions()),
           ChangeNotifierProvider<SelectedProject>(
               child: MyApp(), create: (_) => SelectedProject()),
+          ChangeNotifierProvider<SelectedPartner>(
+              child: MyApp(), create: (_) => SelectedPartner()),
         ],
         child: MaterialApp(
           theme: ThemeData(fontFamily: 'Poppins'),
