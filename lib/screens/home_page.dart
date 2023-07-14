@@ -1,3 +1,4 @@
+import 'package:app_project/models/partner.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -215,136 +216,76 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                   SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        barrierColor: const Color.fromARGB(255, 56, 56, 56)
-                            .withOpacity(0.3),
-                        context: context,
-                        builder: (_) => FunkyOverlay(
-                          mainImage: AssetImage('assets/images/marathon.png'),
-                          title: 'Nike',
-                          subtitle: 'Make it happens',
-                          body: 'Maratona',
-                          isSelectable: false,
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: 200.0,
-                      width: 400.0,
-                      margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/marathon.png'),
-                          fit: BoxFit.cover,
-                        ),
-                        shape: BoxShape.rectangle,
-                        color: Colors.white,
-                        /*border: Border.all(
-                              width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
+                  Consumer<SelectedPartner>(builder: (context, partner, child) {
+                    Sponsor selectedPartner =
+                        partner.sponsor[partner.getSelectedProject()];
+                    return GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          barrierColor: const Color.fromARGB(255, 56, 56, 56)
+                              .withOpacity(0.3),
+                          context: context,
+                          builder: (_) => FunkyOverlay(
+                            mainImage: AssetImage(selectedPartner.imagePath),
+                            title: 'PARTNER OF THE WEEK',
+                            subtitle: selectedPartner.name,
+                            body: selectedPartner.phrase,
+                            isSelectable: false,
                           ),
-                        ],
+                        );
+                      },
+                      child: Container(
+                        height: 200.0,
+                        width: 400.0,
+                        margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(selectedPartner.imagePath),
+                            fit: BoxFit.cover,
+                          ),
+                          shape: BoxShape.rectangle,
+                          color: Colors.white,
+                          /*border: Border.all(
+                                width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(selectedPartner.name,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                  background: Paint()
+                                    ..color = Colors.black.withOpacity(0.4)
+                                    ..style = PaintingStyle.fill,
+                                )),
+                            Text(selectedPartner.phrase,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  background: Paint()
+                                    ..color = Colors.black.withOpacity(0.4)
+                                    ..style = PaintingStyle.fill,
+                                )),
+                            SizedBox(height: 10)
+                          ],
+                        ),
                       ),
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text('LoremIpsum',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                                background: Paint()
-                                  ..color = Colors.black.withOpacity(0.4)
-                                  ..style = PaintingStyle.fill,
-                              )),
-                          Text('The way of the bees',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                background: Paint()
-                                  ..color = Colors.black.withOpacity(0.4)
-                                  ..style = PaintingStyle.fill,
-                              )),
-                          SizedBox(height: 10)
-                        ],
-                      ),
-                    ),
+                    );}
                   ),
                   SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        barrierColor: const Color.fromARGB(255, 56, 56, 56)
-                            .withOpacity(0.3),
-                        context: context,
-                        builder: (_) => FunkyOverlay(
-                           mainImage: AssetImage('assets/images/garden.png'),
-                          title: 'Beautiful Garden',
-                          subtitle: 'Bio for life',
-                          body: 'Maratona',
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: 200.0,
-                      width: 400.0,
-                      margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/garden.png'),
-                          fit: BoxFit.cover,
-                        ),
-                        shape: BoxShape.rectangle,
-                        color: Colors.white,
-                        /*border: Border.all(
-                              width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text('LoremIpsum',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                                background: Paint()
-                                  ..color = Colors.black.withOpacity(0.4)
-                                  ..style = PaintingStyle.fill,
-                              )),
-                          Text('The way of the bees',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                background: Paint()
-                                  ..color = Colors.black.withOpacity(0.4)
-                                  ..style = PaintingStyle.fill,
-                              )),
-                          SizedBox(height: 10),
-                        ],
-                      ),
-                    ),
-                  ),
                 ]),
               ),
             ),
