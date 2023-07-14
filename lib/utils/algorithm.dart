@@ -49,3 +49,14 @@ double getTotalKalories(List<Kalories> kalories) {
   return dailyScore;
 
 }
+
+int getGlobalScore(int dailyScore){
+    int GlobalScore = 0;
+    //int ds = getDailyScore(totalKalories, totalSteps, aerobicTime);
+    //int? ds = await _getDailyScore();
+    GlobalScore = GlobalScore + dailyScore;
+    if (GlobalScore > 90) {
+      GlobalScore = 0;
+    }
+    return GlobalScore;
+  }

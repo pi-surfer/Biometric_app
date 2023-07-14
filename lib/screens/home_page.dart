@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           SizedBox(width: 25),
-                          Text('${provider.score}',
+                          Text('0',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 17,
