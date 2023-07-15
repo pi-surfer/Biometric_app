@@ -13,11 +13,11 @@ import '../models/projects.dart';
 
 class HomeProvider extends ChangeNotifier {
   late List<HR> heartRates;
-  late int aerobicTime;
+  late AerobicTime aerobicTime;
   late List<Cal> calories;
-  late double totalCalories;
+  late TotCal totalCalories;
   late List<Steps> steps;
-  late int totalSteps;
+  late TotSteps totalSteps;
   final DatabaseFit db;
   late int globalScore = 0;
 
@@ -70,6 +70,15 @@ class HomeProvider extends ChangeNotifier {
 
     dailyScore = DailyScore(await _calculateDailyScore(_heartRates,_steps,_calories),lastFetch);
     db.dailyScoreDao.insertDailyScore(dailyScore);
+
+    totalCalories = TotCal(getTotalCalories(_calories) as int, lastFetch);
+    db.totCalDao.insertTotCal(totalCalories);
+
+    totalSteps = TotSteps(getTotalSteps(_steps), lastFetch);
+    db.totStepsDao.insertTotSteps(totalSteps);
+
+    aerobicTime = AerobicTime(getAerobicTime(_heartRates), lastFetch);
+    db.aerobicTimeDao.insertAerobicTime(aerobicTime);
   }
 
   Future<void> refresh() async {
@@ -84,9 +93,6 @@ class HomeProvider extends ChangeNotifier {
     
     _dailyScore = getDailyScore(totCal,totSteps,aerobicTime);
     return _dailyScore;
-    //for (var element in _exposure) {
-    //  db.exposuresDao.insertExposure(element);
-    //} // db add to the table
   }
 
   Future<void> getDataOfDay(DateTime showDate) async {
