@@ -211,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                       animation: true,
                       width: 360.0,
                       lineHeight: 30,
-                      percent: provider.GlobalScore / 90,
+                      percent: provider.globalScore / 90,
                       barRadius: Radius.circular(20),
                       backgroundColor:
                           Color.fromARGB(100, 255, 221, 74).withOpacity(0.6),
@@ -230,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         SizedBox(width: 25),
                         Text(
-                          '${provider.GlobalScore}',
+                          '${provider.globalScore}',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 17,

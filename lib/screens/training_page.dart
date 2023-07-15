@@ -31,12 +31,6 @@ class Times {
   final dynamic valueTimes;
 }
 
-class finalOBIETTIVI {
-  finalOBIETTIVI(this.crediti, this.value);
-  final String crediti;
-  final double value;
-}
-
 class day {
   // this class models the single heart rate data point
   late final DateTime date;
@@ -62,12 +56,10 @@ class _ActivityState extends State<Activity> {
   late List<Steps> _chartData2;
   late List<Times> _chartData3;
   late TooltipBehavior _tooltipBehavior;
-  late List<finalOBIETTIVI> _chartData1;
 
   @override
   void initState() {
     _chartData = getChartData();
-    _chartData1 = getChartData1();
     _chartData2 = getChartData2();
     _chartData3 = getChartData3();
     _tooltipBehavior = TooltipBehavior(enable: true);
@@ -131,25 +123,6 @@ class _ActivityState extends State<Activity> {
                     const SizedBox(
                       height: 20,
                     ),
-                    TextButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(MdiIcons.reload,
-                            size: 18, color: Color.fromARGB(255, 254, 251, 228)),
-                        label: const Text(
-                          "Update your data",
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 254, 251, 228),
-                              fontSize: 16),
-                        ),
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.all(12),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(28.0),
-                            ),
-                          ),
-                          backgroundColor: const Color.fromARGB(255, 1, 97, 4),
-                        )),
                     Container(
                       alignment: Alignment.topLeft,
                       height: MediaQuery.of(context).size.height * 0.50,
@@ -263,7 +236,7 @@ class _ActivityState extends State<Activity> {
                                   ),
                                 ),
                                 Text(
-                                  provider.totalKalories.toStringAsFixed(1),
+                                  provider.totalCalories.toString(),
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 255, 221, 74),
                                     fontWeight: FontWeight.bold,
@@ -357,7 +330,7 @@ class _ActivityState extends State<Activity> {
                       height: 20,
                     ),
                     Text(
-                      'Today, you have earned' + provider.dailyScore.toString() + 'points',
+                      'Today, you have earned ' + provider.dailyScore.toString() + ' points',
                       style: subtitleStyle,
                       textAlign: TextAlign.start,
                       ),
@@ -367,19 +340,21 @@ class _ActivityState extends State<Activity> {
                     ),
                     
                       Text(
-                        'You are still' + (90-provider.GlobalScore).toString() + 'points away from funding the project:',
+                        'You are still ' + (90-provider.globalScore).toString() + ' points away from funding the project:',
                         textAlign: TextAlign.start,
                       style: subtitleStyle
                       ),
                       Consumer<SelectedProject>(builder:
                         ((context, project, child) {
-                          Projects selectedProject =
-                            project.proj[project.getSelectedProject()];
+                          if (project.getSelectedProject() >= 0) {
+                  Projects selectedProject =
+                      project.proj[project.getSelectedProject()];
                           return Text(
                           selectedProject.name,
                           textAlign: TextAlign.start,
                       style: subtitleStyle
-                        );})
+                        );} else {return Text('no project selected',textAlign: TextAlign.start,
+                      style: subtitleStyle);}})
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height *0.01,
@@ -388,7 +363,7 @@ class _ActivityState extends State<Activity> {
                       animation: true,
                       width: 360.0,
                       lineHeight: 30,
-                      percent: provider.GlobalScore/90,
+                      percent: provider.globalScore/90,
                       barRadius: Radius.circular(20),
                       backgroundColor:
                           Color.fromARGB(255, 255, 221, 74).withOpacity(0.4),
@@ -405,8 +380,8 @@ class _ActivityState extends State<Activity> {
                     SizedBox(height: 5),
                     Row(children: [
                       SizedBox(width: 25),
-                      Text('SCORE' +
-                        provider.GlobalScore.toString(),
+                      Text('SCORE: ' +
+                        provider.globalScore.toString(),
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 17,
@@ -446,8 +421,4 @@ class _ActivityState extends State<Activity> {
     return chartData3;
   }
 
-  List<finalOBIETTIVI> getChartData1() {
-    final List<finalOBIETTIVI> chartData1 = [finalOBIETTIVI('Crediti', 90)];
-    return chartData1;
-  }
 }
