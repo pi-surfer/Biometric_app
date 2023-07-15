@@ -60,6 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
     print('${ProfilePage.routename} built');
     return SafeArea(
       child: Scaffold(
+        
         backgroundColor: Color.fromARGB(255, 254, 251, 228),
         body: SingleChildScrollView(
           child: Column(
@@ -97,7 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 TextField(
                                   controller: names,
                                   decoration: InputDecoration(
-                                      labelText: '$name',
+                                      labelText: 'Enter your name to change it',
                                       prefixIcon: Icon(Icons.person),
                                       border: myInputBorder(),
                                       enabledBorder: myInputBorder(),
@@ -323,7 +324,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   builder: (context) => SkeletonPage()));
                         },
                         icon: Icon(Icons.home,
-                            color: Color.fromARGB(255, 1, 97, 4), size: 18)),
+                            color: Color.fromARGB(255, 1, 97, 4), size: 25)),
                     Text('Back to Home',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontWeight: FontWeight.bold)),
@@ -362,10 +363,5 @@ class _ProfilePageState extends State<ProfilePage> {
         .push(MaterialPageRoute(builder: (context) => LoginPage()));
   } // _toLoginPage
 
-  void _toHomePage(BuildContext context) {
-    Navigator.pop(context);
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => SkeletonPage()));
-  } // _toLoginPage
 
 }

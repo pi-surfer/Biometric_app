@@ -85,13 +85,13 @@ class SelectedProject extends ChangeNotifier {
 
   void selectProject(id) {
     int idSel = getSelectedProject();
-    int gscore = _getGlobalScore() as int;
-    if (idSel == -1 || gscore == 0) { 
+    int gscore = 0;
+    if (/*idSel == -1 ||*/ gscore == 0) { 
     for (i in ids) {
       proj[i].light = false;
     }
     proj[id].light = true;}
-    else {id = idSel;}
+    else if(idSel != -1) {id = idSel;}
     notifyListeners();
   }
 

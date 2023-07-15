@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Thank you,' '$name' '!',
+                            'Thank you, ' '$name' '!',
                             style: titleStyle,
                             textAlign: TextAlign.start,
                           ),
