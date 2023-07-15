@@ -228,7 +228,7 @@ class _ActivityState extends State<Activity> {
                                   color: Color.fromARGB(255, 255, 221, 74),
                                 ),
                                 Text(
-                                  'Kalories',
+                                  'Calories',
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 255, 221, 74),
                                     fontSize: 15,
