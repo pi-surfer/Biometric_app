@@ -73,7 +73,7 @@ class HomeProvider extends ChangeNotifier {
     _dailyScore = DailyScore(await _calculateDailyScore(_heartRates,_steps,_calories),lastFetch);
     db.dailyScoreDao.insertDailyScore(_dailyScore);
 
-    _totalCalories = TotCal(getTotalCalories(_calories) as int, lastFetch);
+    _totalCalories = TotCal(getTotalCalories(_calories).round(), lastFetch);
     db.totCalDao.insertTotCal(_totalCalories);
 
     _totalSteps = TotSteps(getTotalSteps(_steps), lastFetch);
