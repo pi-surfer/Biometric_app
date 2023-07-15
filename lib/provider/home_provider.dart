@@ -111,7 +111,7 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> _saveDailyScore() async {
+  /*Future<bool> _saveDailyScore() async {
     //final score = getDailyScore(totalKalories, totalSteps, aerobicTime);
     final score = dailyScore;
     SharedPreferences prefs_score = await SharedPreferences.getInstance();
@@ -121,7 +121,7 @@ class HomeProvider extends ChangeNotifier {
   Future<int?> _getDailyScore() async{
     SharedPreferences prefs_score = await SharedPreferences.getInstance();
     return prefs_score.getInt('dailyScore');
-  }
+  }*/
 
   Future<bool> _saveGlobalScore() async {
     final gscore = getGlobalScore(dailyScore);
@@ -129,10 +129,10 @@ class HomeProvider extends ChangeNotifier {
     return prefs_gscore.setInt('globalScore', gscore as int);
   }
 
-  Future<int?> _getGlobalScore() async{
+  /*Future<int?> _getGlobalScore() async{
     SharedPreferences prefs_gscore = await SharedPreferences.getInstance();
     return prefs_gscore.getInt('globalScore');
-  }
+  }*/
 }
 
 
