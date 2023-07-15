@@ -3,8 +3,8 @@ import 'package:app_project/database/entities/entities.dart';
 
 @dao
 abstract class TotStepsDao {
-   @Query('SELECT * FROM TOTALSTEPS AT DAY :day')
-  Future<TotSteps?> findTotStepsbyDate(DateTime day);
+   @Query('SELECT * FROM TOTALSTEPS AT DAY :dateTime')
+  Future<TotSteps?> findTotStepsbyDate(String dateTime);
 
   @Query('SELECT * FROM TOTALSTEPS')
   Future<List<TotSteps>> findAllTotSteps();

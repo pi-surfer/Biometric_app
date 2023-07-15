@@ -181,7 +181,7 @@ class ImpactService {
   Future<List<Steps>> getStepFromDay(DateTime day) async {
     await updateBearer();
     List<Steps> result;
-    String formattedDate = DateFormat('yyyy-MM-dd').format(day);
+    String formattedDate = DateFormat("yyyy-MM-dd").format(day);
     debugPrint('day = $formattedDate');
     final url = '${ServerStrings.backendBaseUrl}${ServerStrings.stepsEndpoint}${ServerStrings.patientUsername}/day/$formattedDate/';
     var access = retrieveSavedToken(false);
@@ -193,14 +193,15 @@ class ImpactService {
       final decodedResponse = jsonDecode(response.body);
       result = [];
       for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
-        result.add(Steps(decodedResponse['data']['data'][i],
-          decodedResponse['data']['date']));
+        print('decoded response ' + decodedResponse['data']['data'][i]['value'].toString());
+        result.add(Steps(int.parse(decodedResponse['data']['data'][i] ['value']),
+          (decodedResponse['data']['date'])));
       } //for
     } //if
     else {
       //debugPrint('ln 203 ${response.statusCode} ${response.reasonPhrase}');
       //debugPrint('body = ${response.body} \n headers = ${response.headers}');
-      result = [Steps(0, day)];
+      result = [Steps(0, formattedDate)];
     }
     //debugPrint('Steps = $result');
     return result;
@@ -209,7 +210,7 @@ class ImpactService {
   Future<List<HR>> getHRFromDay(DateTime day) async {
     await updateBearer();
     List<HR> result;
-    String formattedDate = DateFormat('yyyy-MM-dd').format(day);
+    String formattedDate = DateFormat("yyyy-MM-dd").format(day);
 
     final url = ServerStrings.backendBaseUrl +
         ServerStrings.hrEndpoint +
@@ -225,12 +226,12 @@ class ImpactService {
       final decodedResponse = jsonDecode(response.body);
       result = [];
       for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
-        result.add(HR(decodedResponse['data']['data'][i],
-        decodedResponse['data']['date'],));
+        result.add(HR(decodedResponse['data']['data'][i] ['value'],
+          (decodedResponse['data']['date'])));
       } //for
     } //if
     else {
-      result = [HR(0, day)];
+      result = [HR(0, formattedDate)];
     }
 
     //debugPrint('HR = $result');
@@ -240,7 +241,7 @@ class ImpactService {
   Future<List<Cal>> getCalFromDay(DateTime day) async {
     await updateBearer();
     List<Cal> result;
-    String formattedDate = DateFormat('yyyy-MM-dd').format(day);
+    String formattedDate = DateFormat("yyyy-MM-dd").format(day);
 
     final url = ServerStrings.backendBaseUrl +
         ServerStrings.kaloriesEndpoint +
@@ -255,12 +256,12 @@ class ImpactService {
       final decodedResponse = jsonDecode(response.body);
       result = [];
       for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
-        result.add(Cal(decodedResponse['data']['data'][i],
-            decodedResponse['data']['date'],));
+        result.add(Cal(double.parse(decodedResponse['data']['data'][i] ['value']),
+          decodedResponse['data']['date']));
       } //for
     } //if
     else {
-      result = [Cal(0, day)];
+      result = [Cal(0, formattedDate)];
     }
 
     //debugPrint('Kalories = $result');

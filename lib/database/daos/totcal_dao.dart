@@ -3,8 +3,8 @@ import 'package:app_project/database/entities/entities.dart';
 
 @dao
 abstract class TotCalDao {
-   @Query('SELECT * FROM TOTALCALORIES AT DAY :day')
-  Future<TotCal?> findTotCalbyDate(DateTime day);
+   @Query('SELECT * FROM TOTALCALORIES AT DAY :dateTime')
+  Future<TotCal?> findTotCalbyDate(String dateTime);
 
   @Query('SELECT * FROM TOTALCALORIES')
   Future<List<TotCal>> findAllTotCal();

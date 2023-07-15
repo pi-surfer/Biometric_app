@@ -3,8 +3,8 @@ import 'package:floor/floor.dart';
 
 @Entity(primaryKeys: ['dateTime'])
 class Cal {
-  final int value;
-  final DateTime dateTime;
+  final double value;
+  final String dateTime;
 
   Cal(this.value, this.dateTime);
 }

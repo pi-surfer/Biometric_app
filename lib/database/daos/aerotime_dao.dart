@@ -4,8 +4,8 @@ import 'package:app_project/database/entities/entities.dart';
 @dao
 abstract class AerobicTimeDao {
   
-  @Query('SELECT * FROM AEROBICTIME AT DAY :day')
-  Future<AerobicTime?> findAerobicTimebyDate(DateTime day);
+  @Query('SELECT * FROM AEROBICTIME AT DAY :dateTime')
+  Future<AerobicTime?> findAerobicTimebyDate(String dateTime);
 
   @Query('SELECT * FROM AEROBICTIME')
   Future<List<AerobicTime>> findAllAerobicTime();

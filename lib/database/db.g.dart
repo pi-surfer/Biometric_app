@@ -97,19 +97,19 @@ class _$DatabaseFit extends DatabaseFit {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `HR` (`value` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, PRIMARY KEY (`dateTime`))');
+            'CREATE TABLE IF NOT EXISTS `HR` (`value` INTEGER NOT NULL, `dateTime` TEXT NOT NULL, PRIMARY KEY (`dateTime`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Steps` (`value` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, PRIMARY KEY (`dateTime`))');
+            'CREATE TABLE IF NOT EXISTS `Steps` (`value` INTEGER NOT NULL, `dateTime` TEXT NOT NULL, PRIMARY KEY (`dateTime`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Cal` (`value` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, PRIMARY KEY (`dateTime`))');
+            'CREATE TABLE IF NOT EXISTS `Cal` (`value` REAL NOT NULL, `dateTime` TEXT NOT NULL, PRIMARY KEY (`dateTime`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `TotSteps` (`value` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, PRIMARY KEY (`dateTime`))');
+            'CREATE TABLE IF NOT EXISTS `TotSteps` (`value` INTEGER NOT NULL, `dateTime` TEXT NOT NULL, PRIMARY KEY (`dateTime`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `TotCal` (`value` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, PRIMARY KEY (`dateTime`))');
+            'CREATE TABLE IF NOT EXISTS `TotCal` (`value` REAL NOT NULL, `dateTime` TEXT NOT NULL, PRIMARY KEY (`dateTime`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `AerobicTime` (`value` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, PRIMARY KEY (`dateTime`))');
+            'CREATE TABLE IF NOT EXISTS `AerobicTime` (`value` INTEGER NOT NULL, `dateTime` TEXT NOT NULL, PRIMARY KEY (`dateTime`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `DailyScore` (`value` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, PRIMARY KEY (`dateTime`))');
+            'CREATE TABLE IF NOT EXISTS `DailyScore` (`value` INTEGER NOT NULL, `dateTime` TEXT NOT NULL, PRIMARY KEY (`dateTime`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -164,7 +164,7 @@ class _$HeartRatesDao extends HeartRatesDao {
             'HR',
             (HR item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _hRUpdateAdapter = UpdateAdapter(
             database,
@@ -172,7 +172,7 @@ class _$HeartRatesDao extends HeartRatesDao {
             ['dateTime'],
             (HR item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _hRDeletionAdapter = DeletionAdapter(
             database,
@@ -180,7 +180,7 @@ class _$HeartRatesDao extends HeartRatesDao {
             ['dateTime'],
             (HR item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -197,23 +197,20 @@ class _$HeartRatesDao extends HeartRatesDao {
 
   @override
   Future<List<HR>> findHeartRatesbyDate(
-    DateTime startTime,
-    DateTime endTime,
+    String startTime,
+    String endTime,
   ) async {
     return _queryAdapter.queryList(
         'SELECT * FROM HR WHERE dateTime between ?1 and ?2 ORDER BY dateTime ASC',
-        mapper: (Map<String, Object?> row) => HR(row['value'] as int, _dateTimeConverter.decode(row['dateTime'] as int)),
-        arguments: [
-          _dateTimeConverter.encode(startTime),
-          _dateTimeConverter.encode(endTime)
-        ]);
+        mapper: (Map<String, Object?> row) => HR(row['value'] as int, row['dateTime'] as String),
+        arguments: [startTime, endTime]);
   }
 
   @override
   Future<List<HR>> findAllHeartRates() async {
     return _queryAdapter.queryList('SELECT * FROM HR',
-        mapper: (Map<String, Object?> row) => HR(row['value'] as int,
-            _dateTimeConverter.decode(row['dateTime'] as int)));
+        mapper: (Map<String, Object?> row) =>
+            HR(row['value'] as int, row['dateTime'] as String));
   }
 
   @override
@@ -242,7 +239,7 @@ class _$StepsDao extends StepsDao {
             'Steps',
             (Steps item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _stepsUpdateAdapter = UpdateAdapter(
             database,
@@ -250,7 +247,7 @@ class _$StepsDao extends StepsDao {
             ['dateTime'],
             (Steps item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _stepsDeletionAdapter = DeletionAdapter(
             database,
@@ -258,7 +255,7 @@ class _$StepsDao extends StepsDao {
             ['dateTime'],
             (Steps item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -275,23 +272,20 @@ class _$StepsDao extends StepsDao {
 
   @override
   Future<List<Steps>> findStepsbyDate(
-    DateTime startTime,
-    DateTime endTime,
+    String startTime,
+    String endTime,
   ) async {
     return _queryAdapter.queryList(
         'SELECT * FROM STEPS WHERE dateTime between ?1 and ?2 ORDER BY dateTime ASC',
-        mapper: (Map<String, Object?> row) => Steps(row['value'] as int, _dateTimeConverter.decode(row['dateTime'] as int)),
-        arguments: [
-          _dateTimeConverter.encode(startTime),
-          _dateTimeConverter.encode(endTime)
-        ]);
+        mapper: (Map<String, Object?> row) => Steps(row['value'] as int, row['dateTime'] as String),
+        arguments: [startTime, endTime]);
   }
 
   @override
   Future<List<Steps>> findAllSteps() async {
     return _queryAdapter.queryList('SELECT * FROM STEPS',
-        mapper: (Map<String, Object?> row) => Steps(row['value'] as int,
-            _dateTimeConverter.decode(row['dateTime'] as int)));
+        mapper: (Map<String, Object?> row) =>
+            Steps(row['value'] as int, row['dateTime'] as String));
   }
 
   @override
@@ -320,7 +314,7 @@ class _$CaloriesDao extends CaloriesDao {
             'Cal',
             (Cal item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _calUpdateAdapter = UpdateAdapter(
             database,
@@ -328,7 +322,7 @@ class _$CaloriesDao extends CaloriesDao {
             ['dateTime'],
             (Cal item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _calDeletionAdapter = DeletionAdapter(
             database,
@@ -336,7 +330,7 @@ class _$CaloriesDao extends CaloriesDao {
             ['dateTime'],
             (Cal item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -353,23 +347,20 @@ class _$CaloriesDao extends CaloriesDao {
 
   @override
   Future<List<Cal>> findCaloriesbyDate(
-    DateTime startTime,
-    DateTime endTime,
+    String startTime,
+    String endTime,
   ) async {
     return _queryAdapter.queryList(
         'SELECT * FROM CALORIES WHERE dateTime between ?1 and ?2 ORDER BY dateTime ASC',
-        mapper: (Map<String, Object?> row) => Cal(row['value'] as int, _dateTimeConverter.decode(row['dateTime'] as int)),
-        arguments: [
-          _dateTimeConverter.encode(startTime),
-          _dateTimeConverter.encode(endTime)
-        ]);
+        mapper: (Map<String, Object?> row) => Cal(row['value'] as double, row['dateTime'] as String),
+        arguments: [startTime, endTime]);
   }
 
   @override
   Future<List<Cal>> findAllCalories() async {
     return _queryAdapter.queryList('SELECT * FROM CALORIES',
-        mapper: (Map<String, Object?> row) => Cal(row['value'] as int,
-            _dateTimeConverter.decode(row['dateTime'] as int)));
+        mapper: (Map<String, Object?> row) =>
+            Cal(row['value'] as double, row['dateTime'] as String));
   }
 
   @override
@@ -398,7 +389,7 @@ class _$TotStepsDao extends TotStepsDao {
             'TotSteps',
             (TotSteps item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _totStepsUpdateAdapter = UpdateAdapter(
             database,
@@ -406,7 +397,7 @@ class _$TotStepsDao extends TotStepsDao {
             ['dateTime'],
             (TotSteps item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _totStepsDeletionAdapter = DeletionAdapter(
             database,
@@ -414,7 +405,7 @@ class _$TotStepsDao extends TotStepsDao {
             ['dateTime'],
             (TotSteps item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -430,18 +421,18 @@ class _$TotStepsDao extends TotStepsDao {
   final DeletionAdapter<TotSteps> _totStepsDeletionAdapter;
 
   @override
-  Future<TotSteps?> findTotStepsbyDate(DateTime day) async {
+  Future<TotSteps?> findTotStepsbyDate(String dateTime) async {
     return _queryAdapter.query('SELECT * FROM TOTALSTEPS AT DAY ?1',
-        mapper: (Map<String, Object?> row) => TotSteps(row['value'] as int,
-            _dateTimeConverter.decode(row['dateTime'] as int)),
-        arguments: [_dateTimeConverter.encode(day)]);
+        mapper: (Map<String, Object?> row) =>
+            TotSteps(row['value'] as int, row['dateTime'] as String),
+        arguments: [dateTime]);
   }
 
   @override
   Future<List<TotSteps>> findAllTotSteps() async {
     return _queryAdapter.queryList('SELECT * FROM TOTALSTEPS',
-        mapper: (Map<String, Object?> row) => TotSteps(row['value'] as int,
-            _dateTimeConverter.decode(row['dateTime'] as int)));
+        mapper: (Map<String, Object?> row) =>
+            TotSteps(row['value'] as int, row['dateTime'] as String));
   }
 
   @override
@@ -470,7 +461,7 @@ class _$TotCalDao extends TotCalDao {
             'TotCal',
             (TotCal item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _totCalUpdateAdapter = UpdateAdapter(
             database,
@@ -478,7 +469,7 @@ class _$TotCalDao extends TotCalDao {
             ['dateTime'],
             (TotCal item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _totCalDeletionAdapter = DeletionAdapter(
             database,
@@ -486,7 +477,7 @@ class _$TotCalDao extends TotCalDao {
             ['dateTime'],
             (TotCal item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -502,18 +493,18 @@ class _$TotCalDao extends TotCalDao {
   final DeletionAdapter<TotCal> _totCalDeletionAdapter;
 
   @override
-  Future<TotCal?> findTotCalbyDate(DateTime day) async {
+  Future<TotCal?> findTotCalbyDate(String dateTime) async {
     return _queryAdapter.query('SELECT * FROM TOTALCALORIES AT DAY ?1',
-        mapper: (Map<String, Object?> row) => TotCal(row['value'] as int,
-            _dateTimeConverter.decode(row['dateTime'] as int)),
-        arguments: [_dateTimeConverter.encode(day)]);
+        mapper: (Map<String, Object?> row) =>
+            TotCal(row['value'] as double, row['dateTime'] as String),
+        arguments: [dateTime]);
   }
 
   @override
   Future<List<TotCal>> findAllTotCal() async {
     return _queryAdapter.queryList('SELECT * FROM TOTALCALORIES',
-        mapper: (Map<String, Object?> row) => TotCal(row['value'] as int,
-            _dateTimeConverter.decode(row['dateTime'] as int)));
+        mapper: (Map<String, Object?> row) =>
+            TotCal(row['value'] as double, row['dateTime'] as String));
   }
 
   @override
@@ -542,7 +533,7 @@ class _$AerobicTimeDao extends AerobicTimeDao {
             'AerobicTime',
             (AerobicTime item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _aerobicTimeUpdateAdapter = UpdateAdapter(
             database,
@@ -550,7 +541,7 @@ class _$AerobicTimeDao extends AerobicTimeDao {
             ['dateTime'],
             (AerobicTime item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _aerobicTimeDeletionAdapter = DeletionAdapter(
             database,
@@ -558,7 +549,7 @@ class _$AerobicTimeDao extends AerobicTimeDao {
             ['dateTime'],
             (AerobicTime item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -574,18 +565,18 @@ class _$AerobicTimeDao extends AerobicTimeDao {
   final DeletionAdapter<AerobicTime> _aerobicTimeDeletionAdapter;
 
   @override
-  Future<AerobicTime?> findAerobicTimebyDate(DateTime day) async {
+  Future<AerobicTime?> findAerobicTimebyDate(String dateTime) async {
     return _queryAdapter.query('SELECT * FROM AEROBICTIME AT DAY ?1',
-        mapper: (Map<String, Object?> row) => AerobicTime(row['value'] as int,
-            _dateTimeConverter.decode(row['dateTime'] as int)),
-        arguments: [_dateTimeConverter.encode(day)]);
+        mapper: (Map<String, Object?> row) =>
+            AerobicTime(row['value'] as int, row['dateTime'] as String),
+        arguments: [dateTime]);
   }
 
   @override
   Future<List<AerobicTime>> findAllAerobicTime() async {
     return _queryAdapter.queryList('SELECT * FROM AEROBICTIME',
-        mapper: (Map<String, Object?> row) => AerobicTime(row['value'] as int,
-            _dateTimeConverter.decode(row['dateTime'] as int)));
+        mapper: (Map<String, Object?> row) =>
+            AerobicTime(row['value'] as int, row['dateTime'] as String));
   }
 
   @override
@@ -616,7 +607,7 @@ class _$DailyScoreDao extends DailyScoreDao {
             'DailyScore',
             (DailyScore item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _dailyScoreUpdateAdapter = UpdateAdapter(
             database,
@@ -624,7 +615,7 @@ class _$DailyScoreDao extends DailyScoreDao {
             ['dateTime'],
             (DailyScore item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 }),
         _dailyScoreDeletionAdapter = DeletionAdapter(
             database,
@@ -632,7 +623,7 @@ class _$DailyScoreDao extends DailyScoreDao {
             ['dateTime'],
             (DailyScore item) => <String, Object?>{
                   'value': item.value,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime)
+                  'dateTime': item.dateTime
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -648,18 +639,18 @@ class _$DailyScoreDao extends DailyScoreDao {
   final DeletionAdapter<DailyScore> _dailyScoreDeletionAdapter;
 
   @override
-  Future<DailyScore?> findDailyScorebyDate(DateTime day) async {
+  Future<DailyScore?> findDailyScorebyDate(String dateTime) async {
     return _queryAdapter.query('SELECT * FROM DAILYSCORE AT DAY ?1',
-        mapper: (Map<String, Object?> row) => DailyScore(row['value'] as int,
-            _dateTimeConverter.decode(row['dateTime'] as int)),
-        arguments: [_dateTimeConverter.encode(day)]);
+        mapper: (Map<String, Object?> row) =>
+            DailyScore(row['value'] as int, row['dateTime'] as String),
+        arguments: [dateTime]);
   }
 
   @override
   Future<List<DailyScore>> findAllDailyScore() async {
     return _queryAdapter.queryList('SELECT * FROM DAILYSCORE',
-        mapper: (Map<String, Object?> row) => DailyScore(row['value'] as int,
-            _dateTimeConverter.decode(row['dateTime'] as int)));
+        mapper: (Map<String, Object?> row) =>
+            DailyScore(row['value'] as int, row['dateTime'] as String));
   }
 
   @override

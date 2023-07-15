@@ -1,4 +1,5 @@
 import 'package:app_project/screens/login_page.dart';
+import 'package:app_project/screens/prova.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,7 +68,8 @@ class _SkeletonPageState extends State<SkeletonPage>
       case 0:
         return HomePage();
       case 1:
-        return Activity();
+      return Prova();
+        //return Activity();
       case 2:
         return ProjectsPage();
       case 3:

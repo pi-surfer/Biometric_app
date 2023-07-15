@@ -1,5 +1,6 @@
 //import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:app_project/utils/algorithm.dart';
 //import 'package:app_project/utils/shared_preferences.dart';
 import 'package:app_project/services/impact.dart';
@@ -29,6 +30,8 @@ class HomeProvider extends ChangeNotifier {
 
   late int ValueDailyScore = 0;
 
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+
   // selected day of data to be shown
   DateTime showDate = DateTime.now().subtract(const Duration(days: 1));
 
@@ -54,33 +57,42 @@ class HomeProvider extends ChangeNotifier {
     if (data.isEmpty) {
       return null;
     }
-    return data.last.dateTime;
+    return DateTime.parse(data.last.dateTime);
   }
 
   Future<void> _fetchAndCalculate() async {
 
+    print('QUESTAAAA OKKK');
+
     lastFetch = await _getLastFetch() ??
         DateTime.now().subtract(const Duration(days: 1));
     // do nothing if already fetched
-    if (lastFetch.day == DateTime.now().subtract(const Duration(days: 1)).day) {
-      return;
-    }
+    //if (lastFetch.day == DateTime.now().subtract(const Duration(days: 1)).day) {
+      //return;
+    //}
 
-    _steps = await impactService.getStepFromDay(lastFetch);
-    _heartRates = await impactService.getHRFromDay(lastFetch);
-    _calories = await impactService.getCalFromDay(lastFetch);
+    _steps = await impactService.getStepFromDay(DateUtils.dateOnly(lastFetch));
 
-    _dailyScore = DailyScore(await _calculateDailyScore(_heartRates,_steps,_calories),lastFetch);
-    db.dailyScoreDao.insertDailyScore(_dailyScore);
+    print('STEP ' + _steps.toString());
 
-    _totalCalories = TotCal(getTotalCalories(_calories).round(), lastFetch);
+    _heartRates = await impactService.getHRFromDay(DateUtils.dateOnly(lastFetch));
+    _calories = await impactService.getCalFromDay(DateUtils.dateOnly(lastFetch));
+
+    _dailyScore = DailyScore(await _calculateDailyScore(_heartRates,_steps,_calories), dateFormat.format(DateUtils.dateOnly(lastFetch)));
+    //db.dailyScoreDao.insertDailyScore(_dailyScore);
+
+    _totalCalories = TotCal(getTotalCalories(_calories), dateFormat.format(DateUtils.dateOnly(lastFetch)));
+    print('${(dateFormat.format(DateUtils.dateOnly(lastFetch))).runtimeType}');
     db.totCalDao.insertTotCal(_totalCalories);
 
-    _totalSteps = TotSteps(getTotalSteps(_steps), lastFetch);
+    _totalSteps = TotSteps(getTotalSteps(_steps), dateFormat.format(DateUtils.dateOnly(lastFetch)));
     db.totStepsDao.insertTotSteps(_totalSteps);
 
-    _aerobicTime = AerobicTime(getAerobicTime(_heartRates), lastFetch);
+    _aerobicTime = AerobicTime(getAerobicTime(_heartRates), dateFormat.format(DateUtils.dateOnly(lastFetch)));
     db.aerobicTimeDao.insertAerobicTime(_aerobicTime);
+
+    print('ECCOOO ' + _heartRates.toString() + _steps.toString() + _totalSteps.toString());
+    print('TOTAL STEPS ' '${_totalSteps.value}' '${DateUtils.dateOnly(lastFetch)}');
   }
 
   Future<void> refresh() async {
@@ -115,16 +127,20 @@ class HomeProvider extends ChangeNotifier {
         DateTime(showDate.year, showDate.month, showDate.day, 23, 59));
     notifyListeners(); */
 
-    totalSteps = await db.totStepsDao.findTotStepsbyDate(showDate);
+    totalSteps = await db.totStepsDao.findTotStepsbyDate(dateFormat.format(DateUtils.dateOnly(showDate)));
     notifyListeners();
 
-    totalCalories = await db.totCalDao.findTotCalbyDate(showDate);
+    totalCalories = await db.totCalDao.findTotCalbyDate(dateFormat.format(DateUtils.dateOnly(showDate)));
     notifyListeners();
 
-    aerobicTime = await db.aerobicTimeDao.findAerobicTimebyDate(showDate);
+    aerobicTime = await db.aerobicTimeDao.findAerobicTimebyDate(dateFormat.format(DateUtils.dateOnly(showDate)));
     notifyListeners();
 
-    dailyScore = await db.dailyScoreDao.findDailyScorebyDate(showDate);
-    notifyListeners();
+    //dailyScore = await db.dailyScoreDao.findDailyScorebyDate(dateFormat.format(DateUtils.dateOnly(showDate)));
+    //notifyListeners();
+
+    print('DATA ' + '${dateFormat.format(DateUtils.dateOnly(showDate))}');
+
+    print(totalSteps?.value.toString() );
   }
 }

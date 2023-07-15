@@ -12,7 +12,7 @@ int getAerobicTime(List<HR> hr) {
       aerobicTime = aerobicTime + 5/60;
     }
   }
-  return aerobicTime as int;
+  return aerobicTime.round();
 }
 
 int getTotalSteps(List<Steps> steps) {
