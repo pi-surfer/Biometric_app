@@ -49,8 +49,16 @@ TextStyle partnerSubTitleStyle = const TextStyle(
   fontSize: 22,
 );
 
+
 TextStyle linkStyle = const TextStyle(
   color: Color.fromARGB(255, 1, 97, 4),
   fontWeight: FontWeight.normal,
   fontSize: 16,
+);
+
+
+TextStyle dateStyle = const TextStyle(
+  color: Color.fromARGB(255, 1, 97, 4),
+  fontWeight: FontWeight.normal,
+  fontSize: 20,
 );

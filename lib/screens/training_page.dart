@@ -6,10 +6,13 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:app_project/utils/shared_preferences.dart';
+import 'package:app_project/utils/algorithm.dart';
 import 'package:app_project/widgets/date_picker_widget.dart';
 import 'package:app_project/provider/home_provider.dart';
-import 'package:app_project/models/db.dart' as db;
+import 'package:app_project/database/db.dart' as db;
 
 
 
@@ -62,17 +65,22 @@ class _ActivityState extends State<Activity> {
   late List<Steps> _chartData2;
   late List<Times> _chartData3;
   late TooltipBehavior _tooltipBehavior;
-  late List<finalOBIETTIVI> _chartData1;
 
+  late SharedPreferences _sp;
+  
   @override
   void initState() {
     _chartData = getChartData();
-    _chartData1 = getChartData1();
     _chartData2 = getChartData2();
     _chartData3 = getChartData3();
     _tooltipBehavior = TooltipBehavior(enable: true);
 
     super.initState();
+    initial();
+  }
+
+  void initial() async{
+    _sp = await SharedPreferences.getInstance();
   }
 
   DateTime day = DateTime.now();
@@ -98,22 +106,15 @@ class _ActivityState extends State<Activity> {
                               size: 22,
                             ),
                             onPressed: () {
-                              final provider =
-                          Provider.of<HomeProvider>(context, listen: false);
+                              final provider = Provider.of<HomeProvider>(context, listen: false);
                           DateTime day = provider.showDate;
-                          provider
-                          .getDataOfDay(day.subtract(const Duration(days: 1)));
+                          provider.getDataOfDay(day.subtract(const Duration(days: 1)));
                             }
                         ),
                         Consumer<HomeProvider>(
                         builder: (context, value, child) => Text(
                         DateFormat('dd MMMM yyyy').format(value.showDate),
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 1, 97, 4),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              fontStyle: FontStyle.normal,
-                            ))),
+                            style: dateStyle)),
                         IconButton(
                             icon: const Icon(
                               Icons.navigate_next,
@@ -121,8 +122,7 @@ class _ActivityState extends State<Activity> {
                               size: 25,
                             ),
                             onPressed: () {
-                              final provider =
-                          Provider.of<HomeProvider>(context, listen: false);
+                              final provider = Provider.of<HomeProvider>(context, listen: false);
                       DateTime day = provider.showDate;
                       provider.getDataOfDay(day.add(const Duration(days: 1)));
                     }),
@@ -131,7 +131,7 @@ class _ActivityState extends State<Activity> {
                     const SizedBox(
                       height: 20,
                     ),
-                    TextButton.icon(
+                    /*TextButton.icon(
                         onPressed: () {},
                         icon: const Icon(MdiIcons.reload,
                             size: 18, color: Color.fromARGB(255, 254, 251, 228)),
@@ -149,7 +149,7 @@ class _ActivityState extends State<Activity> {
                             ),
                           ),
                           backgroundColor: const Color.fromARGB(255, 1, 97, 4),
-                        )),
+                        )),*/
                     Container(
                       alignment: Alignment.topLeft,
                       height: MediaQuery.of(context).size.height * 0.50,
@@ -249,12 +249,12 @@ class _ActivityState extends State<Activity> {
                           children: [
                             Column(
                               children: [
-                                Icon(
+                                const Icon(
                                   MdiIcons.fire,
                                   weight: 20,
                                   color: Color.fromARGB(255, 255, 221, 74),
                                 ),
-                                Text(
+                                const Text(
                                   'Kalories',
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 255, 221, 74),
@@ -264,14 +264,14 @@ class _ActivityState extends State<Activity> {
                                 ),
                                 Text(
                                   provider.totalKalories.toStringAsFixed(1),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Color.fromARGB(255, 255, 221, 74),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
                                     fontStyle: FontStyle.normal,
                                   ),
                                 ),
-                                Text(
+                                const Text(
                                   '/2000',
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 255, 221, 74),
@@ -281,16 +281,16 @@ class _ActivityState extends State<Activity> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 40,
                             ),
                             Column(children: [
-                              Icon(
+                              const Icon(
                                 MdiIcons.walk,
                                 weight: 20,
                                 color: Color.fromARGB(255, 253, 176, 120),
                               ),
-                              Text(
+                              const Text(
                                 'Steps',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 253, 176, 120),
@@ -300,14 +300,14 @@ class _ActivityState extends State<Activity> {
                               ),
                               Text(
                                 provider.totalSteps.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Color.fromARGB(255, 253, 176, 120),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                   fontStyle: FontStyle.normal,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 '/6000',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 253, 176, 120),
@@ -316,16 +316,16 @@ class _ActivityState extends State<Activity> {
                                 ),
                               ),
                             ]),
-                            SizedBox(
+                            const SizedBox(
                               width: 40,
                             ),
                             Column(children: [
-                              Icon(
+                              const Icon(
                                 MdiIcons.clock,
                                 weight: 20,
                                 color: Color.fromARGB(255, 255, 114, 106),
                               ),
-                              Text(
+                              const Text(
                                 'Times',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 255, 114, 106),
@@ -335,14 +335,14 @@ class _ActivityState extends State<Activity> {
                               ),
                               Text(
                                 provider.aerobicTime.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Color.fromARGB(255, 255, 114, 106),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                   fontStyle: FontStyle.normal,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 '/60',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 255, 114, 106),
@@ -353,11 +353,11 @@ class _ActivityState extends State<Activity> {
                             ]),
                           ]),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      'Today, you have earned' + provider.dailyScore.toString() + 'points',
+                      'Today, you have earned ' + provider.dailyScore.toString() + ' points',
                       style: subtitleStyle,
                       textAlign: TextAlign.start,
                       ),
@@ -367,20 +367,24 @@ class _ActivityState extends State<Activity> {
                     ),
                     
                       Text(
-                        'You are still' + (90-provider.GlobalScore).toString() + 'points away from funding the project:',
+                        'You are still ' + (90-provider.GlobalScore).toString() + ' points away from funding the project:',
                         textAlign: TextAlign.start,
                       style: subtitleStyle
                       ),
                       Consumer<SelectedProject>(builder:
                         ((context, project, child) {
+                          if (project.getSelectedProject() >=0) {
                           Projects selectedProject =
                             project.proj[project.getSelectedProject()];
                           return Text(
                           selectedProject.name,
                           textAlign: TextAlign.start,
                       style: subtitleStyle
-                        );})
-                      ),
+                        );}
+                        else {
+                          return Text('No project was selected', style: subtitleStyle, textAlign: TextAlign.start);
+                        }}
+                      )),
                       SizedBox(
                         height: MediaQuery.of(context).size.height *0.01,
                       ),
@@ -388,11 +392,11 @@ class _ActivityState extends State<Activity> {
                       animation: true,
                       width: 360.0,
                       lineHeight: 30,
-                      percent: 0.7,
-                      barRadius: Radius.circular(20),
+                      percent: provider.GlobalScore/90,
+                      barRadius: const Radius.circular(20),
                       backgroundColor:
-                          Color.fromARGB(255, 255, 221, 74).withOpacity(0.4),
-                      linearGradient: LinearGradient(colors: [
+                          const Color.fromARGB(255, 255, 221, 74).withOpacity(0.4),
+                      linearGradient: const LinearGradient(colors: [
                         Color.fromARGB(255, 255, 221, 74),
                         Color.fromARGB(255, 255, 192, 74),
                       ]),
@@ -400,14 +404,14 @@ class _ActivityState extends State<Activity> {
                           height: 60,
                           width: 60,
                           color: Colors.transparent,
-                          child: Icon(Icons.star, size: 25)),
+                          child: const Icon(Icons.star, size: 25)),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(children: [
-                      SizedBox(width: 25),
-                      Text('SCORE' +
+                      const SizedBox(width: 25),
+                      Text('SCORE: ' +
                         provider.GlobalScore.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
@@ -432,22 +436,19 @@ class _ActivityState extends State<Activity> {
   }
 
   List<Kalories> getChartData() {
-    final List<Kalories> chartData = [Kalories('Kalories', 2000)];
+    final List<Kalories> chartData = [Kalories('Kalories', _sp.getDouble('totalKalories'))];
     return chartData;
   }
 
   List<Steps> getChartData2() {
-    final List<Steps> chartData2 = [Steps('Steps', 6000)];
+    final List<Steps> chartData2 = [Steps('Steps', _sp.getInt('totalSteps'))];
     return chartData2;
   }
 
   List<Times> getChartData3() {
-    final List<Times> chartData3 = [Times('Times', 60)];
+    final List<Times> chartData3 = [Times('Times', _sp.getInt('aerobicTime'))];
     return chartData3;
   }
 
-  List<finalOBIETTIVI> getChartData1() {
-    final List<finalOBIETTIVI> chartData1 = [finalOBIETTIVI('Crediti', 90)];
-    return chartData1;
-  }
+ 
 }

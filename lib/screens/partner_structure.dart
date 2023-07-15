@@ -8,13 +8,17 @@ class PartnerItem extends StatelessWidget {
   final String phrase;
   final String imagePath;
   final Uri url;
+  int ?idx;
 
   PartnerItem({
     required this.name,
     required this.phrase,
     required this.url,
     required this.imagePath, 
+    this.idx,
   });
+
+  late bool selectable =true;
 
   Future<void> _launchUrl() async {
   if (!await launchUrl(url)) {

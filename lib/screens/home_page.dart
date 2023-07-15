@@ -4,6 +4,8 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:app_project/models/partner.dart';
+import 'package:app_project/screens/partner_structure.dart';
 import 'package:app_project/widgets/linechart_week.dart';
 import 'package:app_project/models/funky_overlays.dart';
 import 'package:app_project/models/text_styles.dart';
@@ -20,7 +22,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   // TODO : VORREI ACCEDER ALLA SHARED PREFERENCE SALVATA NEL PROFILO IN MODO DA SOSTITUIRE 'MASSIMO' CON IL NOME INSERITO, NON SO COME FARLO 
-  String name = await _getName();
+  //String name = await _getName();
+  List<Sponsor> partner = getPartner();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                'Thank you,' '$name' '!',
+                                'Thank you,' 'Massimo' '!',
                                 style: titleStyle,
                                 textAlign: TextAlign.start,),
                             SizedBox(height: 2,),
@@ -240,7 +243,7 @@ class _HomePageState extends State<HomePage> {
                   ),],
                   ),
                   const SizedBox(height: 20,),
-                  Row(
+                  /*Row(
                         children: [
                           SizedBox(width:25),
                           Text('Take a look at this!',
@@ -256,12 +259,13 @@ class _HomePageState extends State<HomePage> {
                         /*barrierColor: const Color.fromARGB(255, 56, 56, 56)
                             .withOpacity(0.3),*/
                         context: context,
-                        builder: (_) => const FunkyOverlay(
-                          mainImage: AssetImage('assets/images/marathon.png'),
-                          title: 'Nike',
-                          subtitle: 'Make it happens',
-                          body: 'Maratona',
-                          isSelectable: false,
+                        builder: (_) => Card(
+                          partner: PartnerItem(
+                            name: partner.name, 
+                            phrase: partner.phrase, 
+                            url: partner.url, 
+                            imagePath: partner.imagePath,
+                            idx: partner.idx,
                         ),
                       );
                     },
@@ -316,74 +320,11 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   const SizedBox(height : 20),
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        /*barrierColor: const Color.fromARGB(255, 56, 56, 56)
-                            .withOpacity(0.3),*/
-                        context: context,
-                        builder: (_) => const FunkyOverlay(
-                           mainImage: AssetImage('assets/images/garden.png'),
-                          title: 'Beautiful Garden',
-                          subtitle: 'Bio for life',
-                          body: 'Maratona',
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.35,
-                      width: MediaQuery.of(context).size.width * 0.95,
-                      //margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/garden.png'),
-                          fit: BoxFit.cover,
-                        ),
-                        shape: BoxShape.rectangle,
-                        color: Colors.white,
-                        /*border: Border.all(
-                              width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      alignment: Alignment.bottomLeft,
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(' LoremIpsum',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 251, 249, 226),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 28,
-                                /*background: Paint()
-                                  ..color = Colors.black.withOpacity(0.4)
-                                  ..style = PaintingStyle.fill,*/
-                              )),
-                          Text('   The way of the bees',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 251, 249, 226),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                /*background: Paint()
-                                  ..color = Colors.black.withOpacity(0.4)
-                                  ..style = PaintingStyle.fill,*/
-                              )),
-                          SizedBox(height: 10),
-                        ],
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-            ),
-    )]),
-        );
+                            ]                    ),
+                    ),*/
+        ]),
+    )))]),
+              );
+           
   }
 }

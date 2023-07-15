@@ -1,5 +1,7 @@
-import 'package:app_project/models/db.dart';
+import 'package:app_project/database/db.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:app_project/database/db.dart';
+import 'package:app_project/database/entities/entities.dart';
 
 // TODO : NELLE SHARED PREFERENCES CHE DOVREBBERO ESSERE SALVATE DAL PROFILO C'E' ANCHE L'ETA', QUINDI SI POTREBBE FARE IL 60% DI 220-ETA' PER LA SOGLIA AEROBICA
 
@@ -25,9 +27,9 @@ int getTotalSteps(List<Steps> steps) {
   return totalSteps;
 }
 
-double getTotalKalories(List<Kalories> kalories) {
+double getTotalKalories(List<Calories> calories) {
   double totalKalories = 0;
-  for(Kalories kcal in kalories) {
+  for(Calories kcal in calories) {
     totalKalories = totalKalories + kcal.value;
   }
   return totalKalories;

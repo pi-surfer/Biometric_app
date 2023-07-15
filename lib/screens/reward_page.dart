@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
 import 'package:app_project/models/missions.dart';
-import 'package:app_project/models/db.dart' as db;
+import 'package:app_project/database/db.dart' as db;
 import 'package:app_project/provider/home_provider.dart';
 import 'package:app_project/models/reward.dart';
 import 'package:app_project/models/reward_structure.dart';

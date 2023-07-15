@@ -1,12 +1,24 @@
-import 'dart:math';
+import 'dart:async';
+import 'package:floor/floor.dart';
+import 'package:sqflite/sqflite.dart' as sqflite;
+import 'daos/dao.dart';
+import 'entities/entities.dart';
+import 'typeConverters/timeConverter.dart';
+//import 'package:app_project/utils/algorithm.dart';
 
-import 'package:app_project/utils/algorithm.dart';
-import 'package:intl/intl.dart';
+part 'db.g.dart';
 
-// We create a different class for each type of data and
-// each one is characterized by the properties of interest
+@TypeConverters([DateTimeConverter])
+@Database(version: 1, entities: [HR, Calories, Steps])
+abstract class DatabaseFit extends FloorDatabase {
+  //Add all the daos as getters here
+  HeartRatesDao get heartRatesDao;
+  CaloriesDao get caloriesDao;
+  StepsDao get stepsDao;
+}//AppDatabase
 
-class HR {
+
+/*class HR {
   // this class models the single heart rate data point
   final DateTime timestamp;
   final int value;
@@ -85,4 +97,4 @@ class FitbitGen {
   }
 
 
-}
+}*/

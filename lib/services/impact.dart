@@ -10,7 +10,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:app_project/services/server_strings.dart';
 import 'package:app_project/utils/shared_preferences.dart';
-import 'package:app_project/models/db.dart';
+import 'package:app_project/database/entities/entities.dart';
+import 'package:app_project/database/db.dart';
 
 class ImpactService {
   Preferences prefs;
@@ -178,9 +179,9 @@ class ImpactService {
 
   // Method to retrieve HR, Steps, Kalories data of a single day:
 
-  Future<List<Steps>> getStepFromDay(DateTime day) async {
+  Future<List<Step>> getStepFromDay(DateTime day) async {
     await updateBearer();
-    List<Steps> result;
+    List<Step> result;
     String formattedDate = DateFormat('yyyy-MM-dd').format(day);
     debugPrint('day = $formattedDate');
     final url = '${ServerStrings.backendBaseUrl}${ServerStrings.stepsEndpoint}${ServerStrings.patientUsername}/day/$formattedDate/';
@@ -237,9 +238,9 @@ class ImpactService {
     return result;
   }
 
-  Future<List<Kalories>> getKalFromDay(DateTime day) async {
+  Future<List<Calories>> getKalFromDay(DateTime day) async {
     await updateBearer();
-    List<Kalories> result;
+    List<C> result;
     String formattedDate = DateFormat('yyyy-MM-dd').format(day);
 
     final url = ServerStrings.backendBaseUrl +

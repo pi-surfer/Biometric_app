@@ -1,3 +1,4 @@
+import 'package:app_project/database/db.dart';
 import 'package:app_project/models/projects.dart';
 import 'package:app_project/screens/login_page.dart';
 import 'package:app_project/provider/home_provider.dart';
@@ -8,11 +9,18 @@ import 'package:app_project/screens/splash.dart';
 import 'package:app_project/services/impact.dart';
 import 'package:app_project/models/missions.dart';
 import 'package:app_project/utils/shared_preferences.dart';
+import 'package:app_project/repository/DataBaseRepository.dart';
 
 // VERSION 1.2
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  final database = await $FloorDatabaseFit.databaseBuilder('database_fit.db').build();
+  final databaseRepository = DataBaseRepository(database: database);
+  
+    runApp(ChangeNotifierProvider<DataBaseRepository>(
+      create: (context) => databaseRepository,
+      child: MyApp()));
 } // main
 
 class MyApp extends StatelessWidget {
@@ -30,9 +38,12 @@ class MyApp extends StatelessWidget {
               create: (context) => ImpactService(
                     Provider.of<Preferences>(context, listen: false),
                   )),
-          ChangeNotifierProvider<HomeProvider>(
+          
+          /*ChangeNotifierProvider<HomeProvider>(
               create: (context) => HomeProvider(
-                  Provider.of<ImpactService>(context, listen: false))),
+                  Provider.of<ImpactService>(context, listen: false),
+                  )),*/
+          
           ChangeNotifierProvider<Missions>(
               child: MyApp(), create: (_) => Missions()),
           ChangeNotifierProvider<SelectedProject>(
