@@ -8,10 +8,8 @@ import 'package:app_project/services/impact.dart';
 import 'package:app_project/utils/shared_preferences.dart';
 
 import 'package:app_project/screens/skeleton_page.dart';
-//import 'package:app_project/screens/login/login_page.dart';
 import 'package:app_project/screens/onboarding/impact_ob.dart';
 
-// MUST MODIFY THE UI (ln. 68 to end), THE OTHER LINES ARE OK
 
 class Splash extends StatelessWidget {
   static const route = '/splash/';
@@ -81,16 +79,13 @@ class Splash extends StatelessWidget {
   } //_isImpactUp
 
 
-  // User Interface (TO BE REARRANGED)
   @override
   Widget build(BuildContext context) {
-    //Future.delayed(const Duration(seconds: 5), () => _toLoginPage(context));
     Future.delayed(const Duration(seconds: 1), () async {
       final result = await _isImpactUp();
       final message =
           result ? 'IMPACT backend is up!' : 'IMPACT backend is down!';
       debugPrint(message);
-      // NOTE: debugPrint extension is neccessary to visualize this debug checkpoint
     });
     Future.delayed(const Duration(seconds: 1), () => _checkAuth(context));
     return Material(

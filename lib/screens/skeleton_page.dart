@@ -1,10 +1,8 @@
 import 'package:app_project/screens/login_page.dart';
-import 'package:app_project/screens/prova.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//import 'package:app_project/screens/login/login_page.dart';
 import 'package:app_project/screens/home_page.dart';
 import 'package:app_project/screens/projects_page.dart';
 import 'package:app_project/screens/training_page.dart';
@@ -68,8 +66,7 @@ class _SkeletonPageState extends State<SkeletonPage>
       case 0:
         return HomePage();
       case 1:
-      return Prova();
-        //return Activity();
+        return Activity();
       case 2:
         return ProjectsPage();
       case 3:
@@ -189,10 +186,5 @@ class _SkeletonPageState extends State<SkeletonPage>
     controller.animateTo(start,
         duration: const Duration(milliseconds: 700), curve: Curves.easeOut);
 
-    // controller.jumpTo(start),
-
-    /// [controller.animateTo(start,…)] makes the transition between pages and
-    /// the same page to show the appearance of the AppBar. If we want to delete
-    /// this animation we can simply use [controller.JumpTo(start)]
   }
 }

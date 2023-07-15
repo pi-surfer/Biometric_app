@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-//import 'package:intl/intl.dart';
-//import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:app_project/services/server_strings.dart';
@@ -15,11 +13,9 @@ import 'package:app_project/database/entities/entities.dart';
 class ImpactService {
   Preferences prefs;
   Map<String, String>? headersBearer;
-  //= {HttpHeaders.authorizationHeader: 'Bearer $token'};
 
   ImpactService(this.prefs) {
     updateBearer();
-    // This helper method is defined below
   }
 
   String? retrieveSavedToken(bool refresh) {
@@ -29,11 +25,8 @@ class ImpactService {
       return prefs.impactAccessToken;
     }
   }
-  // if refresh function was called we need the RefreshToken,
-  // if not we can use the AccessToken
 
   bool checkSavedToken({bool refresh = false}) {
-    // By deafault refresh = false
 
     String? token = retrieveSavedToken(refresh);
     if (token == null) {
@@ -56,7 +49,6 @@ class ImpactService {
       return false;
     }
     // Check if the token is expired using JwtDecoder library
-    // It is a small library for decoding a json web token
 
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
     // Decode a string JWT token into a Map<String, dynamic> containing
@@ -122,7 +114,7 @@ class ImpactService {
 
   Future<bool> refreshTokens() async {
     String? refToken = await retrieveSavedToken(true);
-    // now we are trying to refresh a token so we pass refresh = true
+    // trying to refresh a token so we pass refresh = true
     // to [retrieveSavedToken()]
 
     try {
@@ -156,7 +148,6 @@ class ImpactService {
     String? token = await prefs.impactAccessToken;
     if (token != null) {
       headersBearer = {HttpHeaders.authorizationHeader: 'Bearer $token'};
-      //_dio.options.headers = {'Authorization': 'Bearer $token'};
       // We are changing the headers cause we want to ask for authorization.
       // Bearer authentication (also called token authentication) is an HTTP
       // authentication scheme that involves security tokens called bearer tokens.
@@ -170,7 +161,6 @@ class ImpactService {
     final r = await http.get(
         Uri.parse('${ServerStrings.backendBaseUrl}study/v1/patients/active'),
         headers: headersBearer);
-    //Response r = await _dio.get('study/v1/patients/active');
     final decodedR = jsonDecode(r.body);
     prefs.impactUsername = decodedR['data'][0]['username'];
     return decodedR['data'][0]['username'];
@@ -193,17 +183,13 @@ class ImpactService {
       final decodedResponse = jsonDecode(response.body);
       result = [];
       for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
-        print('decoded response ' + decodedResponse['data']['data'][i]['value'].toString());
         result.add(Steps(int.parse(decodedResponse['data']['data'][i] ['value']),
           (decodedResponse['data']['date'])));
       } //for
     } //if
     else {
-      //debugPrint('ln 203 ${response.statusCode} ${response.reasonPhrase}');
-      //debugPrint('body = ${response.body} \n headers = ${response.headers}');
       result = [Steps(0, formattedDate)];
     }
-    //debugPrint('Steps = $result');
     return result;
   }
 
@@ -216,7 +202,6 @@ class ImpactService {
         ServerStrings.hrEndpoint +
         ServerStrings.patientUsername +
         '/day/$formattedDate/';
-    //debugPrint('$url');
     var access = retrieveSavedToken(false);
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
@@ -234,7 +219,6 @@ class ImpactService {
       result = [HR(0, formattedDate)];
     }
 
-    //debugPrint('HR = $result');
     return result;
   }
 
@@ -264,12 +248,7 @@ class ImpactService {
       result = [Cal(0, formattedDate)];
     }
 
-    //debugPrint('Kalories = $result');
     return result;
   }
 
-  DateTime _truncateSeconds(DateTime input) {
-    return DateTime(
-        input.year, input.month, input.day, input.hour, input.minute);
-  }
 }

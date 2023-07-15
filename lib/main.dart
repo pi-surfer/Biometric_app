@@ -1,7 +1,5 @@
 import 'package:app_project/models/partner.dart';
 import 'package:app_project/models/projects.dart';
-import 'package:app_project/repository/databaseRepository.dart';
-import 'package:app_project/screens/login_page.dart';
 import 'package:app_project/provider/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -50,6 +48,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           theme: ThemeData(fontFamily: 'Poppins'),
           home: const Splash(),
+          debugShowCheckedModeBanner: false,
         ));
   } // build
 } // MyApp 

@@ -1,8 +1,6 @@
 
-// DA MODIFICARE PRESO PARI PARI DAI TUTOR
 
 class ServerStrings {
-  // --- Impact Backend
 
   // JWT
   static const issClaim = 'backend-impact';

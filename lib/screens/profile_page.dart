@@ -1,20 +1,13 @@
-import 'dart:math';
-
 import 'package:app_project/models/projects.dart';
-import 'package:app_project/screens/login_page.dart';
-import 'package:app_project/screens/reward_page.dart';
-import 'package:app_project/screens/training_page.dart';
-import 'package:app_project/widgets/funky_overlay.dart';
+
+import 'package:app_project/models/funky_overlays.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:app_project/screens/skeleton_page.dart';
-import 'package:app_project/screens/login/login_page.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// TODO: CONTROLLARE SHARED PREFERENCES!! LE PARTI COMMENTATE CON LA NAVIGATION VERSO L'ACTIVITY E LA REWARD DOVREBBERO PASSARE PRIMA PER LA SKELETON
-// PERCHE' SENNO' RIMANDA ALLE PAGINE SENZA LA BOTTOMNAVIGATION
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -26,8 +19,6 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController names = TextEditingController();
-
-  
 
   Future<bool> _saveName() async {
     String sp_name = names.text;
@@ -45,15 +36,14 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void initial() async {
-    pref= await SharedPreferences.getInstance();
+    pref = await SharedPreferences.getInstance();
     setState(() {
       name = pref.getString('name');
-      if (name == null) { name = 'name';}
+      if (name == null) {
+        name = 'name';
+      }
     });
   }
-
-  
-  
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +55,9 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Padding(
             padding: const EdgeInsets.all(10.0),
             child: SizedBox(
-            height: 60,
-            width: 150.0,
-            child: Image.asset("assets/images/nome.png", 
-                          fit: BoxFit.contain),
+              height: 60,
+              width: 150.0,
+              child: Image.asset("assets/images/nome.png", fit: BoxFit.contain),
             ),
           ),
           centerTitle: true,
@@ -87,10 +76,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     Container(
                       alignment: Alignment.topCenter,
                       margin: EdgeInsets.only(top: 80, left: 20, right: 20),
-                      //width: 400,
                       height: 300,
                       width: MediaQuery.of(context).size.width,
-                      //height: MediaQuery.of(context).size.width*0.6,
                       decoration: BoxDecoration(
                           color: Color.fromARGB(255, 254, 251, 228),
                           borderRadius: BorderRadius.only(
@@ -117,10 +104,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                       enabledBorder: myInputBorder(),
                                       focusedBorder: myFocusBorder()),
                                 ),
-                                SizedBox(height: 10,),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 ElevatedButton(
-                                  onPressed: () async{_saveName();
-                                  //print('ciao' + _getName().toString());
+                                  onPressed: () async {
+                                    _saveName();
                                   },
                                   child: Text('Update'),
                                   style: ElevatedButton.styleFrom(
@@ -157,7 +146,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               padding: EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                   color: Colors.white, shape: BoxShape.circle),
-                              //child: Icon(Icons.edit, size: 30),
                             ),
                           )
                         ],
@@ -199,8 +187,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         shape: BoxShape.rectangle,
                         color: Colors.white,
-                        /*border: Border.all(
-                                  width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                         boxShadow: [
                           BoxShadow(
@@ -246,8 +232,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
                         color: Colors.white,
-                        /*border: Border.all(
-                                  width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                         boxShadow: [
                           BoxShadow(
@@ -264,59 +248,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       ));
                 }
               }),
-              /*SizedBox(height: 30),
-              Container(
-                  height: 80,
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  padding: EdgeInsets.only(left: 30, right: 30),
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 254, 251, 228),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20)),
-                      border: Border.all(
-                        color: Colors.grey.shade400,
-                      )),
-                  child: Row(children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => RewardPage()));
-                        },
-                        icon: Icon(MdiIcons.crown,
-                            color: Color.fromARGB(255, 1, 97, 4), size: 18)),
-                    Text('YOUR MISSIONS AND REWARDS',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                  ])),
-              SizedBox(height: 30),
-              Container(
-                height: 80,
-                width: MediaQuery.of(context).size.width * 0.8,
-                padding: EdgeInsets.only(left: 30, right: 30),
-                decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 254, 251, 228),
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    border: Border.all(
-                      color: Colors.grey.shade400,
-                    )),
-                child: Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Activity()));
-                        },
-                        icon: Icon(Icons.fitness_center,
-                            color: Color.fromARGB(255, 1, 97, 4), size: 18)),
-                    Text('YOUR WEEKLY ACTIVITY',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ),*/
               SizedBox(height: 30),
               Container(
                 height: 80,
@@ -369,12 +300,4 @@ class _ProfilePageState extends State<ProfilePage> {
           width: 3,
         ));
   }
-
-  void _toLoginPage(BuildContext context) {
-    Navigator.pop(context);
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => LoginPage()));
-  } // _toLoginPage
-
-
 }

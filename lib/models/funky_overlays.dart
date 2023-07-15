@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_project/widgets/switch_button.dart';
-//import 'package:flutter/semantics.dart';
-
 class FunkyOverlay extends StatefulWidget {
   final AssetImage mainImage;
   final String title;
@@ -10,7 +7,6 @@ class FunkyOverlay extends StatefulWidget {
   final String body;
   final bool isSelectable;
   final bool isSelected;
-
 
   const FunkyOverlay({
     Key? key,
@@ -20,7 +16,7 @@ class FunkyOverlay extends StatefulWidget {
     required this.body,
     this.isSelected = false,
     this.isSelectable = true,
-  }): super(key: key);
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _FunkyOverlay();
@@ -33,7 +29,6 @@ class _FunkyOverlay extends State<FunkyOverlay>
 
   double pageHeight = 600;
   double pageWidth = 390;
-
 
   @override
   void initState() {
@@ -73,7 +68,7 @@ class _FunkyOverlay extends State<FunkyOverlay>
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 5,
                   blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
+                  offset: Offset(0, 3),
                 ),
               ],
             ),
@@ -81,9 +76,8 @@ class _FunkyOverlay extends State<FunkyOverlay>
               padding: const EdgeInsets.only(top: 20, left: 25, right: 25),
               child: Column(children: [
                 Container(
-                  height: pageHeight*3/10,
-                  width: pageWidth-50,
-                  //margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
+                  height: pageHeight * 3 / 10,
+                  width: pageWidth - 50,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: widget.mainImage,
@@ -91,8 +85,6 @@ class _FunkyOverlay extends State<FunkyOverlay>
                     ),
                     shape: BoxShape.rectangle,
                     color: Colors.white,
-                    /*border: Border.all(
-                                  width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     boxShadow: [
                       BoxShadow(
@@ -132,11 +124,6 @@ class _FunkyOverlay extends State<FunkyOverlay>
                           ],
                         ),
                         SizedBox(width: 50),
-                        Container(
-                            child: widget.isSelectable
-                                ? SwitchButton(light: widget.isSelected):
-                                SizedBox(),
-                                ),
                       ],
                     ),
                     SizedBox(

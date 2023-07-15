@@ -15,10 +15,6 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> {
-  //final IdProject id = IdProject();
-  List<bool> light = [false, false, false, false, false];
-  List<bool> selected = [false, false, false, false, false];
-  int index = 1;
   final List<Projects> projects = getProject();
 
   @override

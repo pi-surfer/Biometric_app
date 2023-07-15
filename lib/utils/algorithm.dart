@@ -9,7 +9,7 @@ int getAerobicTime(List<HR> hr) {
   for (int idx = 0; idx < hr.length; idx++){
     hrValues[idx] = hr[idx].value;
     if (hrValues[idx] > 1) {
-      aerobicTime = aerobicTime + 5/60;
+      aerobicTime = aerobicTime + 1/60;
     }
   }
   return aerobicTime.round();
@@ -50,8 +50,6 @@ double getTotalCalories(List<Cal> calories) {
 
 int getGlobalScore(int dailyScore){
     int GlobalScore = 0;
-    //int ds = getDailyScore(totalKalories, totalSteps, aerobicTime);
-    //int? ds = await _getDailyScore();
     GlobalScore = GlobalScore + dailyScore;
     if (GlobalScore > 90) {
       GlobalScore = 0;

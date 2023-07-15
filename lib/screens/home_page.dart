@@ -9,8 +9,6 @@ import 'package:app_project/widgets/linechart_week.dart';
 import 'package:app_project/models/funky_overlays.dart';
 import 'package:app_project/models/text_styles.dart';
 import 'package:app_project/provider/home_provider.dart';
-import 'package:app_project/screens/profile_page.dart';
-//import 'package:app_project/models/db.dart' as db;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,7 +18,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // TODO : VORREI ACCEDER ALLA SHARED PREFERENCE SALVATA NEL PROFILO IN MODO DA SOSTITUIRE 'MASSIMO' CON IL NOME INSERITO, NON SO COME FARLO
   String? name;
   late SharedPreferences name_;
 
@@ -121,8 +118,6 @@ class _HomePageState extends State<HomePage> {
                           ),
                           shape: BoxShape.rectangle,
                           color: Colors.white,
-                          /*border: Border.all(
-                                width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           boxShadow: [
                             BoxShadow(
@@ -170,16 +165,13 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           shape: BoxShape.rectangle,
                           color: Colors.white,
-                          /*border: Border.all(
-                                  width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 5,
                               blurRadius: 7,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
+                              offset: Offset(0, 3),
                             ),
                           ],
                         ),
@@ -257,18 +249,14 @@ class _HomePageState extends State<HomePage> {
                         shape: BoxShape.rectangle,
                         color: Colors.transparent,
                       ),
-                      //height: 300,
                       padding: const EdgeInsets.only(left: 10, right: 20),
-                      // implement the bar chart
-                      child: LineChartWeek(), // Grafico linea da chart1.dart
+                      child: LineChartWeek(),
                     ),
                     Padding(
                       padding: EdgeInsets.all(15),
                       child: Column(
                         children: [
                           Text(
-
-                              /// qui cambiamo con punteggio perchè non facciamo i giorni
                               'Not bad! \nIf you will continue like this you will reach your goal',
                               textAlign: TextAlign.start,
                               style: bodyStyle),
@@ -292,74 +280,72 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 20),
                 Consumer<SelectedPartner>(builder: (context, partner, child) {
-                    Sponsor selectedPartner =
-                        partner.sponsor[partner.getSelectedPartner()];
-                    return GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          barrierColor: const Color.fromARGB(255, 56, 56, 56)
-                              .withOpacity(0.3),
-                          context: context,
-                          builder: (_) => FunkyOverlay(
-                            mainImage: AssetImage(selectedPartner.imagePath),
-                            title: selectedPartner.name,
-                            subtitle: 'PARTNER OF THE WEEK',
-                            body: 'This reality is demonstrating its commitment to supporting small businesses and the well-being of the individual, which is why it won the partner of the week award',
-                            isSelectable: false,
-                          ),
-                        );
-                      },
-                      child: Container(
-                        height: 200.0,
-                        width: 400.0,
-                        margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(selectedPartner.imagePath),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: BoxShape.rectangle,
-                          color: Colors.white,
-                          /*border: Border.all(
-                                width: 2.0, color: Color.fromARGB(255, 0, 0, 0)),*/
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset: Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
+                  Sponsor selectedPartner =
+                      partner.sponsor[partner.getSelectedPartner()];
+                  return GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        barrierColor: const Color.fromARGB(255, 56, 56, 56)
+                            .withOpacity(0.3),
+                        context: context,
+                        builder: (_) => FunkyOverlay(
+                          mainImage: AssetImage(selectedPartner.imagePath),
+                          title: selectedPartner.name,
+                          subtitle: 'PARTNER OF THE WEEK',
+                          body:
+                              'This reality is demonstrating its commitment to supporting small businesses and the well-being of the individual, which is why it won the partner of the week award',
                         ),
-                        alignment: Alignment.center,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(selectedPartner.name,
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30,
-                                  background: Paint()
-                                    ..color = Colors.black.withOpacity(0.4)
-                                    ..style = PaintingStyle.fill,
-                                )),
-                            Text(selectedPartner.phrase,
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  background: Paint()
-                                    ..color = Colors.black.withOpacity(0.4)
-                                    ..style = PaintingStyle.fill,
-                                )),
-                            SizedBox(height: 10)
-                          ],
+                      );
+                    },
+                    child: Container(
+                      height: 200.0,
+                      width: 400.0,
+                      margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(selectedPartner.imagePath),
+                          fit: BoxFit.cover,
                         ),
+                        shape: BoxShape.rectangle,
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
                       ),
-                    );}),
-                        
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(selectedPartner.name,
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                                background: Paint()
+                                  ..color = Colors.black.withOpacity(0.4)
+                                  ..style = PaintingStyle.fill,
+                              )),
+                          Text(selectedPartner.phrase,
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                background: Paint()
+                                  ..color = Colors.black.withOpacity(0.4)
+                                  ..style = PaintingStyle.fill,
+                              )),
+                          SizedBox(height: 10)
+                        ],
+                      ),
+                    ),
+                  );
+                }),
                 const SizedBox(height: 20),
               ]),
             ),

@@ -59,9 +59,10 @@ class _ActivityState extends State<Activity> {
 
   @override
   void initState() {
-    _chartData = getChartData();
-    _chartData2 = getChartData2();
-    _chartData3 = getChartData3();
+    final providerChart = Provider.of<HomeProvider>(context, listen: false); 
+    _chartData = getChartData(providerChart.dbTotCalories.value);
+    _chartData2 = getChartData2(providerChart.dbTotSteps.value);
+    _chartData3 = getChartData3(providerChart.dbAerobicTime.value);
     _tooltipBehavior = TooltipBehavior(enable: true);
 
     super.initState();
@@ -236,7 +237,7 @@ class _ActivityState extends State<Activity> {
                                   ),
                                 ),
                                 Text(
-                                  provider.totalCalories.toString(),
+                                  (provider.dbTotCalories.value.round()).toString(),
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 255, 221, 74),
                                     fontWeight: FontWeight.bold,
@@ -272,7 +273,7 @@ class _ActivityState extends State<Activity> {
                                 ),
                               ),
                               Text(
-                                provider.totalSteps.toString(),
+                                provider.dbTotSteps.value.toString(),
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 253, 176, 120),
                                   fontWeight: FontWeight.bold,
@@ -307,7 +308,7 @@ class _ActivityState extends State<Activity> {
                                 ),
                               ),
                               Text(
-                                provider.aerobicTime.toString(),
+                                provider.dbAerobicTime.value.toString(),
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 255, 114, 106),
                                   fontWeight: FontWeight.bold,
@@ -330,7 +331,7 @@ class _ActivityState extends State<Activity> {
                       height: 20,
                     ),
                     Text(
-                      'Today, you have earned ' + provider.dailyScore.toString() + ' points',
+                      'Today, you have earned ' + provider.dbDailyScore.value.toString() + ' points',
                       style: subtitleStyle,
                       textAlign: TextAlign.start,
                       ),
@@ -406,18 +407,18 @@ class _ActivityState extends State<Activity> {
         )));
   }
 
-  List<Kalories> getChartData() {
-    final List<Kalories> chartData = [Kalories('Kalories', 2000)];
+  List<Kalories> getChartData(double totCal) {
+    final List<Kalories> chartData = [Kalories('Kalories', totCal)];
     return chartData;
   }
 
-  List<Steps> getChartData2() {
-    final List<Steps> chartData2 = [Steps('Steps', 6000)];
+  List<Steps> getChartData2(int totSteps) {
+    final List<Steps> chartData2 = [Steps('Steps', totSteps)];
     return chartData2;
   }
 
-  List<Times> getChartData3() {
-    final List<Times> chartData3 = [Times('Times', 60)];
+  List<Times> getChartData3(int aeroTime) {
+    final List<Times> chartData3 = [Times('Times', aeroTime)];
     return chartData3;
   }
 

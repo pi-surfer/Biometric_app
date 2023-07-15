@@ -1,44 +1,27 @@
-
-// DA MODIFICARE PRESO PARI PARI DAI TUTOR
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Preferences {
-  // singleton design pattern
 
   Future<void> init() async {
     _pref = await SharedPreferences.getInstance();
-
-    // Loads and parses the [SharedPreferences] for this app from disk.
   }
 
-  // NOTE: we are using an asynchronous method to initialize Preferences
 
   late SharedPreferences _pref;
 
   Future<bool> resetSettings() async {
     return _pref.clear();
-    // _pref.clear() returns a bool value (true if preferences were delated)
   }
-
-  //helper method (_saveToDisk, defined here below) to manage default
-  //values of preferences without the need to call the specific getType
-  //method of SharedPreferences
 
   dynamic _getFromDisk(String key, {dynamic defaultVal}) {
     var value = _pref.get(key);
-    // _pref.get(key) reads a value of any type from persistent storage
 
     if (value == null) {
       _saveToDisk(key, defaultVal);
       return defaultVal;
-      // Here [defaultVal] corresponds to [content] definied inside _saveToDisk()
-      // It changes according to the types definied inside _saveToDisk()
       
     } else if (value is List) {
       var val = _pref.getStringList(key);
-      // _pref.getStringList() Reads a set of string values from persistent storage,
-      // throwing an exception if it's not a string set
 
       return val;
     }
@@ -46,7 +29,6 @@ class Preferences {
     return value;
   }
 
-  // helper method to call the correct setType method of SharedPreferences
   void _saveToDisk<T>(String key, T content) {
     if (content is String) {
       _pref.setString(key, content);
@@ -67,13 +49,6 @@ class Preferences {
       _pref.remove(key);
     }
   }
-
-  // Here we define all the keys we will need in the Preferences.
-
-  // We will then access the value with the getter as Preferences.key
-  // The getter allows us to forget the specific string used as key
-  // in the SharedPreferences and get a list of all saved preferences
-  // as variables of the class
 
   String? get impactRefreshToken => _getFromDisk('impactRT');
   set impactRefreshToken(String? newImpactRefreshToken) =>

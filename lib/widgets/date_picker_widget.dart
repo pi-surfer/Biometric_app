@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class DatePicker extends StatefulWidget {
-  /// Start Date in case user wants to show past dates
-  /// If not provided calendar will start from the initialSelectedDate
   final DateTime startDate;
 
-  final double width;     
+  final double width;
   final double height;
 
   // DatePicker Controller
@@ -25,25 +23,14 @@ class DatePicker extends StatefulWidget {
   final TextStyle dayTextStyle;
   final TextStyle dateTextStyle;
 
-  /// Current Selected Date
-  //final DateTime? initialSelectedDate;
-
-  /// Contains the list of inactive dates.
-  /// All the dates defined in this List will be deactivated
   final List<DateTime>? inactiveDates;
 
-  /// Contains the list of active dates.
-  /// Only the dates in this list will be activated.
   final List<DateTime>? activeDates;
 
-  /// Callback function for when a different date is selected
   final DateChangeListener? onDateChange;
 
-  /// Max limit up to which the dates are shown.
-  /// Days are counted from the startDate
   final int daysCount;
 
-  /// Locale for the calendar default: en_us
   final String locale;
 
   DatePicker(
@@ -59,12 +46,11 @@ class DatePicker extends StatefulWidget {
     this.selectionColor = const Color.fromARGB(100, 1, 97, 4),
     this.deactivatedColor = const Color.fromARGB(255, 1, 97, 4),
     this.deactivatedTextColor = const Color.fromARGB(255, 1, 97, 4),
-    //this.initialSelectedDate,
     this.activeDates,
     this.inactiveDates,
     this.daysCount = 500,
     this.onDateChange,
-    this.locale = "en_US", 
+    this.locale = "en_US",
   }) : assert(
             activeDates == null || inactiveDates == null,
             "Can't "
@@ -89,10 +75,8 @@ class _DatePickerState extends State<DatePicker> {
 
   @override
   void initState() {
-    // Init the calendar locale
     initializeDateFormatting(widget.locale, null);
-    // Set initial Values
-    //_currentDate = widget.initialSelectedDate;
+
     _currentDate = widget.startDate;
 
     if (widget.controller != null) {
@@ -100,9 +84,9 @@ class _DatePickerState extends State<DatePicker> {
     }
 
     this.selectedDateStyle =
-      widget.dateTextStyle.copyWith(color: widget.selectedTextColor);
+        widget.dateTextStyle.copyWith(color: widget.selectedTextColor);
     this.selectedMonthStyle =
-      widget.monthTextStyle.copyWith(color: widget.selectedTextColor);
+        widget.monthTextStyle.copyWith(color: widget.selectedTextColor);
     this.selectedDayStyle =
         widget.dayTextStyle.copyWith(color: widget.selectedTextColor);
 
@@ -125,17 +109,13 @@ class _DatePickerState extends State<DatePicker> {
         scrollDirection: Axis.horizontal,
         controller: _controller,
         itemBuilder: (context, index) {
-          // get the date object based on the index position
-          // if widget.startDate is null then use the initialDateValue
           DateTime date;
           DateTime _date = widget.startDate.add(Duration(days: index));
           date = new DateTime(_date.year, _date.month, _date.day);
 
           bool isDeactivated = false;
 
-          // check if this date needs to be deactivated for only DeactivatedDates
           if (widget.inactiveDates != null) {
-//            print("Inside Inactive dates.");
             for (DateTime inactiveDate in widget.inactiveDates!) {
               if (_compareDate(date, inactiveDate)) {
                 isDeactivated = true;
@@ -144,11 +124,9 @@ class _DatePickerState extends State<DatePicker> {
             }
           }
 
-          // check if this date needs to be deactivated for only ActivatedDates
           if (widget.activeDates != null) {
             isDeactivated = true;
             for (DateTime activateDate in widget.activeDates!) {
-              // Compare the date if it is in the
               if (_compareDate(date, activateDate)) {
                 isDeactivated = false;
                 break;
@@ -156,11 +134,9 @@ class _DatePickerState extends State<DatePicker> {
             }
           }
 
-          // Check if this date is the one that is currently selected
           bool isSelected =
               _currentDate != null ? _compareDate(date, _currentDate!) : false;
 
-          // Return the Date Widget
           return DateWidget(
             date: date,
             monthTextStyle: isDeactivated
@@ -183,10 +159,8 @@ class _DatePickerState extends State<DatePicker> {
             selectionColor:
                 isSelected ? widget.selectionColor : Colors.transparent,
             onDateSelected: (selectedDate) {
-              // Don't notify listener if date is deactivated
               if (isDeactivated) return;
 
-              // A date is selected
               if (widget.onDateChange != null) {
                 widget.onDateChange!(selectedDate);
               }
@@ -200,8 +174,6 @@ class _DatePickerState extends State<DatePicker> {
     );
   }
 
-  /// Helper function to compare two dates
-  /// Returns True if both dates are the same
   bool _compareDate(DateTime date1, DateTime date2) {
     return date1.day == date2.day &&
         date1.month == date2.month &&
@@ -254,14 +226,15 @@ class DatePickerController {
   void setDateAndAnimate(DateTime date,
       {duration = const Duration(milliseconds: 500), curve = Curves.linear}) {
     assert(_datePickerState != null,
-    'DatePickerController is not attached to any DatePicker View.');
+        'DatePickerController is not attached to any DatePicker View.');
 
     _datePickerState!._controller.animateTo(_calculateDateOffset(date),
         duration: duration, curve: curve);
 
     if (date.compareTo(_datePickerState!.widget.startDate) >= 0 &&
-    date.compareTo(_datePickerState!.widget.startDate.add(
-        Duration(days: _datePickerState!.widget.daysCount))) <= 0) {
+        date.compareTo(_datePickerState!.widget.startDate
+                .add(Duration(days: _datePickerState!.widget.daysCount))) <=
+            0) {
       // date is in the range
       _datePickerState!._currentDate = date;
     }
