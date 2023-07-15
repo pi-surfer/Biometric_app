@@ -60,7 +60,17 @@ class _ProfilePageState extends State<ProfilePage> {
     print('${ProfilePage.routename} built');
     return SafeArea(
       child: Scaffold(
-        
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 254, 251, 228),
+          title: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: SizedBox(
+            height: 50,
+            child: Image.asset("assets/images/nome.png", fit: BoxFit.contain, alignment: Alignment.center,),
+            ),
+          ),
+          toolbarHeight: 50,
+        ),
         backgroundColor: Color.fromARGB(255, 254, 251, 228),
         body: SingleChildScrollView(
           child: Column(
