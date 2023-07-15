@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 20),
                   Consumer<SelectedPartner>(builder: (context, partner, child) {
                     Sponsor selectedPartner =
-                        partner.sponsor[partner.getSelectedProject()];
+                        partner.sponsor[partner.getSelectedPartner()];
                     return GestureDetector(
                       onTap: () {
                         showDialog(
@@ -227,9 +227,9 @@ class _HomePageState extends State<HomePage> {
                           context: context,
                           builder: (_) => FunkyOverlay(
                             mainImage: AssetImage(selectedPartner.imagePath),
-                            title: 'PARTNER OF THE WEEK',
-                            subtitle: selectedPartner.name,
-                            body: selectedPartner.phrase,
+                            title: selectedPartner.name,
+                            subtitle: 'PARTNER OF THE WEEK',
+                            body: 'This reality is demonstrating its commitment to supporting small businesses and the well-being of the individual, which is why it won the partner of the week award',
                             isSelectable: false,
                           ),
                         );

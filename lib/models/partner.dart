@@ -96,13 +96,13 @@ class SelectedPartner extends ChangeNotifier {
   List<int> ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   int i = 0;
 
-  void SelectPartner() {
+  /*void SelectPartner() {
     sponsor[4].selected = true;
     notifyListeners();
-  }
+  }*/
 
-  int getSelectedProject(){
-    int idSelected = -1;
+  int getSelectedPartner(){
+    int idSelected = 4;
     for (i in ids) {
       if (sponsor[i].selected) {
         idSelected = i;
