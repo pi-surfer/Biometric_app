@@ -45,6 +45,7 @@ class HomeProvider extends ChangeNotifier {
     await _fetchAndCalculate();
     await getDataOfDay(showDate);
     doneInit = true;
+    print('doneInit' + doneInit.toString());
     notifyListeners();
   }
 
@@ -99,7 +100,7 @@ class HomeProvider extends ChangeNotifier {
   Future<void> getDataOfDay(DateTime showDate) async {
         
     this.showDate = showDate;
-    heartRates = await db.heartRatesDao.findHeartRatesbyDate(
+    /*heartRates = await db.heartRatesDao.findHeartRatesbyDate(
         DateUtils.dateOnly(showDate),
         DateTime(showDate.year, showDate.month, showDate.day, 23, 59));
     notifyListeners();
@@ -112,7 +113,7 @@ class HomeProvider extends ChangeNotifier {
     steps = await db.stepsDao.findStepsbyDate(
         DateUtils.dateOnly(showDate),
         DateTime(showDate.year, showDate.month, showDate.day, 23, 59));
-    notifyListeners();
+    notifyListeners(); */
 
     totalSteps = await db.totStepsDao.findTotStepsbyDate(showDate);
     notifyListeners();
