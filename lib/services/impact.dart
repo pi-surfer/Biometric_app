@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:app_project/services/server_strings.dart';
 import 'package:app_project/utils/shared_preferences.dart';
-import 'package:app_project/models/db.dart';
+import 'package:app_project/database/entities/entities.dart';
 
 class ImpactService {
   Preferences prefs;
@@ -193,14 +193,14 @@ class ImpactService {
       final decodedResponse = jsonDecode(response.body);
       result = [];
       for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
-        result.add(Steps.fromJson(decodedResponse['data']['date'],
-            decodedResponse['data']['data'][i]));
+        result.add(Steps(decodedResponse['data']['data'][i],
+          decodedResponse['data']['date']));
       } //for
     } //if
     else {
       //debugPrint('ln 203 ${response.statusCode} ${response.reasonPhrase}');
       //debugPrint('body = ${response.body} \n headers = ${response.headers}');
-      result = [Steps(timestamp: day, value: 0)];
+      result = [Steps(0, day)];
     }
     //debugPrint('Steps = $result');
     return result;
@@ -225,21 +225,21 @@ class ImpactService {
       final decodedResponse = jsonDecode(response.body);
       result = [];
       for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
-        result.add(HR.fromJson(decodedResponse['data']['date'],
-            decodedResponse['data']['data'][i]));
+        result.add(HR(decodedResponse['data']['data'][i],
+        decodedResponse['data']['date'],));
       } //for
     } //if
     else {
-      result = [HR(timestamp: day, value: 0)];
+      result = [HR(0, day)];
     }
 
     //debugPrint('HR = $result');
     return result;
   }
 
-  Future<List<Kalories>> getKalFromDay(DateTime day) async {
+  Future<List<Cal>> getCalFromDay(DateTime day) async {
     await updateBearer();
-    List<Kalories> result;
+    List<Cal> result;
     String formattedDate = DateFormat('yyyy-MM-dd').format(day);
 
     final url = ServerStrings.backendBaseUrl +
@@ -255,12 +255,12 @@ class ImpactService {
       final decodedResponse = jsonDecode(response.body);
       result = [];
       for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
-        result.add(Kalories.fromJson(decodedResponse['data']['date'],
-            decodedResponse['data']['data'][i]));
+        result.add(Cal(decodedResponse['data']['data'][i],
+            decodedResponse['data']['date'],));
       } //for
     } //if
     else {
-      result = [Kalories(timestamp: day, value: 0)];
+      result = [Cal(0, day)];
     }
 
     //debugPrint('Kalories = $result');
