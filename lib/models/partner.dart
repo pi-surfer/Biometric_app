@@ -1,14 +1,17 @@
 //import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+
 class Sponsor {
   final String name;
   final String phrase;
   final String imagePath;
   final Uri url;
+  bool selected;
 
   Sponsor({required this.name, 
   required this.url, 
-  required this.phrase,required this.imagePath});
+  required this.phrase,required this.imagePath, bool this.selected = false});
 }
 
 List<Sponsor> getPartner() {
@@ -86,6 +89,27 @@ List<Sponsor> getPartner() {
     ));
 
     return partners;
+}
+
+class SelectedPartner extends ChangeNotifier {
+  List<Sponsor> sponsor = getPartner();
+  List<int> ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  int i = 0;
+
+  /*void SelectPartner() {
+    sponsor[4].selected = true;
+    notifyListeners();
+  }*/
+
+  int getSelectedPartner(){
+    int idSelected = 4;
+    for (i in ids) {
+      if (sponsor[i].selected) {
+        idSelected = i;
+      } 
+    }
+    return idSelected;
+  }
 }
 
 

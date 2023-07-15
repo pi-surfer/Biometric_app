@@ -1,5 +1,6 @@
 import 'package:app_project/utils/algorithm.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app_project/provider/home_provider.dart';
 
 class Projects extends ChangeNotifier {
@@ -74,13 +75,23 @@ class SelectedProject extends ChangeNotifier {
   List<int> ids = [0, 1, 2, 3, 4];
   int i = 0;
 
-  //int GlobalScore = getGlobalScore();
+  int? gscore;
+  //late SharedPreferences globalScore;
+
+  Future<int?> _getGlobalScore() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('globalScore');
+  }
 
   void selectProject(id) {
+    int idSel = getSelectedProject();
+    int gscore = _getGlobalScore() as int;
+    if (idSel == -1 || gscore == 0) { 
     for (i in ids) {
       proj[i].light = false;
     }
-    proj[id].light = true;
+    proj[id].light = true;}
+    else {id = idSel;}
     notifyListeners();
   }
 
@@ -89,7 +100,7 @@ class SelectedProject extends ChangeNotifier {
     for (i in ids) {
       if (proj[i].light) {
         idSelected = i;
-      } else { debugPrint('no project selected');null; }
+      } else { debugPrint('no project selected'); null; }
     }
     return idSelected;
   }
