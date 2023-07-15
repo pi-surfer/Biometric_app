@@ -63,13 +63,16 @@ class _ProfilePageState extends State<ProfilePage> {
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 254, 251, 228),
           title: Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(10.0),
             child: SizedBox(
-            height: 50,
-            child: Image.asset("assets/images/nome.png", fit: BoxFit.contain, alignment: Alignment.center,),
+            height: 60,
+            width: 150.0,
+            child: Image.asset("assets/images/nome.png", 
+                          fit: BoxFit.contain),
             ),
           ),
-          toolbarHeight: 50,
+          centerTitle: true,
+          toolbarHeight: 60,
         ),
         backgroundColor: Color.fromARGB(255, 254, 251, 228),
         body: SingleChildScrollView(
@@ -85,7 +88,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       alignment: Alignment.topCenter,
                       margin: EdgeInsets.only(top: 80, left: 20, right: 20),
                       //width: 400,
-                      height: 475,
+                      height: 300,
                       width: MediaQuery.of(context).size.width,
                       //height: MediaQuery.of(context).size.width*0.6,
                       decoration: BoxDecoration(
