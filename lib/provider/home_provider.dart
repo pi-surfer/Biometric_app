@@ -70,25 +70,25 @@ class HomeProvider extends ChangeNotifier {
     dbDailyScore = DailyScore(
         await _calculateDailyScore(_heartRates, _steps, _calories),
         dateFormat.format(DateUtils.dateOnly(lastFetch)));
-    //db.dailyScoreDao.insertDailyScore(_dailyScore);
+    //db.dailyScoreDao.insertDailyScore(dbDailyScore);
     notifyListeners();
 
     dbTotCalories = TotCal(getTotalCalories(_calories),
         dateFormat.format(DateUtils.dateOnly(lastFetch)));
-    //db.totCalDao.insertTotCal(_totalCalories);
+    //db.totCalDao.insertTotCal(dbTotCalories);
     notifyListeners();
 
     dbTotSteps = TotSteps(getTotalSteps(_steps),
         dateFormat.format(DateUtils.dateOnly(lastFetch)));
-    //db.totStepsDao.insertTotSteps(_totalSteps);
+    //db.totStepsDao.insertTotSteps(dbTotSteps);
     notifyListeners();
 
     dbAerobicTime = AerobicTime(getAerobicTime(_heartRates),
         dateFormat.format(DateUtils.dateOnly(lastFetch)));
-    //db.aerobicTimeDao.insertAerobicTime(_aerobicTime);
+    //db.aerobicTimeDao.insertAerobicTime(dbAerobicTime);
     notifyListeners();
 
-    //print('TOTAL STEPS: ' '${_totalSteps.value}' '${DateUtils.dateOnly(lastFetch)}');
+    //print('TOTAL STEPS: ' '${dbTotSteps.value}' '${DateUtils.dateOnly(lastFetch)}');
   }
 
   Future<void> refresh() async {
