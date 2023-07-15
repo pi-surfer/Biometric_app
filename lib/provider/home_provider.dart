@@ -19,13 +19,14 @@ class HomeProvider extends ChangeNotifier {
   late List<Steps> steps;
   late int totalSteps;
   final DatabaseFit db;
-
-  late int dailyScore = 0;
-  late int GlobalScore = 0;
+  late int globalScore = 0;
 
   late List<HR> _heartRates;
   late List<Cal> _calories;
   late List<Steps> _steps;
+
+  late int _dailyScore = 0;
+  late DailyScore dailyScore;
 
   // selected day of data to be shown
   DateTime showDate = DateTime.now().subtract(const Duration(days: 1));
@@ -41,7 +42,7 @@ class HomeProvider extends ChangeNotifier {
 
   Future<void> _init() async {
     await _fetchAndCalculate();
-    getDataOfDay(showDate);
+    await getDataOfDay(showDate);
     doneInit = true;
     notifyListeners();
   }
@@ -57,20 +58,35 @@ class HomeProvider extends ChangeNotifier {
   Future<void> _fetchAndCalculate() async {
 
     lastFetch = await _getLastFetch() ??
-        DateTime.now().subtract(const Duration(days: 2));
+        DateTime.now().subtract(const Duration(days: 1));
     // do nothing if already fetched
     if (lastFetch.day == DateTime.now().subtract(const Duration(days: 1)).day) {
       return;
     }
-    _heartRates = await impactService.getDataFromDay(lastFetch);
-    for (var element in _heartRates) {
-      db.heartRatesDao.insertHeartRate(element);
-    }
+
+    _steps = await impactService.getStepFromDay(lastFetch);
+    _heartRates = await impactService.getHRFromDay(lastFetch);
+    _calories = await impactService.getCalFromDay(lastFetch);
+
+    dailyScore = DailyScore(await _calculateDailyScore(_heartRates,_steps,_calories),lastFetch);
+    db.dailyScoreDao.insertDailyScore(dailyScore);
   }
 
   Future<void> refresh() async {
     await _fetchAndCalculate();
     await getDataOfDay(showDate);
+  }
+
+  int _calculateDailyScore(List<HR> hr, List<Steps> steps, List<Cal> cal) {
+    var totSteps = getTotalSteps(steps);
+    var totCal = getTotalCalories(cal);
+    var aerobicTime = getAerobicTime(hr);
+    
+    _dailyScore = getDailyScore(totCal,totSteps,aerobicTime);
+    return _dailyScore;
+    //for (var element in _exposure) {
+    //  db.exposuresDao.insertExposure(element);
+    //} // db add to the table
   }
 
   Future<void> getDataOfDay(DateTime showDate) async {

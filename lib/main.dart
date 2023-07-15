@@ -14,13 +14,15 @@ import 'package:app_project/utils/shared_preferences.dart';
 // VERSION 1.2
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   final db = await $FloorDatabaseFit.databaseBuilder('app_database.db').build();
-
   final databaseRepository = DatabaseRepository(database: db);
 
-  runApp(ChangeNotifierProvider<DatabaseRepository>(create: (context) => databaseRepository,
-  child: MyApp()));
+  runApp(ChangeNotifierProvider<DatabaseRepository>(
+    create: (context) => databaseRepository,
+    child: MyApp()
+  ));
 } // main
 
 class MyApp extends StatelessWidget {
@@ -40,7 +42,9 @@ class MyApp extends StatelessWidget {
                   )),
           ChangeNotifierProvider<HomeProvider>(
               create: (context) => HomeProvider(
-                  Provider.of<ImpactService>(context, listen: false))),
+                  Provider.of<ImpactService>(context, listen: false),
+                  Provider.of<DatabaseFit>(context),
+                  )),
           ChangeNotifierProvider<Missions>(
               child: MyApp(), create: (_) => Missions()),
           ChangeNotifierProvider<SelectedProject>(

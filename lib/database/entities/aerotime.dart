@@ -2,9 +2,9 @@ import 'package:floor/floor.dart';
 
 
 @Entity(primaryKeys: ['dateTime'])
-class Steps {
+class AerobicTime {
   final int value;
   final DateTime dateTime;
 
-  Steps(this.value, this.dateTime);
+  AerobicTime(this.value, this.dateTime);
 }

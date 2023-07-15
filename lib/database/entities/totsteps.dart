@@ -2,9 +2,9 @@ import 'package:floor/floor.dart';
 
 
 @Entity(primaryKeys: ['dateTime'])
-class Steps {
+class TotSteps {
   final int value;
   final DateTime dateTime;
 
-  Steps(this.value, this.dateTime);
+  TotSteps(this.value, this.dateTime);
 }

@@ -11,9 +11,13 @@ import 'typeConverters/timeConverter.dart';
 part 'db.g.dart';
 
 @TypeConverters([DateTimeConverter])
-@Database(version: 1, entities: [HR, Steps, Cal])
+@Database(version: 1, entities: [HR, Steps, Cal, TotSteps, TotCal, AerobicTime, DailyScore])
 abstract class DatabaseFit extends FloorDatabase {
   HeartRatesDao get heartRatesDao;
   StepsDao get stepsDao;
   CaloriesDao get caloriesDao;
+  TotStepsDao get totStepsDao;
+  TotCalDao get totCalDao;
+  AerobicTimeDao get aerobicTimeDao;
+  DailyScoreDao get dailyScoreDao;
 }//AppDatabase

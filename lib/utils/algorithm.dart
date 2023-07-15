@@ -1,17 +1,18 @@
-import 'package:app_project/models/db.dart';
+
+import 'package:app_project/database/entities/entities.dart';
 
 
 int getAerobicTime(List<HR> hr) {
   List<int> hrValues = List.generate(hr.length, (index) => 0);
-  int aerobicTime = 0; // time in minutes
+  double aerobicTime = 0; // time in minutes
 
   for (int idx = 0; idx < hr.length; idx++){
     hrValues[idx] = hr[idx].value;
-    if (hrValues[idx] > 120) {
-      aerobicTime = aerobicTime + 1;
+    if (hrValues[idx] > 1) {
+      aerobicTime = aerobicTime + 5/60;
     }
   }
-  return aerobicTime;
+  return aerobicTime as int;
 }
 
 int getTotalSteps(List<Steps> steps) {
@@ -22,15 +23,15 @@ int getTotalSteps(List<Steps> steps) {
   return totalSteps;
 }
 
-double getTotalKalories(List<Kalories> kalories) {
-  double totalKalories = 0;
-  for(Kalories kcal in kalories) {
-    totalKalories = totalKalories + kcal.value;
+double getTotalCalories(List<Cal> calories) {
+  double totalCalories = 0;
+  for(Cal kcal in calories) {
+    totalCalories = totalCalories + kcal.value;
   }
-  return totalKalories;
+  return totalCalories;
 }
 
- int getDailyScore(double totalKalories, int totalSteps, int aerobicTime) {
+ int getDailyScore(double totalCalories, int totalSteps, int aerobicTime) {
 
   int dailyScore = 0;
 
@@ -42,7 +43,7 @@ double getTotalKalories(List<Kalories> kalories) {
     dailyScore = dailyScore + 1;
   }
 
-  if (totalKalories >= 300) {
+  if (totalCalories >= 300) {
     dailyScore = dailyScore + 1;
   }
 
