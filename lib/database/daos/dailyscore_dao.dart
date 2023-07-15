@@ -3,8 +3,8 @@ import 'package:app_project/database/entities/entities.dart';
 
 @dao
 abstract class DailyScoreDao {
-   @Query('SELECT * FROM DAILYSCORE WHERE dateTime between :startTime and :endTime ORDER BY dateTime ASC')
-  Future<List<DailyScore>> findDailyScorebyDate(DateTime startTime, DateTime endTime);
+   @Query('SELECT * FROM DAILYSCORE AT DAY :day')
+  Future<DailyScore?> findDailyScorebyDate(DateTime day);
 
   @Query('SELECT * FROM DAILYSCORE')
   Future<List<DailyScore>> findAllDailyScore();

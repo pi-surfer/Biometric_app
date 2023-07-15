@@ -430,17 +430,11 @@ class _$TotStepsDao extends TotStepsDao {
   final DeletionAdapter<TotSteps> _totStepsDeletionAdapter;
 
   @override
-  Future<List<TotSteps>> findDTotStepsDate(
-    DateTime startTime,
-    DateTime endTime,
-  ) async {
-    return _queryAdapter.queryList(
-        'SELECT * FROM TOTALSTEPS WHERE dateTime between ?1 and ?2 ORDER BY dateTime ASC',
-        mapper: (Map<String, Object?> row) => TotSteps(row['value'] as int, _dateTimeConverter.decode(row['dateTime'] as int)),
-        arguments: [
-          _dateTimeConverter.encode(startTime),
-          _dateTimeConverter.encode(endTime)
-        ]);
+  Future<TotSteps?> findTotStepsbyDate(DateTime day) async {
+    return _queryAdapter.query('SELECT * FROM TOTALSTEPS AT DAY ?1',
+        mapper: (Map<String, Object?> row) => TotSteps(row['value'] as int,
+            _dateTimeConverter.decode(row['dateTime'] as int)),
+        arguments: [_dateTimeConverter.encode(day)]);
   }
 
   @override
@@ -508,17 +502,11 @@ class _$TotCalDao extends TotCalDao {
   final DeletionAdapter<TotCal> _totCalDeletionAdapter;
 
   @override
-  Future<List<TotCal>> findDTotCalDate(
-    DateTime startTime,
-    DateTime endTime,
-  ) async {
-    return _queryAdapter.queryList(
-        'SELECT * FROM TOTALCALORIES WHERE dateTime between ?1 and ?2 ORDER BY dateTime ASC',
-        mapper: (Map<String, Object?> row) => TotCal(row['value'] as int, _dateTimeConverter.decode(row['dateTime'] as int)),
-        arguments: [
-          _dateTimeConverter.encode(startTime),
-          _dateTimeConverter.encode(endTime)
-        ]);
+  Future<TotCal?> findTotCalbyDate(DateTime day) async {
+    return _queryAdapter.query('SELECT * FROM TOTALCALORIES AT DAY ?1',
+        mapper: (Map<String, Object?> row) => TotCal(row['value'] as int,
+            _dateTimeConverter.decode(row['dateTime'] as int)),
+        arguments: [_dateTimeConverter.encode(day)]);
   }
 
   @override
@@ -586,22 +574,16 @@ class _$AerobicTimeDao extends AerobicTimeDao {
   final DeletionAdapter<AerobicTime> _aerobicTimeDeletionAdapter;
 
   @override
-  Future<List<AerobicTime>> findAerobicTimebyDate(
-    DateTime startTime,
-    DateTime endTime,
-  ) async {
-    return _queryAdapter.queryList(
-        'SELECT * FROM AEROBICTIME WHERE dateTime between ?1 and ?2 ORDER BY dateTime ASC',
-        mapper: (Map<String, Object?> row) => AerobicTime(row['value'] as int, _dateTimeConverter.decode(row['dateTime'] as int)),
-        arguments: [
-          _dateTimeConverter.encode(startTime),
-          _dateTimeConverter.encode(endTime)
-        ]);
+  Future<AerobicTime?> findAerobicTimebyDate(DateTime day) async {
+    return _queryAdapter.query('SELECT * FROM AEROBICTIME AT DAY ?1',
+        mapper: (Map<String, Object?> row) => AerobicTime(row['value'] as int,
+            _dateTimeConverter.decode(row['dateTime'] as int)),
+        arguments: [_dateTimeConverter.encode(day)]);
   }
 
   @override
   Future<List<AerobicTime>> findAllAerobicTime() async {
-    return _queryAdapter.queryList('SELECT * FROM HR',
+    return _queryAdapter.queryList('SELECT * FROM AEROBICTIME',
         mapper: (Map<String, Object?> row) => AerobicTime(row['value'] as int,
             _dateTimeConverter.decode(row['dateTime'] as int)));
   }
@@ -666,17 +648,11 @@ class _$DailyScoreDao extends DailyScoreDao {
   final DeletionAdapter<DailyScore> _dailyScoreDeletionAdapter;
 
   @override
-  Future<List<DailyScore>> findDailyScorebyDate(
-    DateTime startTime,
-    DateTime endTime,
-  ) async {
-    return _queryAdapter.queryList(
-        'SELECT * FROM DAILYSCORE WHERE dateTime between ?1 and ?2 ORDER BY dateTime ASC',
-        mapper: (Map<String, Object?> row) => DailyScore(row['value'] as int, _dateTimeConverter.decode(row['dateTime'] as int)),
-        arguments: [
-          _dateTimeConverter.encode(startTime),
-          _dateTimeConverter.encode(endTime)
-        ]);
+  Future<DailyScore?> findDailyScorebyDate(DateTime day) async {
+    return _queryAdapter.query('SELECT * FROM DAILYSCORE AT DAY ?1',
+        mapper: (Map<String, Object?> row) => DailyScore(row['value'] as int,
+            _dateTimeConverter.decode(row['dateTime'] as int)),
+        arguments: [_dateTimeConverter.encode(day)]);
   }
 
   @override

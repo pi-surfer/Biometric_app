@@ -4,10 +4,10 @@ import 'package:app_project/database/entities/entities.dart';
 @dao
 abstract class AerobicTimeDao {
   
-  @Query('SELECT * FROM AEROBICTIME WHERE dateTime between :startTime and :endTime ORDER BY dateTime ASC')
-  Future<List<AerobicTime>> findAerobicTimebyDate(DateTime startTime, DateTime endTime);
+  @Query('SELECT * FROM AEROBICTIME AT DAY :day')
+  Future<AerobicTime?> findAerobicTimebyDate(DateTime day);
 
-  @Query('SELECT * FROM HR')
+  @Query('SELECT * FROM AEROBICTIME')
   Future<List<AerobicTime>> findAllAerobicTime();
 
   @insert

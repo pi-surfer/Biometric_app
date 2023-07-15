@@ -1,32 +1,33 @@
-import 'dart:math';
+//import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:app_project/utils/algorithm.dart';
-import 'package:app_project/utils/shared_preferences.dart';
+//import 'package:app_project/utils/shared_preferences.dart';
 import 'package:app_project/services/impact.dart';
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:app_project/screens/skeleton_page.dart';
 import 'package:app_project/database/db.dart';
 import 'package:app_project/database/entities/entities.dart';
 
-import '../models/projects.dart';
-
 class HomeProvider extends ChangeNotifier {
+
   late List<HR> heartRates;
-  late AerobicTime aerobicTime;
   late List<Cal> calories;
-  late TotCal totalCalories;
   late List<Steps> steps;
-  late TotSteps totalSteps;
+  late AerobicTime? aerobicTime;
+  late TotSteps? totalSteps;
+  late TotCal? totalCalories;
+  late DailyScore? dailyScore;
+
   final DatabaseFit db;
   late int globalScore = 0;
 
   late List<HR> _heartRates;
   late List<Cal> _calories;
   late List<Steps> _steps;
+  late TotCal _totalCalories;
+  late TotSteps _totalSteps;
+  late AerobicTime _aerobicTime;
+  late DailyScore _dailyScore;
 
-  late int _dailyScore = 0;
-  late DailyScore dailyScore;
+  late int ValueDailyScore = 0;
 
   // selected day of data to be shown
   DateTime showDate = DateTime.now().subtract(const Duration(days: 1));
@@ -68,17 +69,17 @@ class HomeProvider extends ChangeNotifier {
     _heartRates = await impactService.getHRFromDay(lastFetch);
     _calories = await impactService.getCalFromDay(lastFetch);
 
-    dailyScore = DailyScore(await _calculateDailyScore(_heartRates,_steps,_calories),lastFetch);
-    db.dailyScoreDao.insertDailyScore(dailyScore);
+    _dailyScore = DailyScore(await _calculateDailyScore(_heartRates,_steps,_calories),lastFetch);
+    db.dailyScoreDao.insertDailyScore(_dailyScore);
 
-    totalCalories = TotCal(getTotalCalories(_calories) as int, lastFetch);
-    db.totCalDao.insertTotCal(totalCalories);
+    _totalCalories = TotCal(getTotalCalories(_calories) as int, lastFetch);
+    db.totCalDao.insertTotCal(_totalCalories);
 
-    totalSteps = TotSteps(getTotalSteps(_steps), lastFetch);
-    db.totStepsDao.insertTotSteps(totalSteps);
+    _totalSteps = TotSteps(getTotalSteps(_steps), lastFetch);
+    db.totStepsDao.insertTotSteps(_totalSteps);
 
-    aerobicTime = AerobicTime(getAerobicTime(_heartRates), lastFetch);
-    db.aerobicTimeDao.insertAerobicTime(aerobicTime);
+    _aerobicTime = AerobicTime(getAerobicTime(_heartRates), lastFetch);
+    db.aerobicTimeDao.insertAerobicTime(_aerobicTime);
   }
 
   Future<void> refresh() async {
@@ -91,8 +92,8 @@ class HomeProvider extends ChangeNotifier {
     var totCal = getTotalCalories(cal);
     var aerobicTime = getAerobicTime(hr);
     
-    _dailyScore = getDailyScore(totCal,totSteps,aerobicTime);
-    return _dailyScore;
+    ValueDailyScore = getDailyScore(totCal,totSteps,aerobicTime);
+    return ValueDailyScore;
   }
 
   Future<void> getDataOfDay(DateTime showDate) async {
@@ -111,6 +112,18 @@ class HomeProvider extends ChangeNotifier {
     steps = await db.stepsDao.findStepsbyDate(
         DateUtils.dateOnly(showDate),
         DateTime(showDate.year, showDate.month, showDate.day, 23, 59));
+    notifyListeners();
+
+    totalSteps = await db.totStepsDao.findTotStepsbyDate(showDate);
+    notifyListeners();
+
+    totalCalories = await db.totCalDao.findTotCalbyDate(showDate);
+    notifyListeners();
+
+    aerobicTime = await db.aerobicTimeDao.findAerobicTimebyDate(showDate);
+    notifyListeners();
+
+    dailyScore = await db.dailyScoreDao.findDailyScorebyDate(showDate);
     notifyListeners();
   }
 }
